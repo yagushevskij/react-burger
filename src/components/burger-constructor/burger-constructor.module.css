@@ -1,0 +1,56 @@
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.total {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: flex-end;
+}
+
+.total svg {
+  width: 33px;
+  height: 33px;
+}
+
+.total__cost {
+  display: flex;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.item svg {
+  margin-right: 7px;
+}
+
+.list {
+  display: grid;
+  gap: 16px;
+  height: fit-content;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.scroll {
+  max-height: 370px;
+  overflow: auto;
+  padding-right: 8px;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}
