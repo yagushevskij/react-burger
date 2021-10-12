@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import burgerIngridients from './burger-ingredients.module.css';
 import {
-  Tab, Counter, CurrencyIcon
+  Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import IngredientCard from '../ingredient-card/ingredient-card'
 
 const ingridientPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
@@ -59,23 +60,9 @@ const BurgerIngridients = (props) => {
                 <h2 className='text text_type_main-medium'>{group.title}</h2>
                 <div className={`${burgerIngridients.cards} pt-6 pb-10 pl-4 pr-4`}>
                   {
-                    group.elems.map((card) => {
-                      return (
-                        <article className={burgerIngridients.card} key={card._id}>
-                          <div className={`${burgerIngridients.card__count}`}>
-                            <Counter count={1} size='default' />
-                          </div>
-                          <img className={`${burgerIngridients.card__image} ml-4 mr-4`} src={card.image} alt=''></img>
-                          <div className={`${burgerIngridients.card__price} mt-1`}>
-                            <p className='text text_type_digits-default mr-2'>{card.price}</p>
-                            <CurrencyIcon type='primary' />
-                          </div>
-                          <h3 className={`${burgerIngridients.card__title} text text_type_main-default mt-1`}>
-                            {card.name}
-                          </h3>
-                        </article>
-                      )
-                    })
+                    group.elems.map((card, i) =>
+                      <IngredientCard data={card} key={i}/>
+                    )
                   }
                 </div>
               </div>
