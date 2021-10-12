@@ -7,18 +7,16 @@ import app from './app.module.css';
 import { data } from '../../utils/data.js';
 import { basket } from '../../utils/data.js';
 
-class App extends React.Component {
-  render() {
-    return (
-      <>
+const App = () => {
+  return (
+    <>
       <AppHeader />
       <main className={app.main}>
         <BurgerIngridients data={data} />
-        <BurgerConstructor data={basket}/>
+        <BurgerConstructor data={basket} />
       </main>
-      </>
-    );
-  }
+    </>
+  );
 }
 
 export default App;
