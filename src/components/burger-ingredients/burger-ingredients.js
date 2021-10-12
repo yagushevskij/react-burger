@@ -29,20 +29,24 @@ const BurgerIngridients = (props) => {
   }, []
   );
   const scrollContainer = useRef();
-  const filterArr = (good) => props.data.filter((el) => el.type === good)
+
   const getScrollContainerHeight = () => {
     const windowHeight = window.innerHeight;
     const scrollContainerOffsetTop = scrollContainer.current.offsetTop;
     return windowHeight - scrollContainerOffsetTop;
   }
-  const mainArr = filterArr('main');
-  const sauceArr = filterArr('sauce');
-  const bunArr = filterArr('bun');
-  const data = [
-    { title: 'Булки', elems: bunArr },
-    { title: 'Соусы', elems: sauceArr },
-    { title: 'Начинки', elems: mainArr }
-  ]
+  const getGrouppedIngredients = () => {
+    const filterArr = (good) => props.data.filter((el) => el.type === good)
+    const mainArr = filterArr('main');
+    const sauceArr = filterArr('sauce');
+    const bunArr = filterArr('bun');
+    return [
+      { title: 'Булки', elems: bunArr },
+      { title: 'Соусы', elems: sauceArr },
+      { title: 'Начинки', elems: mainArr }
+    ]
+  }
+
   return (
     <section className={burgerIngridients.section}>
       <h1 className='text text_type_main-large mt-10' id='test'>Соберите бургер</h1>
@@ -54,7 +58,7 @@ const BurgerIngridients = (props) => {
       <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: state.scrollContainerHeight }} ref={scrollContainer}>
 
         {
-          data.map((group, index) => {
+          getGrouppedIngredients().map((group, index) => {
             return (
               <div key={index}>
                 <h2 className='text text_type_main-medium'>{group.title}</h2>
