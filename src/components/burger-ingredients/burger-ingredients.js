@@ -6,6 +6,7 @@ import {
   Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCard from '../ingredient-card/ingredient-card'
+import Modal from '../modal/modal'
 
 const ingridientPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
@@ -23,9 +24,15 @@ const ingridientPropTypes = PropTypes.shape({
 });
 
 const BurgerIngridients = (props) => {
-  const [state, setState] = useState({ scrollContainerHeight: 0 });
+  const [state, setState] = useState({
+    scrollContainerHeight: 0,
+    isModalOpened: false
+  });
   useEffect(() => {
-    setState({ scrollContainerHeight: getScrollContainerHeight() })
+    setState({
+      ...state,
+      scrollContainerHeight: getScrollContainerHeight()
+    })
   }, []
   );
   const scrollContainer = useRef();
@@ -47,35 +54,58 @@ const BurgerIngridients = (props) => {
     ]
   }
 
+  const handleCloseModal = () => {
+    setState({
+      ...state,
+      isModalOpened: false
+    })
+  }
+  const handleOpenModal = () => {
+    setState({
+      ...state,
+      isModalOpened: true
+    })
+  }
+
+  const modal = (
+    <Modal title='Детали ингридиента' onClose={handleCloseModal}>
+    </Modal>
+  );
   return (
-    <section className={burgerIngridients.section}>
-      <h1 className='text text_type_main-large mt-10' id='test'>Соберите бургер</h1>
-      <div className={`${burgerIngridients.tab} mt-5`}>
-        <Tab value='one' active={true}>Булки</Tab>
-        <Tab value='two' active={false}>Соусы</Tab>
-        <Tab value='three' active={false}>Начинки</Tab>
-      </div>
-      <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: state.scrollContainerHeight }} ref={scrollContainer}>
+    <>
+      <div style={{ overflow: 'hidden' }}>
+        {state.isModalOpened && modal}
+        <section className={burgerIngridients.section}>
+          <h1 className='text text_type_main-large mt-10' id='test'>Соберите бургер</h1>
+          <div className={`${burgerIngridients.tab} mt-5`}>
+            <Tab value='one' active={true}>Булки</Tab>
+            <Tab value='two' active={false}>Соусы</Tab>
+            <Tab value='three' active={false}>Начинки</Tab>
+          </div>
+          <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: state.scrollContainerHeight }}
+            ref={scrollContainer}>
 
-        {
-          getGrouppedIngredients().map((group, index) => {
-            return (
-              <div key={index}>
-                <h2 className='text text_type_main-medium'>{group.title}</h2>
-                <div className={`${burgerIngridients.cards} pt-6 pb-10 pl-4 pr-4`}>
-                  {
-                    group.elems.map((card, i) =>
-                      <IngredientCard data={card} key={i}/>
-                    )
-                  }
-                </div>
-              </div>
-            )
-          })
-        }
+            {
+              getGrouppedIngredients().map((group, index) => {
+                return (
+                  <div key={index}>
+                    <h2 className='text text_type_main-medium'>{group.title}</h2>
+                    <div className={`${burgerIngridients.cards} pt-6 pb-10 pl-4 pr-4`}>
+                      {
+                        group.elems.map((card, i) =>
+                          <IngredientCard data={card} key={i} openModal={handleOpenModal} />
+                        )
+                      }
+                    </div>
+                  </div>
+                )
+              })
+            }
 
+          </div>
+        </section>
       </div>
-    </section>
+    </>
   );
 }
 

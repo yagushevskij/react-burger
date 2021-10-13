@@ -21,18 +21,22 @@ const ingridientPropTypes = PropTypes.shape({
 });
 
 const IngredientCard = (props) => {
+  const { data } = props;
+  const openModal = () => {
+    props.openModal(data)
+  }
   return (
-    <article className={ingredientCard.card}>
+    <article className={ingredientCard.card} onClick={openModal}>
       <div className={`${ingredientCard.card__count}`}>
         <Counter count={1} size='default' />
       </div>
-      <img className={`${ingredientCard.card__image} ml-4 mr-4`} src={props.data.image} alt=''></img>
+      <img className={`${ingredientCard.card__image} ml-4 mr-4`} src={data.image} alt=''></img>
       <div className={`${ingredientCard.card__price} mt-1`}>
-        <p className='text text_type_digits-default mr-2'>{props.data.price}</p>
+        <p className='text text_type_digits-default mr-2'>{data.price}</p>
         <CurrencyIcon type='primary' />
       </div>
       <h3 className={`${ingredientCard.card__title} text text_type_main-default mt-1`}>
-        {props.data.name}
+        {data.name}
       </h3>
     </article>
   )
