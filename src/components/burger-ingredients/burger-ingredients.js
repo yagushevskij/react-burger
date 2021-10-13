@@ -5,8 +5,9 @@ import burgerIngridients from './burger-ingredients.module.css';
 import {
   Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientCard from '../ingredient-card/ingredient-card'
-import Modal from '../modal/modal'
+import IngredientCard from '../ingredient-card/ingredient-card';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 const ingridientPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
@@ -60,15 +61,17 @@ const BurgerIngridients = (props) => {
       isModalOpened: false
     })
   }
-  const handleOpenModal = () => {
+  const handleOpenModal = (card) => {
     setState({
       ...state,
-      isModalOpened: true
+      isModalOpened: true,
+      data: card
     })
   }
 
   const modal = (
     <Modal title='Детали ингридиента' onClose={handleCloseModal}>
+      <IngredientDetails data={state.data}/>
     </Modal>
   );
   return (
