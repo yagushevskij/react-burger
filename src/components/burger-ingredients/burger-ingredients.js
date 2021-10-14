@@ -27,7 +27,8 @@ const ingridientPropTypes = PropTypes.shape({
 const BurgerIngridients = (props) => {
   const [state, setState] = useState({
     scrollContainerHeight: 0,
-    isModalOpened: false
+    isModalOpened: false,
+    data: []
   });
   useEffect(() => {
     setState({
@@ -75,6 +76,7 @@ const BurgerIngridients = (props) => {
       <IngredientDetails data={state.data} />
     </Modal>
   );
+
   return (
     <>
       {state.isModalOpened && modal}
