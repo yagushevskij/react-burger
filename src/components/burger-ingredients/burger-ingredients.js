@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import burgerIngridients from './burger-ingredients.module.css';
@@ -57,26 +57,29 @@ const BurgerIngridients = (props) => {
     ]
   }
 
-  const handleCloseModal = () => {
-    setState({
-      ...state,
-      isModalOpened: false
-    })
-  }
-  const handleOpenModal = (card) => {
-    setState({
-      ...state,
-      isModalOpened: true,
-      data: card
-    })
-  }
+  const handleCloseModal = useCallback(
+    () => {
+      setState({
+        ...state,
+        isModalOpened: false
+      })
+    }, [state.data]
+  )
+  const handleOpenModal = useCallback(
+    (card) => {
+      setState({
+        ...state,
+        isModalOpened: true,
+        data: card
+      })
+    }, [state.data]
+  )
 
   const modal = (
     <Modal title='Детали ингридиента' onClose={handleCloseModal}>
       <IngredientDetails data={state.data} />
     </Modal>
   );
-
   return (
     <>
       {state.isModalOpened && modal}
