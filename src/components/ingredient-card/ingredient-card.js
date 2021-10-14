@@ -46,7 +46,7 @@ const IngredientCard = React.memo(
 )
 
 ingredientCard.propTypes = {
-  data: PropTypes.objectOf(ingridientPropTypes.isRequired).isRequired
+  data: ingridientPropTypes.isRequired
 }
 
 export default IngredientCard ;
