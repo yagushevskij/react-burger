@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import AppHeader from '../app-header/app-header.js';
 import BurgerIngridients from '../burger-ingredients/burger-ingredients.js';
 import BurgerConstructor from '../burger-constructor/burger-constructor.js';
+import ErrorBoundary from '../error-boundary/error-boundary.js';
 import app from './app.module.css';
 
 const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
@@ -28,13 +29,13 @@ const App = () => {
   }
 
   return (
-    <>
+    <ErrorBoundary>
       <AppHeader />
       <main className={app.main}>
         <BurgerIngridients data={state.data} />
         <BurgerConstructor data={state.data} />
       </main>
-    </>
+    </ErrorBoundary>
   );
 }
 

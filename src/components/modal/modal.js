@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import modal from './modal.module.css';
 import Overlay from '../overlay/overlay';
+import ErrorBoundary from '../error-boundary/error-boundary.js';
 
 const modalRoot = document.getElementById('modal-root');
 
@@ -22,7 +23,7 @@ const Modal = (props) => {
   }
   return ReactDOM.createPortal(
     (
-      <>
+      <ErrorBoundary>
         <Overlay onClose={onClose} />
         <div className={`${modal.modal}  pt-10 pl-10 pr-10`}>
           <div className={`${modal.header}`}>
@@ -35,7 +36,7 @@ const Modal = (props) => {
           </div>
           {children}
         </div>
-      </>
+      </ErrorBoundary>
     ),
     modalRoot
   );
