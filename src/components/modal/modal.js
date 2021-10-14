@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import modal from './modal.module.css';
-import Overlay from '../overlay/overlay';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 import ErrorBoundary from '../error-boundary/error-boundary.js';
 
 const modalRoot = document.getElementById('modal-root');
@@ -24,7 +24,7 @@ const Modal = (props) => {
   return ReactDOM.createPortal(
     (
       <ErrorBoundary>
-        <Overlay onClose={onClose} />
+        <ModalOverlay onClose={onClose} />
         <div className={`${modal.modal}  pt-10 pl-10 pr-10`}>
           <div className={`${modal.header}`}>
             {props.title && (<h3 className={`${modal.header__title} text text_type_main-large`}>{title}</h3>)}
