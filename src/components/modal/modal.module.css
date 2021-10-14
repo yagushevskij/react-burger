@@ -9,11 +9,21 @@
   border-radius: 40px;
   z-index: 50;
   width: 720px;
+  box-sizing: border-box;
 }
 
 .header {
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+}
+
+.header__title {
+  display: flex;
+}
+
+.header__icon {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
 }
