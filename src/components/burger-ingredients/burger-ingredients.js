@@ -27,16 +27,16 @@ const ingridientPropTypes = PropTypes.shape({
 
 const BurgerIngridients = React.memo(
   (props) => {
-    const [scroll, setScroll] = useState({
-      scrollContainerHeight: 0
+    const [state, setState] = useState({
+      scrollContainerHeight: 0,
+      isModalOpened: false,
+      data: []
     });
-    const [modal, setModal] = useState({
-      isModalOpened: false
-    });
-    const [data, setData] = useState({data: []})
     useEffect(() => {
-      setScroll({
+      setState({
+        ...state,
         scrollContainerHeight: getScrollContainerHeight(),
+        data: []
       })
     }, []
     );
@@ -60,21 +60,28 @@ const BurgerIngridients = React.memo(
     }
 
     const handleCloseModal = () => {
-      setModal({ isModalOpened: false })
-    }
-    const handleOpenModal = (card) => {
-      setModal({ isModalOpened: true })
-      setData({ data: card})
+      setState({
+        ...state,
+        isModalOpened: false
+      })
     }
 
-    const modalElem = (
+    const handleOpenModal = (card) => {
+      setState({
+        ...state,
+        isModalOpened: true,
+        data: card
+      })
+    }
+
+    const modal = (
       <Modal title='Детали ингридиента' onClose={handleCloseModal}>
-        <IngredientDetails data={data.data} />
+        <IngredientDetails data={state.data} />
       </Modal>
     );
     return (
       <>
-        {modal.isModalOpened && modalElem}
+        {state.isModalOpened && modal}
         <section className={burgerIngridients.section}>
           <h1 className='text text_type_main-large mt-10' id='test'>Соберите бургер</h1>
           <div className={`${burgerIngridients.tab} mt-5`}>
@@ -82,7 +89,7 @@ const BurgerIngridients = React.memo(
             <Tab value='two' active={false}>Соусы</Tab>
             <Tab value='three' active={false}>Начинки</Tab>
           </div>
-          <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: scroll.scrollContainerHeight }}
+          <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: state.scrollContainerHeight }}
             ref={scrollContainer}>
 
             {
