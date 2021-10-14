@@ -32,7 +32,8 @@ const BurgerIngridients = (props) => {
   useEffect(() => {
     setState({
       ...state,
-      scrollContainerHeight: getScrollContainerHeight()
+      scrollContainerHeight: getScrollContainerHeight(),
+      data: []
     })
   }, []
   );
