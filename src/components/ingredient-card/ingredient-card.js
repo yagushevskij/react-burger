@@ -42,7 +42,7 @@ const IngredientCard = React.memo(
         </h3>
       </article>
     )
-  }
+  }, (prevProps, nextProps) => prevProps.data === nextProps.data
 )
 
 ingredientCard.propTypes = {
