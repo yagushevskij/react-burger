@@ -27,16 +27,16 @@ const ingridientPropTypes = PropTypes.shape({
 
 const BurgerIngridients = React.memo(
   (props) => {
-    const [state, setState] = useState({
-      scrollContainerHeight: 0,
-      isModalOpened: false,
-      data: []
+    const [scroll, setScroll] = useState({
+      scrollContainerHeight: 0
     });
+    const [modal, setModal] = useState({
+      isModalOpened: false
+    });
+    const [data, setData] = useState({data: []})
     useEffect(() => {
-      setState({
-        ...state,
+      setScroll({
         scrollContainerHeight: getScrollContainerHeight(),
-        data: []
       })
     }, []
     );
@@ -60,28 +60,21 @@ const BurgerIngridients = React.memo(
     }
 
     const handleCloseModal = () => {
-      setState({
-        ...state,
-        isModalOpened: false
-      })
+      setModal({ isModalOpened: false })
     }
-
     const handleOpenModal = (card) => {
-      setState({
-        ...state,
-        isModalOpened: true,
-        data: card
-      })
+      setModal({ isModalOpened: true })
+      setData({ data: card})
     }
 
-    const modal = (
+    const modalElem = (
       <Modal title='Детали ингридиента' onClose={handleCloseModal}>
-        <IngredientDetails data={state.data} />
+        <IngredientDetails data={data.data} />
       </Modal>
     );
     return (
       <>
-        {state.isModalOpened && modal}
+        {modal.isModalOpened && modalElem}
         <section className={burgerIngridients.section}>
           <h1 className='text text_type_main-large mt-10' id='test'>Соберите бургер</h1>
           <div className={`${burgerIngridients.tab} mt-5`}>
@@ -89,7 +82,7 @@ const BurgerIngridients = React.memo(
             <Tab value='two' active={false}>Соусы</Tab>
             <Tab value='three' active={false}>Начинки</Tab>
           </div>
-          <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: state.scrollContainerHeight }}
+          <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: scroll.scrollContainerHeight }}
             ref={scrollContainer}>
 
             {
