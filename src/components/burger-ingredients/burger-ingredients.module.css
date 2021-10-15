@@ -1,0 +1,32 @@
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.tab {
+  display: flex;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+.content::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+.content::-webkit-scrollbar-thumb {
+  background: #8585AD;
+  height: 500px;
+}
+
+.cards {
+  display: grid;
+  grid-column-gap: 24px;
+  grid-row-gap: 32px;
+  grid-template-columns: repeat(2, 1fr);
+}

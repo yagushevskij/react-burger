@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image {
+  width: 480px;
+  height: 240px;
+  object-fit: cover;
+}
+
+.addition {
+  display: flex;
+}
+
+.addition__item {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap;
+  margin-left: 20px;
+}
+
+.addition__item:first-of-type {
+  margin-left: 0;
+}
