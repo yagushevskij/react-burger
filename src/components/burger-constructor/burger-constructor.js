@@ -32,6 +32,7 @@ const BurgerConstructor = (props) => {
       <OrderDetails />
     </Modal>
   );
+  const dataWithoutBuns = props.data.filter(el => el.type!=='bun')
   return (
     <>
       {state.isModalOpened && modal}
@@ -48,7 +49,7 @@ const BurgerConstructor = (props) => {
           </li>
           <ul className={`${burgerConstructor.list} ${burgerConstructor.scroll}`}>
             {
-              props.data.map((item, index) =>
+              dataWithoutBuns.map((item, index) =>
                 <li className={`${burgerConstructor.item}`} key={index}>
                   <DragIcon type='primary' />
                   <ConstructorElement
