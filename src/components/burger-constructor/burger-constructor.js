@@ -62,7 +62,7 @@ const BurgerConstructor = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ingredients: idsArr})
+        body: JSON.stringify({ ingredients: idsArr })
       });
       const resData = await res.json();
       setOrder({ number: resData.order.number, loading: false });
@@ -138,10 +138,6 @@ const BurgerConstructor = () => {
       </section>
     </>
   );
-}
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingridientPropTypes.isRequired).isRequired
 }
 
 export default BurgerConstructor;
