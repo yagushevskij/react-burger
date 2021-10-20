@@ -7,7 +7,7 @@ import ErrorBoundary from '../error-boundary/error-boundary.js';
 import app from './app.module.css';
 import { BasketContext } from '../../services/basket-context.js';
 
-const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
+const API_URL = 'https://norma.nomoreparties.space/api/';
 
 const App = () => {
   const [ingredients, setIngredients] = useState({ data: [] });
@@ -20,7 +20,7 @@ const App = () => {
   const getIngredientsData = async () => {
     try {
       setIngredients({ ...ingredients, loading: true });
-      const res = await fetch(API_URL);
+      const res = await fetch(API_URL + 'ingredients');
       const resData = await res.json();
       setIngredients({
         ...ingredients,
@@ -46,3 +46,4 @@ const App = () => {
 }
 
 export default App;
+export { API_URL };

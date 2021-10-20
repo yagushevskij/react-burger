@@ -8,7 +8,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { BasketContext } from '../../services/basket-context';
+import { BasketContext, OrderContext } from '../../services/basket-context';
+import { API_URL } from '../app/app'
 
 const basketInitialState = { total: 0 };
 
@@ -28,6 +29,7 @@ const BurgerConstructor = () => {
   const [modal, setModal] = useState({
     isModalOpened: false
   });
+  const [order, setOrder] = useState({ number: null });
   const [totalCost, totalCostDispatcher] = useReducer(basketReducer, basketInitialState);
   useEffect(() => {
     basket.forEach((el) => {
@@ -51,10 +53,31 @@ const BurgerConstructor = () => {
     })
   }
 
+  const makeOrder = async () => {
+    try {
+      const idsArr = basket.map((el) => el._id);
+      setOrder({ ...order, loading: true });
+      const res = await fetch(API_URL + 'orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ingredients: idsArr})
+      });
+      const resData = await res.json();
+      setOrder({ number: resData.order.number, loading: false });
+      resData.order.number && handleOpenModal();
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   const modalComp = (
-    <Modal onClose={handleCloseModal}>
-      <OrderDetails />
-    </Modal>
+    <OrderContext.Provider value={{ order }}>
+      <Modal onClose={handleCloseModal}>
+        <OrderDetails />
+      </Modal>
+    </OrderContext.Provider>
   );
   const bun = basket.find(el => el.type === 'bun');
   const ingredientsWithoutBun = basket.filter(el => el.type !== 'bun');
@@ -108,7 +131,7 @@ const BurgerConstructor = () => {
             <span className='text text_type_digits-medium mr-2'>{totalCost.total}</span>
             <CurrencyIcon type='primary' />
           </p>
-          <Button type='primary' size='large' onClick={handleOpenModal}>
+          <Button type='primary' size='large' onClick={makeOrder}>
             Оформить заказ
           </Button>
         </div>
