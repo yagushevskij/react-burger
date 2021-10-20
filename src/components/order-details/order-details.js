@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import orderDetails from './order-details.module.css';
 import doneIcon from '../../images/done.png'
-import { OrderContext } from '../../services/basket-context';
+import { OrderContext } from '../../services/app-context';
 
 const OrderDetails = () => {
   const { order } = useContext(OrderContext);

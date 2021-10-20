@@ -1,14 +1,12 @@
 import { useState, useContext, useReducer, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
-import ingridientPropTypes from '../../utils/type'
 import burgerConstructor from './burger-constructor.module.css';
 import {
   ConstructorElement, DragIcon, CurrencyIcon, Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { BasketContext, OrderContext } from '../../services/basket-context';
+import { IngredientsContext, OrderContext } from '../../services/app-context';
 import { API_URL } from '../app/app'
 
 const basketInitialState = { total: 0 };
@@ -25,20 +23,20 @@ const basketReducer = (state, action) => {
 }
 
 const BurgerConstructor = () => {
-  const { basket } = useContext(BasketContext);
+  const { data } = useContext(IngredientsContext);
   const [modal, setModal] = useState({
     isModalOpened: false
   });
   const [order, setOrder] = useState({ number: null });
   const [totalCost, totalCostDispatcher] = useReducer(basketReducer, basketInitialState);
   useEffect(() => {
-    basket.forEach((el) => {
+    data.forEach((el) => {
       totalCostDispatcher({
         type: 'add',
         cost: el.price
       })
     })
-  }, [basket])
+  }, [data])
 
   const handleCloseModal = () => {
     setModal({
@@ -55,7 +53,7 @@ const BurgerConstructor = () => {
 
   const makeOrder = async () => {
     try {
-      const idsArr = basket.map((el) => el._id);
+      const idsArr = data.map((el) => el._id);
       setOrder({ ...order, loading: true });
       const res = await fetch(API_URL + 'orders', {
         method: 'POST',
@@ -79,8 +77,8 @@ const BurgerConstructor = () => {
       </Modal>
     </OrderContext.Provider>
   );
-  const bun = basket.find(el => el.type === 'bun');
-  const ingredientsWithoutBun = basket.filter(el => el.type !== 'bun');
+  const bun = data.find(el => el.type === 'bun');
+  const ingredientsWithoutBun = data.filter(el => el.type !== 'bun');
   return (
     <>
       {modal.isModalOpened && modalComp}
