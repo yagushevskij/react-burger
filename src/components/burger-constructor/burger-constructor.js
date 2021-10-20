@@ -88,7 +88,7 @@ const BurgerConstructor = () => {
         <ul className={`${burgerConstructor.list}`}>
           {
             bun &&
-            <li className='ml-8' key={bun._id}>
+            <li className='ml-8' key={'bun-top' + bun._id}>
               <ConstructorElement
                 type='top'
                 isLocked={true}
@@ -115,7 +115,7 @@ const BurgerConstructor = () => {
           </ul>
           {
             bun &&
-            <li className='ml-8' key={bun._id}>
+            <li className='ml-8' key={'bun-bottom' + bun._id}>
               <ConstructorElement
                 type='bottom'
                 isLocked={true}
