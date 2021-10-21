@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { IngredientsContext, OrderContext } from '../../services/app-context';
+import { IngredientsContext } from '../../services/app-context';
 import { API_URL } from '../app/app'
 
 const basketInitialState = { total: 0 };
@@ -73,11 +73,9 @@ const BurgerConstructor = () => {
   }
 
   const modalComp = (
-    <OrderContext.Provider value={{ order }}>
-      <Modal onClose={handleCloseModal}>
-        <OrderDetails />
-      </Modal>
-    </OrderContext.Provider>
+    <Modal onClose={handleCloseModal}>
+      <OrderDetails orderNumber={order.number}/>
+    </Modal>
   );
   const bun = data.find(el => el.type === 'bun');
   const ingredientsWithoutBun = data.filter(el => el.type !== 'bun');
