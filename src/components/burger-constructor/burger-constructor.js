@@ -12,11 +12,12 @@ import { API_URL } from '../app/app'
 const basketInitialState = { total: 0 };
 
 const basketReducer = (state, action) => {
+  const ingredientCost = (action.ingredient === 'bun') ? action.cost * 2 : action.cost;
   switch (action.type) {
     case 'add':
-      return { total: state.total + action.cost };
+      return { total: state.total + ingredientCost };
     case 'remove':
-      return { total: state.total + action.cost };
+      return { total: state.total - ingredientCost };
     default:
       throw new Error(`Wrong type of action: ${action.type}`);
   }
@@ -33,6 +34,7 @@ const BurgerConstructor = () => {
     data.forEach((el) => {
       totalCostDispatcher({
         type: 'add',
+        ingredient: el.type,
         cost: el.price
       })
     })
