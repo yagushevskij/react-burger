@@ -1,28 +1,26 @@
 import React from 'react';
-import { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useRef, useEffect, useContext } from 'react';
 
-import ingridientPropTypes from '../../utils/type'
 import burgerIngridients from './burger-ingredients.module.css';
 import {
   Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientCard from '../ingredient-card/ingredient-card';
+import IngredientCard from './ingredient-card/ingredient-card';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { IngredientsContext } from '../../services/app-context';
 
 const BurgerIngridients = React.memo(
-  (props) => {
+  () => {
+    const { data } = useContext(IngredientsContext);
     const [state, setState] = useState({
       scrollContainerHeight: 0,
       isModalOpened: false,
-      data: []
     });
     useEffect(() => {
       setState({
         ...state,
         scrollContainerHeight: getScrollContainerHeight(),
-        data: []
       })
     }, []
     );
@@ -34,7 +32,7 @@ const BurgerIngridients = React.memo(
       return windowHeight - scrollContainerOffsetTop;
     }
     const getGrouppedIngredients = () => {
-      const filterArr = (good) => props.data.filter((el) => el.type === good)
+      const filterArr = (good) => data.filter((el) => el.type === good)
       const mainArr = filterArr('main');
       const sauceArr = filterArr('sauce');
       const bunArr = filterArr('bun');
@@ -101,9 +99,5 @@ const BurgerIngridients = React.memo(
     );
   }
 )
-
-BurgerIngridients.propTypes = {
-  data: PropTypes.arrayOf(ingridientPropTypes.isRequired).isRequired
-}
 
 export default BurgerIngridients;

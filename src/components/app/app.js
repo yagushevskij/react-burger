@@ -5,22 +5,24 @@ import BurgerIngridients from '../burger-ingredients/burger-ingredients.js';
 import BurgerConstructor from '../burger-constructor/burger-constructor.js';
 import ErrorBoundary from '../error-boundary/error-boundary.js';
 import app from './app.module.css';
+import { IngredientsContext } from '../../services/app-context.js';
 
-const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
+const API_URL = 'https://norma.nomoreparties.space/api/';
 
 const App = () => {
-  const [state, setState] = useState({ data: [] });
+  const [ingredients, setIngredients] = useState({ data: [] });
+
   useEffect(() => {
     getIngredientsData();
   }, []);
 
   const getIngredientsData = async () => {
     try {
-      setState({ ...state, loading: true });
-      const res = await fetch(API_URL);
+      setIngredients({ ...ingredients, loading: true });
+      const res = await fetch(API_URL + 'ingredients');
       const resData = await res.json();
-      setState({
-        ...state,
+      setIngredients({
+        ...ingredients,
         data: resData.data, loading: false
       });
     } catch (e) {
@@ -32,11 +34,14 @@ const App = () => {
     <ErrorBoundary>
       <AppHeader />
       <main className={app.main}>
-        <BurgerIngridients data={state.data} />
-        <BurgerConstructor data={state.data} />
+        <IngredientsContext.Provider value={{ data: ingredients.data }}>
+          <BurgerIngridients />
+          <BurgerConstructor />
+        </IngredientsContext.Provider>
       </main>
     </ErrorBoundary>
   );
 }
 
 export default App;
+export { API_URL };
