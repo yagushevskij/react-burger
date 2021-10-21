@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import orderDetails from './order-details.module.css';
 import doneIcon from '../../images/done.png'
 
@@ -11,6 +13,10 @@ const OrderDetails = (props) => {
       <span className='text text_type_main-small text_color_inactive mt-2'>Дождитесь готовности на орбитальной станции</span>
     </div>
   );
+}
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.string.isRequired
 }
 
 export default OrderDetails;
