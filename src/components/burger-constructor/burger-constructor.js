@@ -65,8 +65,9 @@ const BurgerConstructor = () => {
         body: JSON.stringify({ ingredients: idsArr })
       });
       const resData = await res.json();
-      setOrder({ number: resData.order.number, loading: false });
-      resData.order.number && handleOpenModal();
+      const orderNumber = resData.order.number;
+      setOrder({ number: orderNumber, loading: false });
+      orderNumber && handleOpenModal();
     } catch (e) {
       console.log(e)
     }
