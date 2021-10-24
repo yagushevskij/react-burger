@@ -7,7 +7,7 @@ import {
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { IngredientsContext } from '../../services/app-context';
-import { API_URL } from '../app/app'
+import { API_URL } from '../../utils/config';
 
 const basketInitialState = { total: 0 };
 

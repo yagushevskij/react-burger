@@ -6,8 +6,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor.js';
 import ErrorBoundary from '../error-boundary/error-boundary.js';
 import app from './app.module.css';
 import { IngredientsContext } from '../../services/app-context.js';
-
-const API_URL = 'https://norma.nomoreparties.space/api/';
+import { API_URL } from '../../utils/config.js';
 
 const App = () => {
   const [ingredients, setIngredients] = useState({ data: [] });
