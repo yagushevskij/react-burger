@@ -9,7 +9,7 @@ import IngredientCard from './ingredient-card/ingredient-card';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { getItems } from '../../services/actions/cart';
-import { ADD_ITEM_DATA, REMOVE_ITEM_DATA } from '../../services/actions/cart';
+import { REMOVE_ITEM_DATA } from '../../services/actions/cart';
 
 const BurgerIngridients = React.memo(
   () => {
@@ -57,11 +57,7 @@ const BurgerIngridients = React.memo(
       })
     }
 
-    const handleOpenModal = (card) => {
-      dispatch({
-        type: ADD_ITEM_DATA,
-        item: card
-      })
+    const handleOpenModal = () => {
       setState({
         ...state,
         isModalOpened: true,

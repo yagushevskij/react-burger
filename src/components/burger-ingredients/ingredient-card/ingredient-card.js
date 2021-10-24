@@ -5,15 +5,22 @@ import ingredientCard from './ingredient-card.module.css';
 import {
   Counter, CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ADD_ITEM_DATA } from '../../../services/actions/cart';
+import { useDispatch } from 'react-redux';
 
 const IngredientCard = React.memo(
   (props) => {
+    const dispatch = useDispatch();
     const { data } = props;
-    const openModal = () => {
+    const handleOpenModal = () => {
+      dispatch({
+        type: ADD_ITEM_DATA,
+        item: data
+      })
       props.openModal(data)
     }
     return (
-      <article className={ingredientCard.card} onClick={openModal}>
+      <article className={ingredientCard.card} onClick={handleOpenModal}>
         <div className={`${ingredientCard.card__count}`}>
           {data.qty > 0 && <Counter count={data.qty} size='default' />}
         </div>
