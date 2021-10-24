@@ -15,7 +15,7 @@ const IngredientCard = React.memo(
     return (
       <article className={ingredientCard.card} onClick={openModal}>
         <div className={`${ingredientCard.card__count}`}>
-          <Counter count={1} size='default' />
+          {data.qty > 0 && <Counter count={data.qty} size='default' />}
         </div>
         <img className={`${ingredientCard.card__image} ml-4 mr-4`} src={data.image} alt=''></img>
         <div className={`${ingredientCard.card__price} mt-1`}>

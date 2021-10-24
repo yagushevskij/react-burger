@@ -1,6 +1,6 @@
 import React from 'react';
-import { useState, useRef, useEffect, useContext } from 'react';
-
+import { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import burgerIngridients from './burger-ingredients.module.css';
 import {
   Tab
@@ -8,16 +8,18 @@ import {
 import IngredientCard from './ingredient-card/ingredient-card';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { IngredientsContext } from '../../services/app-context';
+import { getItems } from '../../services/actions/cart';
 
 const BurgerIngridients = React.memo(
   () => {
-    const { data } = useContext(IngredientsContext);
+    const dispatch = useDispatch();
+    const data = useSelector(store => store.cart.items);
     const [state, setState] = useState({
       scrollContainerHeight: 0,
       isModalOpened: false,
     });
     useEffect(() => {
+      dispatch(getItems());
       setState({
         ...state,
         scrollContainerHeight: getScrollContainerHeight(),
