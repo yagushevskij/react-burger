@@ -1,4 +1,5 @@
-import { useState, useContext, useReducer, useEffect } from 'react';
+import { useState, useReducer, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import burgerConstructor from './burger-constructor.module.css';
 import {
@@ -6,12 +7,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { IngredientsContext } from '../../services/app-context';
-import { API_URL } from '../../utils/config';
+import { getOrder, REMOVE_ORDER } from '../../services/actions/cart';
 
-const basketInitialState = { total: 0 };
+const itemsInitialState = { total: 0 };
 
-const basketReducer = (state, action) => {
+const itemsReducer = (state, action) => {
   const ingredientCost = (action.ingredient === 'bun') ? action.cost * 2 : action.cost;
   switch (action.type) {
     case 'add':
@@ -24,12 +24,12 @@ const basketReducer = (state, action) => {
 }
 
 const BurgerConstructor = () => {
-  const { data } = useContext(IngredientsContext);
+  const dispatch = useDispatch();
+  const data = useSelector(store => store.cart.items); //Заменить на store.cart.constrItems
   const [modal, setModal] = useState({
     isModalOpened: false
   });
-  const [order, setOrder] = useState({ number: null });
-  const [totalCost, totalCostDispatcher] = useReducer(basketReducer, basketInitialState);
+  const [totalCost, totalCostDispatcher] = useReducer(itemsReducer, itemsInitialState);
   useEffect(() => {
     data.forEach((el) => {
       totalCostDispatcher({
@@ -45,37 +45,24 @@ const BurgerConstructor = () => {
       ...modal,
       isModalOpened: false
     })
+    dispatch({ type: REMOVE_ORDER })
   }
   const handleOpenModal = () => {
+    makeOrder();
     setModal({
       ...modal,
       isModalOpened: true,
     })
   }
 
-  const makeOrder = async () => {
-    try {
-      const idsArr = data.map((el) => el._id);
-      setOrder({ ...order, loading: true });
-      const res = await fetch(API_URL + 'orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ ingredients: idsArr })
-      });
-      const resData = await res.json();
-      const orderNumber = resData.order.number;
-      setOrder({ number: orderNumber, loading: false });
-      orderNumber && handleOpenModal();
-    } catch (e) {
-      console.log(e)
-    }
+  const makeOrder = () => {
+    const idsArr = data.map((el) => el._id);
+    dispatch(getOrder(idsArr))
   }
 
   const modalComp = (
     <Modal onClose={handleCloseModal}>
-      <OrderDetails orderNumber={order.number}/>
+      <OrderDetails />
     </Modal>
   );
   const bun = data.find(el => el.type === 'bun');
@@ -130,7 +117,7 @@ const BurgerConstructor = () => {
             <span className='text text_type_digits-medium mr-2'>{totalCost.total}</span>
             <CurrencyIcon type='primary' />
           </p>
-          <Button type='primary' size='large' onClick={makeOrder}>
+          <Button type='primary' size='large' onClick={handleOpenModal}>
             Оформить заказ
           </Button>
         </div>

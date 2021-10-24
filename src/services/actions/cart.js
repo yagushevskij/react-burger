@@ -14,6 +14,7 @@ const REMOVE_ITEM_DATA = 'REMOVE_ITEM_DATA';
 const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
+const REMOVE_ORDER = 'REMOVE_ORDER';
 
 const getItems = () => {
   return async function (dispatch) {
@@ -52,11 +53,11 @@ const getOrder = (idsArr) => {
         },
         body: JSON.stringify({ ingredients: idsArr })
       });
-      if (res && res.success) {
+      if (res && res.ok) {
         const resData = await res.json();
         dispatch({
           type: GET_ORDER_SUCCESS,
-          order: resData.order.number
+          orderNumber: resData.order.number
         });
       } else {
         dispatch({
@@ -73,5 +74,5 @@ export {
   getItems, getOrder,
   GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, GET_ITEMS_FAILED, ADD_ITEM_DATA,
   REMOVE_ITEM_DATA, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED,
-  ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS
+  ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS, REMOVE_ORDER
 }

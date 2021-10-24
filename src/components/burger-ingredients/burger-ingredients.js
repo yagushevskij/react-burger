@@ -9,11 +9,12 @@ import IngredientCard from './ingredient-card/ingredient-card';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { getItems } from '../../services/actions/cart';
+import { ADD_ITEM_DATA, REMOVE_ITEM_DATA } from '../../services/actions/cart';
 
 const BurgerIngridients = React.memo(
   () => {
     const dispatch = useDispatch();
-    const data = useSelector(store => store.cart.items);
+    const { items, currentItem} = useSelector(store => store.cart);
     const [state, setState] = useState({
       scrollContainerHeight: 0,
       isModalOpened: false,
@@ -34,7 +35,7 @@ const BurgerIngridients = React.memo(
       return windowHeight - scrollContainerOffsetTop;
     }
     const getGrouppedIngredients = () => {
-      const filterArr = (good) => data.filter((el) => el.type === good)
+      const filterArr = (good) => items.filter((el) => el.type === good)
       const mainArr = filterArr('main');
       const sauceArr = filterArr('sauce');
       const bunArr = filterArr('bun');
@@ -46,6 +47,10 @@ const BurgerIngridients = React.memo(
     }
 
     const handleCloseModal = () => {
+      dispatch({
+        type: REMOVE_ITEM_DATA,
+        item: currentItem
+      })
       setState({
         ...state,
         isModalOpened: false
@@ -53,16 +58,19 @@ const BurgerIngridients = React.memo(
     }
 
     const handleOpenModal = (card) => {
+      dispatch({
+        type: ADD_ITEM_DATA,
+        item: card
+      })
       setState({
         ...state,
         isModalOpened: true,
-        data: card
       })
     }
 
     const modal = (
       <Modal title='Детали ингридиента' onClose={handleCloseModal}>
-        <IngredientDetails data={state.data} />
+        <IngredientDetails/>
       </Modal>
     );
     return (

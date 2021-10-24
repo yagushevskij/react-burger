@@ -1,7 +1,7 @@
 import {
   GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, GET_ITEMS_FAILED, ADD_ITEM_DATA,
   REMOVE_ITEM_DATA, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED,
-  ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS
+  ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS, REMOVE_ORDER
 } from '../actions/cart';
 
 const initialState = {
@@ -14,7 +14,7 @@ const initialState = {
 
   currentItem: {},
 
-  order: {},
+  order: { number: null },
   orderRequest: false,
   orderFailed: false,
 
@@ -60,7 +60,7 @@ const cartReducer = (state = initialState, action) => {
       return; // Пока так
     }
     case ADD_ITEM_DATA: {
-      return { ...state, currentItem: action.data };
+      return { ...state, currentItem: action.item };
     }
     case REMOVE_ITEM_DATA: {
       return { ...state, currentItem: {} };
@@ -69,10 +69,13 @@ const cartReducer = (state = initialState, action) => {
       return { ...state, orderRequest: true };
     }
     case GET_ORDER_SUCCESS: {
-      return { ...state, orderFailed: false, order: action.order, orderRequest: false };
+      return { ...state, orderFailed: false, order: { ...state.order, number: action.orderNumber}, orderRequest: false };
     }
     case GET_ORDER_FAILED: {
       return { ...state, orderFailed: true, orderRequest: false };
+    }
+    case REMOVE_ORDER: {
+      return { ...state, order: { ...state.order, number: null} }
     }
     default: {
       return state;

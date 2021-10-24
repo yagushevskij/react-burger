@@ -1,8 +1,8 @@
-import ingridientPropTypes from '../../utils/type'
+import { useSelector } from 'react-redux';
 import ingredientDetails from './ingredient-details.module.css';
 
-const IngredientDetails = (props) => {
-  const { data } = props;
+const IngredientDetails = () => {
+  const data = useSelector(store => store.cart.currentItem);
   return (
     <div className={`${ingredientDetails.wrapper} pb-15`}>
       <img className={ingredientDetails.image} src={data.image} alt={data.name}/>
@@ -27,10 +27,6 @@ const IngredientDetails = (props) => {
       </div>
     </div>
   );
-}
-
-ingredientDetails.propTypes = {
-  data: ingridientPropTypes.isRequired
 }
 
 export default IngredientDetails;
