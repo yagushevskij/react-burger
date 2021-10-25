@@ -26,6 +26,7 @@ const itemsReducer = (state, action) => {
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const data = useSelector(store => store.cart.items); //Заменить на store.cart.constrItems
+  const { orderRequest } = useSelector(store => store.cart)
   const [modal, setModal] = useState({
     isModalOpened: false
   });
@@ -48,7 +49,6 @@ const BurgerConstructor = () => {
     dispatch({ type: REMOVE_ORDER })
   }
   const handleOpenModal = () => {
-    makeOrder();
     setModal({
       ...modal,
       isModalOpened: true,
@@ -58,6 +58,7 @@ const BurgerConstructor = () => {
   const makeOrder = () => {
     const idsArr = data.map((el) => el._id);
     dispatch(getOrder(idsArr))
+    !orderRequest && handleOpenModal();
   }
 
   const modalComp = (
@@ -117,7 +118,7 @@ const BurgerConstructor = () => {
             <span className='text text_type_digits-medium mr-2'>{totalCost.total}</span>
             <CurrencyIcon type='primary' />
           </p>
-          <Button type='primary' size='large' onClick={handleOpenModal}>
+          <Button type='primary' size='large' onClick={makeOrder}>
             Оформить заказ
           </Button>
         </div>
