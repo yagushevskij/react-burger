@@ -22,7 +22,7 @@ const IngredientCard = React.memo(
     }
 
     const [{ border }, dragRef] = useDrag({
-      type: 'ingredient',
+      type: 'ingredient-card',
       item: data,
       collect: monitor => ({
         border: monitor.isDragging() ? '3px solid green' : 'none'

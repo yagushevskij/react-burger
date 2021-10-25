@@ -10,6 +10,7 @@ import OrderDetails from '../order-details/order-details';
 import { getOrder, REMOVE_ORDER, ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS } from '../../services/actions/cart';
 import { useDrop } from "react-dnd";
 import ConstructorCard from './constructor-card/constructor-card';
+// import { getKeyByGenerate } from '../../utils/helpers';
 
 const itemsInitialState = { total: 0 };
 
@@ -26,15 +27,24 @@ const itemsReducer = (state, action) => {
 }
 
 const BurgerConstructor = () => {
-  const [{border}, dropTarget] = useDrop({
-    accept: 'ingredient',
+  const [{ border }, sectionTarget] = useDrop({
+    accept: 'ingredient-card',
     drop(item) {
       handleDrop(item);
     },
     collect: monitor => ({
       border: monitor.isOver() ? '3px solid green' : 'none'
     })
-});
+  });
+  const [, scrollContainerTarget] = useDrop({
+    accept: 'constructor-card',
+    drop(item) {
+      console.log(item);
+    },
+    collect: monitor => ({
+      border: monitor.isOver() ? '3px solid green' : 'none'
+    })
+  });
   const dispatch = useDispatch();
   const { constrItems, orderRequest } = useSelector(store => store.cart);
   const [modal, setModal] = useState({
@@ -43,7 +53,7 @@ const BurgerConstructor = () => {
   const [totalCost, totalCostDispatcher] = useReducer(itemsReducer, itemsInitialState);
 
   const handleDrop = (item) => {
-    const existedBun = constrItems.find(el => el.type ==='bun')
+    const existedBun = constrItems.find(el => el.type === 'bun')
     if (item.type === 'bun' && existedBun) {
       dispatch({
         type: REMOVE_CONSTR_ITEM,
@@ -96,7 +106,7 @@ const BurgerConstructor = () => {
   return (
     <>
       {modal.isModalOpened && modalComp}
-      <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={dropTarget} style={{ border }}>
+      <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {
           constrItems.length === 0 ?
             <div className={`${burgerConstructor.info} text text_type_main-default`}>
@@ -115,10 +125,10 @@ const BurgerConstructor = () => {
                     />
                   </li>
                 }
-                <ul className={`${burgerConstructor.list} ${burgerConstructor.scroll}`}>
+                <ul className={`${burgerConstructor.list} ${burgerConstructor.scroll}`} ref={scrollContainerTarget}>
                   {
                     ingredientsWithoutBun &&
-                    ingredientsWithoutBun.map((item, index) => <ConstructorCard key={index} data={item} totalCostDispatcher={totalCostDispatcher}/>)
+                    ingredientsWithoutBun.map((item, index) => <ConstructorCard key={index} data={item} totalCostDispatcher={totalCostDispatcher} />)
                   }
                 </ul>
                 {

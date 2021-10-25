@@ -3,6 +3,7 @@ import {
   REMOVE_ITEM_DATA, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED,
   ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS, REMOVE_ORDER
 } from '../actions/cart';
+import { getKeyByGenerate } from '../../utils/helpers';
 
 const initialState = {
 
@@ -36,23 +37,16 @@ const cartReducer = (state = initialState, action) => {
       return { ...state, itemsFailed: true, itemsRequest: false };
     }
     case ADD_CONSTR_ITEM: {
-      // const isBunExist = !!state.constrItems.find((el) => el.type === 'bun');
-      // if (action.item.type === 'bun' && isBunExist) {
-      //   return {
-      //     ...state,
-      //     constrItems: [...state.constrItems].map(item => item.type === 'bun' ? action.item : item)
-      //   }
-      // }
       return {
         ...state,
-        constrItems: [...state.constrItems, action.item],
+        constrItems: [...state.constrItems, {...action.item, key: getKeyByGenerate()}],
         items: [...state.items].map(el => el._id === action.item._id ? { ...el, qty: ++el.qty } : el)
       }
     }
     case REMOVE_CONSTR_ITEM: {
       return {
         ...state,
-        constrItems: [...state.constrItems].filter(el => el._id !== action.item._id),
+        constrItems: [...state.constrItems].filter(el => el.key !== action.item.key),
         items: [...state.items].map(el => el._id === action.item._id ? { ...el, qty: --el.qty } : el)
       }
     }

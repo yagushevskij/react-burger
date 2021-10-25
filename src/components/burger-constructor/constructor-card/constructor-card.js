@@ -13,7 +13,7 @@ const ConstructorCard = (props) => {
   const dispatch = useDispatch();
   const { data, totalCostDispatcher } = props;
   const [{ border }, dragRef] = useDrag({
-    type: 'ingredient',
+    type: 'constructor-card',
     item: data,
     collect: monitor => ({
       border: monitor.isDragging() ? '3px solid green' : 'none'
