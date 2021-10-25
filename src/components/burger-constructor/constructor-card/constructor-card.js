@@ -5,12 +5,13 @@ import constructorCard from './constructor-card.module.css';
 import {
   ConstructorElement, DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
-// import { REMOVE_CONSTR_ITEM } from '../../../services/actions/cart';
+import { REMOVE_CONSTR_ITEM } from '../../../services/actions/cart';
 
 const ConstructorCard = (props) => {
-  const { data } = props;
+  const dispatch = useDispatch();
+  const { data, totalCostDispatcher } = props;
   const [{ border }, dragRef] = useDrag({
     type: 'ingredient',
     item: data,
@@ -18,6 +19,17 @@ const ConstructorCard = (props) => {
       border: monitor.isDragging() ? '3px solid green' : 'none'
     })
   });
+  const removeCard = () => {
+    dispatch({
+      type: REMOVE_CONSTR_ITEM,
+      item: data
+    })
+    totalCostDispatcher({
+      type: 'remove',
+      ingredient: data.type,
+      cost: data.price
+    })
+  }
   return (
     <li className={`${constructorCard.item}`} ref={dragRef} style={{ border }}>
       <DragIcon type='primary' />
@@ -25,6 +37,7 @@ const ConstructorCard = (props) => {
         text={data.name}
         price={data.price}
         thumbnail={data.image}
+        handleClose={removeCard}
       />
     </li>
   )

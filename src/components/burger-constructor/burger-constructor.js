@@ -118,7 +118,7 @@ const BurgerConstructor = () => {
                 <ul className={`${burgerConstructor.list} ${burgerConstructor.scroll}`}>
                   {
                     ingredientsWithoutBun &&
-                    ingredientsWithoutBun.map((item, index) => <ConstructorCard key={index} data={item}/>)
+                    ingredientsWithoutBun.map((item, index) => <ConstructorCard key={index} data={item} totalCostDispatcher={totalCostDispatcher}/>)
                   }
                 </ul>
                 {
