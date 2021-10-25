@@ -7,6 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ADD_ITEM_DATA } from '../../../services/actions/cart';
 import { useDispatch } from 'react-redux';
+import { useDrag } from "react-dnd";
 
 const IngredientCard = React.memo(
   (props) => {
@@ -19,8 +20,17 @@ const IngredientCard = React.memo(
       })
       props.openModal(data)
     }
+
+    const [{ border }, dragRef] = useDrag({
+      type: 'ingredient',
+      item: data,
+      collect: monitor => ({
+        border: monitor.isDragging() ? '3px solid green' : 'none'
+      })
+    });
+
     return (
-      <article className={ingredientCard.card} onClick={handleOpenModal}>
+      <article className={ingredientCard.card} onClick={handleOpenModal} ref={dragRef} style={{ border }}>
         <div className={`${ingredientCard.card__count}`}>
           {data.qty > 0 && <Counter count={data.qty} size='default' />}
         </div>
@@ -41,4 +51,4 @@ ingredientCard.propTypes = {
   data: ingridientPropTypes.isRequired
 }
 
-export default IngredientCard ;
+export default IngredientCard;

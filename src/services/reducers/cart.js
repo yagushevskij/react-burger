@@ -36,24 +36,24 @@ const cartReducer = (state = initialState, action) => {
       return { ...state, itemsFailed: true, itemsRequest: false };
     }
     case ADD_CONSTR_ITEM: {
-      const isBunExist = !!state.constrItems.find((el) => el.type === 'bun');
-      if (action.item.type === 'bun' && isBunExist) {
-        return {
-          ...state,
-          constrItems: [...state.constrItems].map(item => item.type === 'bun' ? action.item : item)
-        }
-      }
+      // const isBunExist = !!state.constrItems.find((el) => el.type === 'bun');
+      // if (action.item.type === 'bun' && isBunExist) {
+      //   return {
+      //     ...state,
+      //     constrItems: [...state.constrItems].map(item => item.type === 'bun' ? action.item : item)
+      //   }
+      // }
       return {
         ...state,
         constrItems: [...state.constrItems, action.item],
-        items: [...state.items].map(el => el._id === action._id ? { ...el, qty: ++el.qty } : el)
+        items: [...state.items].map(el => el._id === action.item._id ? { ...el, qty: ++el.qty } : el)
       }
     }
     case REMOVE_CONSTR_ITEM: {
       return {
         ...state,
         constrItems: [...state.constrItems].filter(el => el._id !== action.item._id),
-        items: [...state.items].map(el => el._id === action._id ? { ...el, qty: --el.qty } : el)
+        items: [...state.items].map(el => el._id === action.item._id ? { ...el, qty: --el.qty } : el)
       }
     }
     case UPDATE_CONSTR_ITEMS: {

@@ -122,7 +122,6 @@ const BurgerIngridients = React.memo(
                 )
               })
             }
-
           </div>
         </section>
       </>

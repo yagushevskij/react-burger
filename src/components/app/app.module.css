@@ -1,5 +1,9 @@
 .main {
   display: flex;
-  justify-content: center;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
   background-color: #131316;
+  max-width: 1280px;
 }

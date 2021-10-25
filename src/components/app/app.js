@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import AppHeader from '../app-header/app-header.js';
 import BurgerIngridients from '../burger-ingredients/burger-ingredients.js';
@@ -33,10 +35,12 @@ const App = () => {
     <ErrorBoundary>
       <AppHeader />
       <main className={app.main}>
-        <IngredientsContext.Provider value={{ data: ingredients.data }}>
-          <BurgerIngridients />
-          <BurgerConstructor />
-        </IngredientsContext.Provider>
+        <DndProvider backend={HTML5Backend}>
+          <IngredientsContext.Provider value={{ data: ingredients.data }}>
+            <BurgerIngridients />
+            <BurgerConstructor />
+          </IngredientsContext.Provider>
+        </DndProvider>
       </main>
     </ErrorBoundary>
   );
