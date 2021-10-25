@@ -4,6 +4,7 @@ import {
   ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS, REMOVE_ORDER
 } from '../actions/cart';
 import { getKeyByGenerate } from '../../utils/helpers';
+import update from 'immutability-helper';
 
 const initialState = {
 
@@ -51,7 +52,13 @@ const cartReducer = (state = initialState, action) => {
       }
     }
     case UPDATE_CONSTR_ITEMS: {
-      return; // Пока так
+      const dragCard = state.constrItems[action.dragIndex];
+      return { ...state, constrItems: update(state.constrItems, {
+            $splice: [
+                [action.dragIndex, 1],
+                [action.hoverIndex, 0, dragCard],
+            ],
+        }) }
     }
     case ADD_ITEM_DATA: {
       return { ...state, currentItem: action.item };
