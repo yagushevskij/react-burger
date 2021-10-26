@@ -1,7 +1,5 @@
-import appHeader from './app-header.module.css';
-import {
-  Logo, ProfileIcon, BurgerIcon, ListIcon
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import appHeader from './app-header.module.css'
+import { Logo, ProfileIcon, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 const AppHeader = () => {
   return (
@@ -13,7 +11,7 @@ const AppHeader = () => {
             <span className={`${appHeader.link} text text_type_main-default ml-2`}>Конструктор</span>
           </li>
           <li className={`${appHeader.item__link} p-5 ml-2`}>
-            <ListIcon type="secondary" />
+            <ListIcon type='secondary' />
             <span className={`${appHeader.link} text text_type_main-default text_color_inactive ml-2`}>Лента заказов</span>
           </li>
         </ul>
@@ -28,7 +26,7 @@ const AppHeader = () => {
         </ul>
       </div>
     </header>
-  );
+  )
 }
 
-export default AppHeader;
+export default AppHeader
