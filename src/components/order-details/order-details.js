@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
-import orderDetails from './order-details.module.css'
+import orderDetails from './order-details.module.css';
 import doneIcon from '../../images/done.png'
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
   const { number } = useSelector(state => state.cart.order)
@@ -14,11 +14,11 @@ const OrderDetails = () => {
       <span className='text text_type_main-small mt-15'>Ваш заказ начали готовить</span>
       <span className='text text_type_main-small text_color_inactive mt-2'>Дождитесь готовности на орбитальной станции</span>
     </div>
-  )
+  );
 }
 
 OrderDetails.propTypes = {
   orderNumber: PropTypes.number
 }
 
-export default OrderDetails
+export default OrderDetails;

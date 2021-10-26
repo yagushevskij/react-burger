@@ -1,160 +1,215 @@
-import { useState, useReducer } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState, useReducer } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import burgerConstructor from './burger-constructor.module.css'
-import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import Modal from '../modal/modal'
-import OrderDetails from '../order-details/order-details'
-import { getOrder, REMOVE_ORDER, ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS, UPDATE_ITEMS } from '../../services/actions/cart'
-import { useDrop } from 'react-dnd'
-import ConstructorCard from './constructor-card/constructor-card'
+import burgerConstructor from "./burger-constructor.module.css";
+import {
+  ConstructorElement,
+  CurrencyIcon,
+  Button,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+import {
+  getOrder,
+  REMOVE_ORDER,
+  ADD_CONSTR_ITEM,
+  REMOVE_CONSTR_ITEM,
+  UPDATE_CONSTR_ITEMS,
+  UPDATE_ITEMS,
+} from "../../services/actions/cart";
+import { useDrop } from "react-dnd";
+import ConstructorCard from "./constructor-card/constructor-card";
 
-const itemsInitialState = { total: 0 }
+const itemsInitialState = { total: 0 };
 
 const itemsReducer = (state, action) => {
-  const ingredientCost = action.ingredient === 'bun' ? action.cost * 2 : action.cost
+  const ingredientCost =
+    action.ingredient === "bun" ? action.cost * 2 : action.cost;
   switch (action.type) {
-    case 'add':
-      return { total: state.total + ingredientCost }
-    case 'remove':
-      return { total: state.total - ingredientCost }
-    case 'clear':
-      return { total: 0 }
+    case "add":
+      return { total: state.total + ingredientCost };
+    case "remove":
+      return { total: state.total - ingredientCost };
+    case "clear":
+      return { total: 0 };
     default:
-      throw new Error(`Wrong type of action: ${action.type}`)
+      throw new Error(`Wrong type of action: ${action.type}`);
   }
-}
+};
 
 const BurgerConstructor = () => {
   const [{ border }, sectionTarget] = useDrop({
-    accept: 'ingredient-card',
+    accept: "ingredient-card",
     drop(item) {
-      handleDrop(item)
+      handleDrop(item);
     },
-    collect: monitor => ({
-      border: monitor.isOver() ? '3px solid #4C4CFF' : '3px solid transparent'
-    })
-  })
-  const dispatch = useDispatch()
-  const { constrItems, items, orderRequest, orderFailed } = useSelector(store => store.cart)
+    collect: (monitor) => ({
+      border: monitor.isOver() ? "3px solid #4C4CFF" : "3px solid transparent",
+    }),
+  });
+  const dispatch = useDispatch();
+  const { constrItems, items, orderRequest, orderFailed } = useSelector(
+    (store) => store.cart
+  );
   const [modal, setModal] = useState({
-    isModalOpened: false
-  })
-  const [totalCost, totalCostDispatcher] = useReducer(itemsReducer, itemsInitialState)
+    isModalOpened: false,
+  });
+  const [totalCost, totalCostDispatcher] = useReducer(
+    itemsReducer,
+    itemsInitialState
+  );
 
-  const handleDrop = item => {
-    const existedBun = constrItems.find(el => el.type === 'bun')
-    if (item.type === 'bun' && existedBun) {
+  const handleDrop = (item) => {
+    const existedBun = constrItems.find((el) => el.type === "bun");
+    if (item.type === "bun" && existedBun) {
       dispatch({
         type: REMOVE_CONSTR_ITEM,
-        item: existedBun
-      })
+        item: existedBun,
+      });
       totalCostDispatcher({
-        type: 'remove',
+        type: "remove",
         ingredient: existedBun.type,
-        cost: existedBun.price
-      })
+        cost: existedBun.price,
+      });
     }
     dispatch({
       type: ADD_CONSTR_ITEM,
-      item: item
-    })
+      item: item,
+    });
     totalCostDispatcher({
-      type: 'add',
+      type: "add",
       ingredient: item.type,
-      cost: item.price
-    })
-  }
+      cost: item.price,
+    });
+  };
 
   const handleCloseModal = () => {
     setModal({
       ...modal,
-      isModalOpened: false
-    })
-    dispatch({ type: REMOVE_ORDER })
-    dispatchUpdateItems()
-  }
+      isModalOpened: false,
+    });
+    dispatch({ type: REMOVE_ORDER });
+    dispatchUpdateItems();
+  };
   const handleOpenModal = () => {
     setModal({
       ...modal,
-      isModalOpened: true
-    })
-  }
+      isModalOpened: true,
+    });
+  };
 
   const dispatchUpdateItems = () => {
     dispatch({
       type: UPDATE_CONSTR_ITEMS,
-      items: []
-    })
-    const updatedItems = items.map(el => {
-      return { ...el, qty: 0 }
-    })
+      items: [],
+    });
+    const updatedItems = items.map((el) => {
+      return { ...el, qty: 0 };
+    });
     dispatch({
       type: UPDATE_ITEMS,
-      items: updatedItems
-    })
-    totalCostDispatcher({ type: 'clear' })
-  }
+      items: updatedItems,
+    });
+    totalCostDispatcher({ type: "clear" });
+  };
 
   const makeOrder = () => {
-    const idsArr = constrItems.map(el => el._id)
-    dispatch(getOrder(idsArr))
-    !orderRequest && !orderFailed && handleOpenModal()
-  }
+    const idsArr = constrItems.map((el) => el._id);
+    dispatch(getOrder(idsArr));
+    !orderRequest && !orderFailed && handleOpenModal();
+  };
 
   const moveCard = (dragIndex, hoverIndex) => {
-    const DragItem = constrItems[dragIndex]
+    const DragItem = constrItems[dragIndex];
     if (DragItem) {
-      const prevItem = constrItems.splice(hoverIndex, 1, DragItem)
-      constrItems.splice(dragIndex, 1, prevItem[0])
+      const prevItem = constrItems.splice(hoverIndex, 1, DragItem);
+      constrItems.splice(dragIndex, 1, prevItem[0]);
       dispatch({
         type: UPDATE_CONSTR_ITEMS,
-        items: constrItems
-      })
+        items: constrItems,
+      });
     }
-  }
+  };
 
   const modalComp = (
     <Modal onClose={handleCloseModal}>
       <OrderDetails />
     </Modal>
-  )
-  const bun = constrItems.find(el => el.type === 'bun')
+  );
+  const bun = constrItems.find((el) => el.type === "bun");
   return (
     <>
       {modal.isModalOpened && modalComp}
-      <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
+      <section
+        className={`${burgerConstructor.section} ml-10 pl-4 mt-25`}
+        ref={sectionTarget}
+        style={{ border }}
+      >
         {constrItems.length === 0 ? (
-          <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>
+          <div
+            className={`${burgerConstructor.info} text text_type_main-default`}
+          >
+            Перетащите в это окно ингредиенты чтобы собрать бургер
+          </div>
         ) : (
           <>
             <ul className={`${burgerConstructor.list}`}>
               {bun && (
-                <li className={`${burgerConstructor.item} pl-8 pr-5`} key={'bun-top' + bun._id}>
-                  <ConstructorElement type='top' isLocked={true} text={`${bun.name} (верх)`} price={bun.price} thumbnail={bun.image} />
+                <li
+                  className={`${burgerConstructor.item} pl-8 pr-5`}
+                  key={"bun-top" + bun._id}
+                >
+                  <ConstructorElement
+                    type="top"
+                    isLocked={true}
+                    text={`${bun.name} (верх)`}
+                    price={bun.price}
+                    thumbnail={bun.image}
+                  />
                 </li>
               )}
-              <ul className={`${burgerConstructor.list} ${burgerConstructor.scroll}`}>
+              <ul
+                className={`${burgerConstructor.list} ${burgerConstructor.scroll}`}
+              >
                 {constrItems &&
                   constrItems.map((item, index) => {
-                    if (item.type !== 'bun') {
-                      return <ConstructorCard key={index} data={item} totalCostDispatcher={totalCostDispatcher} index={index} moveCard={moveCard} />
+                    if (item.type !== "bun") {
+                      return (
+                        <ConstructorCard
+                          key={index}
+                          data={item}
+                          totalCostDispatcher={totalCostDispatcher}
+                          index={index}
+                          moveCard={moveCard}
+                        />
+                      );
                     }
                   })}
               </ul>
               {bun && (
-                <li className={`${burgerConstructor.item} pl-8 pr-5`} key={'bun-bottom' + bun._id}>
-                  <ConstructorElement type='bottom' isLocked={true} text={`${bun.name} (низ)`} price={bun.price} thumbnail={bun.image} />
+                <li
+                  className={`${burgerConstructor.item} pl-8 pr-5`}
+                  key={"bun-bottom" + bun._id}
+                >
+                  <ConstructorElement
+                    type="bottom"
+                    isLocked={true}
+                    text={`${bun.name} (низ)`}
+                    price={bun.price}
+                    thumbnail={bun.image}
+                  />
                 </li>
               )}
             </ul>
             <div className={`${burgerConstructor.total} mt-10`}>
               <p className={`${burgerConstructor.total__cost} mr-10`}>
-                <span className='text text_type_digits-medium mr-2'>{totalCost.total}</span>
-                <CurrencyIcon type='primary' />
+                <span className="text text_type_digits-medium mr-2">
+                  {totalCost.total}
+                </span>
+                <CurrencyIcon type="primary" />
               </p>
               {bun && (
-                <Button type='primary' size='large' onClick={makeOrder}>
+                <Button type="primary" size="large" onClick={makeOrder}>
                   Оформить заказ
                 </Button>
               )}
@@ -163,7 +218,7 @@ const BurgerConstructor = () => {
         )}
       </section>
     </>
-  )
-}
+  );
+};
 
-export default BurgerConstructor
+export default BurgerConstructor;

@@ -1,8 +1,10 @@
 const getKeyByGenerate = () => {
-  let text = ''
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  for (let i = 0; i < 5; i++) text += possible.charAt(Math.floor(Math.random() * possible.length))
-  return text
-}
+  let text = "";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
+};
 
-export { getKeyByGenerate }
+export {getKeyByGenerate};
