@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ingridientPropTypes } from '../../../utils/type'
 import ingredientCard from './ingredient-card.module.css';
 import {
@@ -9,8 +7,7 @@ import { ADD_ITEM_DATA } from '../../../services/actions/cart';
 import { useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
 
-const IngredientCard = React.memo(
-  ({ data, openModal }) => {
+const IngredientCard = ({ data, openModal }) => {
     const dispatch = useDispatch();
     const { qty, ...restData } = data;
 
@@ -45,8 +42,7 @@ const IngredientCard = React.memo(
         </h3>
       </article>
     )
-  }, (prevProps, nextProps) => prevProps.data.qty === nextProps.data.qty
-)
+  }
 
 ingredientCard.propTypes = {
   data: ingridientPropTypes.isRequired

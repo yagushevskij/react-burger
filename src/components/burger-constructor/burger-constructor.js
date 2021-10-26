@@ -30,6 +30,8 @@ const itemsReducer = (state, action) => {
       return { total: state.total + ingredientCost };
     case "remove":
       return { total: state.total - ingredientCost };
+    case "clear":
+      return { total: 0 };
     default:
       throw new Error(`Wrong type of action: ${action.type}`);
   }
@@ -46,7 +48,9 @@ const BurgerConstructor = () => {
     }),
   });
   const dispatch = useDispatch();
-  const { constrItems, items, orderRequest, orderFailed } = useSelector((store) => store.cart);
+  const { constrItems, items, orderRequest, orderFailed } = useSelector(
+    (store) => store.cart
+  );
   const [modal, setModal] = useState({
     isModalOpened: false,
   });
@@ -85,7 +89,7 @@ const BurgerConstructor = () => {
       isModalOpened: false,
     });
     dispatch({ type: REMOVE_ORDER });
-    updateAllItems();
+    dispatchUpdateItems();
   };
   const handleOpenModal = () => {
     setModal({
@@ -94,17 +98,20 @@ const BurgerConstructor = () => {
     });
   };
 
-  const updateAllItems = () => {
+  const dispatchUpdateItems = () => {
     dispatch({
       type: UPDATE_CONSTR_ITEMS,
-      items: []
-    })
-    const updatedItems = items.map(el => {return {...el, qty: 0}})
+      items: [],
+    });
+    const updatedItems = items.map((el) => {
+      return { ...el, qty: 0 };
+    });
     dispatch({
       type: UPDATE_ITEMS,
-      items: updatedItems
-    })
-  }
+      items: updatedItems,
+    });
+    totalCostDispatcher({ type: "clear" });
+  };
 
   const makeOrder = () => {
     const idsArr = constrItems.map((el) => el._id);
