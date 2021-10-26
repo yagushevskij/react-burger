@@ -12,7 +12,8 @@ const ingridientPropTypes = PropTypes.shape({
   image: PropTypes.string.isRequired,
   image_mobile: PropTypes.string.isRequired,
   image_large: PropTypes.string.isRequired,
-  __v: PropTypes.number
+  __v: PropTypes.number,
+  qty: PropTypes.number.isRequired
 });
 
 const conCardPropTypes = PropTypes.shape({
@@ -28,8 +29,7 @@ const conCardPropTypes = PropTypes.shape({
   image_mobile: PropTypes.string.isRequired,
   image_large: PropTypes.string.isRequired,
   __v: PropTypes.number,
-  key: PropTypes.string.isRequired,
-  qty: PropTypes.number.isRequired,
+  key: PropTypes.string.isRequired
 });
 
 export { ingridientPropTypes, conCardPropTypes}

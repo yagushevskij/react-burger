@@ -10,20 +10,21 @@ import { useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
 
 const IngredientCard = React.memo(
-  (props) => {
+  ({ data, openModal }) => {
     const dispatch = useDispatch();
-    const { data } = props;
+    const { qty, ...restData } = data;
+
     const handleOpenModal = () => {
       dispatch({
         type: ADD_ITEM_DATA,
         item: data
       })
-      props.openModal(data)
+      openModal(data)
     }
 
     const [{ border }, dragRef] = useDrag({
       type: 'ingredient-card',
-      item: data,
+      item: restData,
       collect: monitor => ({
         border: monitor.isDragging() ? '1px solid #4C4CFF' : '1px solid transparent'
       })

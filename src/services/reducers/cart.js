@@ -1,7 +1,7 @@
 import {
   GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, GET_ITEMS_FAILED, ADD_ITEM_DATA,
   REMOVE_ITEM_DATA, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED,
-  ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS, REMOVE_ORDER
+  ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS, REMOVE_ORDER, UPDATE_ITEMS
 } from '../actions/cart';
 import { getKeyByGenerate } from '../../utils/helpers';
 
@@ -35,6 +35,9 @@ const cartReducer = (state = initialState, action) => {
     }
     case GET_ITEMS_FAILED: {
       return { ...state, itemsFailed: true, itemsRequest: false };
+    }
+    case UPDATE_ITEMS: {
+      return { ...state, items: action.items };
     }
     case ADD_CONSTR_ITEM: {
       return {

@@ -15,6 +15,7 @@ import {
   ADD_CONSTR_ITEM,
   REMOVE_CONSTR_ITEM,
   UPDATE_CONSTR_ITEMS,
+  UPDATE_ITEMS,
 } from "../../services/actions/cart";
 import { useDrop } from "react-dnd";
 import ConstructorCard from "./constructor-card/constructor-card";
@@ -45,7 +46,7 @@ const BurgerConstructor = () => {
     }),
   });
   const dispatch = useDispatch();
-  const { constrItems, orderRequest, orderFailed } = useSelector((store) => store.cart);
+  const { constrItems, items, orderRequest, orderFailed } = useSelector((store) => store.cart);
   const [modal, setModal] = useState({
     isModalOpened: false,
   });
@@ -84,6 +85,7 @@ const BurgerConstructor = () => {
       isModalOpened: false,
     });
     dispatch({ type: REMOVE_ORDER });
+    updateAllItems();
   };
   const handleOpenModal = () => {
     setModal({
@@ -92,20 +94,22 @@ const BurgerConstructor = () => {
     });
   };
 
-  const removeConstrutorItems = () => {
+  const updateAllItems = () => {
     dispatch({
       type: UPDATE_CONSTR_ITEMS,
       items: []
+    })
+    const updatedItems = items.map(el => {return {...el, qty: 0}})
+    dispatch({
+      type: UPDATE_ITEMS,
+      items: updatedItems
     })
   }
 
   const makeOrder = () => {
     const idsArr = constrItems.map((el) => el._id);
     dispatch(getOrder(idsArr));
-    if (!orderRequest && !orderFailed) {
-      removeConstrutorItems();
-      handleOpenModal();
-    }
+    !orderRequest && !orderFailed && handleOpenModal();
   };
 
   const moveCard = (dragIndex, hoverIndex) => {
