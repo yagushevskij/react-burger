@@ -135,7 +135,7 @@ const BurgerConstructor = () => {
             <ul className={`${burgerConstructor.list}`}>
               {bun && (
                 <li
-                  className={`${burgerConstructor.item} ml-8 mr-2`}
+                  className={`${burgerConstructor.item} pl-8 pr-5`}
                   key={"bun-top" + bun._id}
                 >
                   <ConstructorElement
@@ -167,7 +167,7 @@ const BurgerConstructor = () => {
               </ul>
               {bun && (
                 <li
-                  className={`${burgerConstructor.item} ml-8 mr-2`}
+                  className={`${burgerConstructor.item} pl-8 pr-5`}
                   key={"bun-bottom" + bun._id}
                 >
                   <ConstructorElement
