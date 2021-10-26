@@ -1,4 +1,3 @@
-import ingridientPropTypes from "../../../utils/type";
 import constructorCard from "./constructor-card.module.css";
 import {
   ConstructorElement,
@@ -10,6 +9,8 @@ import { useDrag, useDrop } from "react-dnd";
 import {
   REMOVE_CONSTR_ITEM,
 } from "../../../services/actions/cart";
+import { conCardPropTypes } from '../../../utils/type'
+import PropTypes from 'prop-types';
 
 const ConstructorCard = (props) => {
   const dispatch = useDispatch();
@@ -106,7 +107,10 @@ const ConstructorCard = (props) => {
 };
 
 ConstructorCard.propTypes = {
-  data: ingridientPropTypes.isRequired,
+  data: conCardPropTypes.isRequired,
+  totalCostDispatcher: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+  moveCard: PropTypes.func.isRequired
 };
 
 export default ConstructorCard;

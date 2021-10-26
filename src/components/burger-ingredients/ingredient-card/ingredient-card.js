@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ingridientPropTypes from '../../../utils/type'
+import { ingridientPropTypes } from '../../../utils/type'
 import ingredientCard from './ingredient-card.module.css';
 import {
   Counter, CurrencyIcon
