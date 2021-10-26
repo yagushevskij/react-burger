@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const ingridientPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
@@ -14,7 +14,7 @@ const ingridientPropTypes = PropTypes.shape({
   image_large: PropTypes.string.isRequired,
   __v: PropTypes.number,
   qty: PropTypes.number.isRequired
-});
+})
 
 const conCardPropTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
@@ -30,6 +30,6 @@ const conCardPropTypes = PropTypes.shape({
   image_large: PropTypes.string.isRequired,
   __v: PropTypes.number,
   key: PropTypes.string.isRequired
-});
+})
 
-export { ingridientPropTypes, conCardPropTypes}
+export { ingridientPropTypes, conCardPropTypes }
