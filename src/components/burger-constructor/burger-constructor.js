@@ -45,7 +45,7 @@ const BurgerConstructor = () => {
     }),
   });
   const dispatch = useDispatch();
-  const { constrItems, orderRequest } = useSelector((store) => store.cart);
+  const { constrItems, orderRequest, orderFailed } = useSelector((store) => store.cart);
   const [modal, setModal] = useState({
     isModalOpened: false,
   });
@@ -92,10 +92,20 @@ const BurgerConstructor = () => {
     });
   };
 
+  const removeConstrutorItems = () => {
+    dispatch({
+      type: UPDATE_CONSTR_ITEMS,
+      items: []
+    })
+  }
+
   const makeOrder = () => {
     const idsArr = constrItems.map((el) => el._id);
     dispatch(getOrder(idsArr));
-    !orderRequest && handleOpenModal();
+    if (!orderRequest && !orderFailed) {
+      removeConstrutorItems();
+      handleOpenModal();
+    }
   };
 
   const moveCard = (dragIndex, hoverIndex) => {

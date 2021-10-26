@@ -44,7 +44,7 @@ const IngredientCard = React.memo(
         </h3>
       </article>
     )
-  }, (prevProps, nextProps) => prevProps.data === nextProps.data
+  }, (prevProps, nextProps) => prevProps.data.qty === nextProps.data.qty
 )
 
 ingredientCard.propTypes = {
