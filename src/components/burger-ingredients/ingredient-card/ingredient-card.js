@@ -25,7 +25,7 @@ const IngredientCard = React.memo(
       type: 'ingredient-card',
       item: data,
       collect: monitor => ({
-        border: monitor.isDragging() ? '3px solid green' : 'none'
+        border: monitor.isDragging() ? '1px solid #4C4CFF' : '1px solid transparent'
       })
     });
 

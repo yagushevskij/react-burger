@@ -4,17 +4,16 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useRef, useCallback } from "react";
+import { useRef, } from "react";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import {
   REMOVE_CONSTR_ITEM,
-  UPDATE_CONSTR_ITEMS,
 } from "../../../services/actions/cart";
 
 const ConstructorCard = (props) => {
   const dispatch = useDispatch();
-  const { data, totalCostDispatcher, index } = props;
+  const { data, totalCostDispatcher, index, moveCard } = props;
 
 
   const ref = useRef(null);
@@ -22,7 +21,7 @@ const ConstructorCard = (props) => {
     accept: "constructor-card",
     collect(monitor) {
       return {
-        border: monitor.isOver() ? "3px solid green" : "none",
+        border: monitor.isOver() ? "1px solid #4C4CFF" : "1px solid transparent",
         handlerId: monitor.getHandlerId(),
       };
     },
@@ -76,14 +75,6 @@ const ConstructorCard = (props) => {
     }),
   });
   drag(drop(ref));
-
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
-    dispatch({
-      type: UPDATE_CONSTR_ITEMS,
-      dragIndex: dragIndex,
-      hoverIndex: hoverIndex,
-    });
-}, [dispatch]);
 
   const removeCard = () => {
     dispatch({

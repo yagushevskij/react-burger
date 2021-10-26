@@ -43,6 +43,12 @@
   padding-right: 8px;
 }
 
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .scroll::-webkit-scrollbar {
   width: 8px;
 }

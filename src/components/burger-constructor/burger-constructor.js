@@ -1,4 +1,4 @@
-import { useState, useReducer, useCallback } from "react";
+import { useState, useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import burgerConstructor from "./burger-constructor.module.css";
@@ -14,6 +14,7 @@ import {
   REMOVE_ORDER,
   ADD_CONSTR_ITEM,
   REMOVE_CONSTR_ITEM,
+  UPDATE_CONSTR_ITEMS,
 } from "../../services/actions/cart";
 import { useDrop } from "react-dnd";
 import ConstructorCard from "./constructor-card/constructor-card";
@@ -40,7 +41,7 @@ const BurgerConstructor = () => {
       handleDrop(item);
     },
     collect: (monitor) => ({
-      border: monitor.isOver() ? "3px solid green" : "none",
+      border: monitor.isOver() ? "3px solid #4C4CFF" : "3px solid transparent",
     }),
   });
   const dispatch = useDispatch();
@@ -97,7 +98,18 @@ const BurgerConstructor = () => {
     !orderRequest && handleOpenModal();
   };
 
-  const isBunExist = !!constrItems.find((el) => el.type === "bun");
+  const moveCard = (dragIndex, hoverIndex) => {
+    const DragItem = constrItems[dragIndex];
+    if (DragItem) {
+      const prevItem = constrItems.splice(hoverIndex, 1, DragItem);
+      constrItems.splice(dragIndex, 1, prevItem[0]);
+      dispatch({
+        type: UPDATE_CONSTR_ITEMS,
+        items: constrItems,
+      });
+    }
+  };
+
   const modalComp = (
     <Modal onClose={handleCloseModal}>
       <OrderDetails />
@@ -122,7 +134,10 @@ const BurgerConstructor = () => {
           <>
             <ul className={`${burgerConstructor.list}`}>
               {bun && (
-                <li className="ml-8" key={"bun-top" + bun._id}>
+                <li
+                  className={`${burgerConstructor.item} ml-8 mr-2`}
+                  key={"bun-top" + bun._id}
+                >
                   <ConstructorElement
                     type="top"
                     isLocked={true}
@@ -137,20 +152,24 @@ const BurgerConstructor = () => {
               >
                 {constrItems &&
                   constrItems.map((item, index) => {
-                    if (item.type !== 'bun') {
+                    if (item.type !== "bun") {
                       return (
                         <ConstructorCard
                           key={index}
                           data={item}
                           totalCostDispatcher={totalCostDispatcher}
                           index={index}
+                          moveCard={moveCard}
                         />
-                      )
+                      );
                     }
                   })}
               </ul>
               {bun && (
-                <li className="ml-8" key={"bun-bottom" + bun._id}>
+                <li
+                  className={`${burgerConstructor.item} ml-8 mr-2`}
+                  key={"bun-bottom" + bun._id}
+                >
                   <ConstructorElement
                     type="bottom"
                     isLocked={true}
@@ -168,7 +187,7 @@ const BurgerConstructor = () => {
                 </span>
                 <CurrencyIcon type="primary" />
               </p>
-              {isBunExist && (
+              {bun && (
                 <Button type="primary" size="large" onClick={makeOrder}>
                   Оформить заказ
                 </Button>
