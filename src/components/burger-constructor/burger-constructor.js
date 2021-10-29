@@ -7,6 +7,7 @@ import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import { getOrder, REMOVE_ORDER, ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS, UPDATE_ITEMS } from '../../services/actions/cart'
 import { useDrop } from 'react-dnd'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import ConstructorCard from './constructor-card/constructor-card'
 
 const itemsInitialState = { total: 0 }
@@ -65,7 +66,7 @@ const BurgerConstructor = () => {
   }
 
   const handleCloseModal = () => {
-    setModal({ isOpened: false  })
+    setModal({ isOpened: false })
     dispatch({ type: REMOVE_ORDER })
     dispatchUpdateItems()
   }
@@ -106,6 +107,24 @@ const BurgerConstructor = () => {
     }
   }
 
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list)
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
+    return result
+  }
+
+  const onDragEnd = result => {
+    if (!result.destination) {
+      return
+    }
+    const items = reorder(constrItems, result.source.index, result.destination.index)
+    dispatch({
+      type: UPDATE_CONSTR_ITEMS,
+      items: items
+    })
+  }
+
   const modalComp = (
     <Modal onClose={handleCloseModal}>
       <OrderDetails />
@@ -126,14 +145,23 @@ const BurgerConstructor = () => {
                   <ConstructorElement type='top' isLocked={true} text={`${bun.name} (верх)`} price={bun.price} thumbnail={bun.image} />
                 </li>
               )}
-              <ul className={`${burgerConstructor.list} ${burgerConstructor.scroll}`}>
-                {constrItems &&
-                  constrItems.map((item, index) => {
-                    if (item.type !== 'bun') {
-                      return <ConstructorCard key={index} data={item} totalCostDispatcher={totalCostDispatcher} index={index} moveCard={moveCard} />
-                    }
-                  })}
-              </ul>
+
+              <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId='droppable'>
+                  {(provided, snapshot) => (
+                    <ul className={`${burgerConstructor.list} ${burgerConstructor.scroll}`} {...provided.droppableProps} ref={provided.innerRef}>
+                      {constrItems &&
+                        constrItems.map((item, index) => {
+                          if (item.type !== 'bun') {
+                            return <ConstructorCard key={index} data={item} totalCostDispatcher={totalCostDispatcher} index={index} moveCard={moveCard} />
+                          }
+                        })}
+                      {provided.placeholder}
+                    </ul>
+                  )}
+                </Droppable>
+              </DragDropContext>
+
               {bun && (
                 <li className={`${burgerConstructor.item} pl-8 pr-5`} key={'bun-bottom' + bun._id}>
                   <ConstructorElement type='bottom' isLocked={true} text={`${bun.name} (низ)`} price={bun.price} thumbnail={bun.image} />
