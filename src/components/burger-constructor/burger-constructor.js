@@ -4,7 +4,7 @@ import burgerConstructor from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
-import { getOrder, REMOVE_ORDER, constrItemActions, itemActions } from '../../services/actions/cart'
+import { getOrder, REMOVE_ORDER, constrItemActions, itemActions, setCustomError } from '../../services/actions/cart'
 import { useDrop } from 'react-dnd'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import ConstructorCard from './constructor-card/constructor-card'
@@ -33,9 +33,10 @@ const BurgerConstructor = () => {
       border: monitor.isOver() ? '3px solid #4C4CFF' : '3px solid transparent'
     })
   })
-const constrItems = useSelector((state) => state.cart.constrItems)
-const orderRequest = useSelector((state) => state.cart.orderRequest)
-const orderFailed = useSelector((state) => state.cart.orderFailed)
+  const constrItems = useSelector(state => state.cart.constrItems)
+  const orderRequest = useSelector(state => state.cart.orderRequest)
+  const orderFailed = useSelector(state => state.cart.orderFailed)
+  const customError = useSelector(state => state.cart.customError)
 
   const [modal, setModal] = useState({ isOpened: false })
   const [totalCost, totalCostDispatcher] = useReducer(totalCostReducer, totalCostInitialState)
@@ -59,33 +60,43 @@ const orderFailed = useSelector((state) => state.cart.orderFailed)
   }
 
   const removeItem = useCallback(
-  (item) => {
-    dispatch(constrItemActions.removeItem(item))
-    dispatch(itemActions.decreaseItem(item))
-    totalCostDispatcher({
-      type: 'remove',
-      ingredient: item.type,
-      cost: item.price
-    })
-  }, [dispatch])
+    item => {
+      dispatch(constrItemActions.removeItem(item))
+      dispatch(itemActions.decreaseItem(item))
+      totalCostDispatcher({
+        type: 'remove',
+        ingredient: item.type,
+        cost: item.price
+      })
+    },
+    [dispatch]
+  )
 
   const handleCloseModal = () => {
-    setModal({ isOpened: false })
-    dispatch({ type: REMOVE_ORDER })
-    constrItems.forEach(el => removeItem(el))
+    dispatch(setCustomError(null))
     closeModal()
   }
 
+  const handleSuccessOrder = () => {
+        dispatch({ type: REMOVE_ORDER })
+    constrItems.forEach(el => removeItem(el))
+  }
+
   const closeModal = () => {
-    setModal({ isOpened: false })
+    setModal({isOpened: false })
   }
   const openModal = () => {
     setModal({ isOpened: true })
   }
 
   const makeOrder = () => {
-    const idsArr = constrItems.map(el => el._id)
-    dispatch(getOrder(idsArr))
+    if (!bun) {
+      dispatch(setCustomError('Нужно добавить хотя бы 1 булочку'))
+      openModal()
+      return;
+    }
+    const ids = constrItems.map(el => el._id)
+    dispatch(getOrder(ids))
     openModal()
   }
 
@@ -105,17 +116,16 @@ const orderFailed = useSelector((state) => state.cart.orderFailed)
   }
 
   const orderModal = (
-    <Modal onClose={handleCloseModal}>
+    <Modal onCloseHandlers={[handleCloseModal, handleSuccessOrder]}>
       <OrderDetails />
     </Modal>
   )
-  const errorModal = (
-    <Modal onClose={closeModal} errorText='При создании заказа возникла ошибка'/>
-  )
+  const createErrorModal = (text) => <Modal onCloseHandlers={[handleCloseModal]} errorText={text} />
   return (
     <>
-      {modal.isOpened && !orderRequest && !orderFailed && orderModal}
-      {modal.isOpened && orderFailed && !orderRequest && errorModal}
+      {modal.isOpened && customError && createErrorModal(customError)}
+      {modal.isOpened && !orderRequest && !orderFailed && !customError && orderModal}
+      {/* {modal.isOpened && orderFailed && !orderRequest && createInfoModal('При создании заказа возникла ошибка')} */}
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (
           <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>
@@ -153,11 +163,9 @@ const orderFailed = useSelector((state) => state.cart.orderFailed)
                 <span className='text text_type_digits-medium mr-2'>{totalCost.total}</span>
                 <CurrencyIcon type='primary' />
               </p>
-              {bun && (
-                <Button type='primary' size='large' onClick={makeOrder} disabled={orderRequest ? 'disabled' : null}>
-                  Оформить заказ
-                </Button>
-              )}
+              <Button type='primary' size='large' onClick={makeOrder} disabled={orderRequest ? 'disabled' : null}>
+                Оформить заказ
+              </Button>
             </div>
           </>
         )}

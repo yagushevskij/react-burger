@@ -19,6 +19,11 @@ const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST'
 const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS'
 const GET_ORDER_FAILED = 'GET_ORDER_FAILED'
 const REMOVE_ORDER = 'REMOVE_ORDER'
+const SET_CUSTOM_ERROR = 'SET_CUSTOM_ERROR'
+
+const setCustomError = (text) => ({
+  type: SET_CUSTOM_ERROR,
+  payload: {text}})
 
 const itemActions = {
   updateItems: (items) => ({
@@ -81,12 +86,15 @@ const getItems = () => {
         })
       }
     } catch (e) {
+      dispatch({
+        type: GET_ITEMS_FAILED
+      })
       console.log(e)
     }
   }
 }
 
-const getOrder = idsArr => {
+const getOrder = ids => {
   return async function (dispatch) {
     dispatch({
       type: GET_ORDER_REQUEST
@@ -97,7 +105,7 @@ const getOrder = idsArr => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ ingredients: idsArr })
+        body: JSON.stringify({ ingredients: ids })
       })
       if (res && res.ok) {
         const resData = await res.json()
@@ -107,19 +115,23 @@ const getOrder = idsArr => {
         })
       } else {
         dispatch({
-          type: GET_ORDER_FAILED
+          type: GET_ORDER_FAILED,
+          payload: {text: 'Во время заказа произошла ошибка'}
         })
+        dispatch(setCustomError('Во время заказа произошла ошибка'))
       }
     } catch (e) {
       dispatch({
-        type: GET_ORDER_FAILED
+        type: GET_ORDER_FAILED,
       })
+      dispatch(setCustomError('Во время заказа произошла ошибка'))
       console.log(e)
     }
   }
 }
 
 export {
+  setCustomError,
   constrItemActions,
   itemActions,
   getItems,
@@ -138,5 +150,6 @@ export {
   REMOVE_ORDER,
   UPDATE_ITEMS,
   INCREASE_ITEM_COUNT,
-  DECREASE_ITEM_COUNT
+  DECREASE_ITEM_COUNT,
+  SET_CUSTOM_ERROR
 }

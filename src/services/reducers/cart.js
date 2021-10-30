@@ -13,7 +13,8 @@ import {
   REMOVE_ORDER,
   UPDATE_ITEMS,
   INCREASE_ITEM_COUNT,
-  DECREASE_ITEM_COUNT
+  DECREASE_ITEM_COUNT,
+  SET_CUSTOM_ERROR
 } from '../actions/cart'
 import { getKeyByGenerate } from '../../utils/helpers'
 
@@ -28,7 +29,8 @@ const initialState = {
 
   order: { number: null },
   orderRequest: false,
-  orderFailed: false
+  orderFailed: false,
+  customError: null
 }
 
 const cartReducer = (state = initialState, action) => {
@@ -90,6 +92,9 @@ const cartReducer = (state = initialState, action) => {
     }
     case REMOVE_ORDER: {
       return { ...state, order: { ...state.order, number: null } }
+    }
+    case SET_CUSTOM_ERROR: {
+      return { ...state, customError: action.payload.text }
     }
     default: {
       return state

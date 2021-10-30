@@ -75,7 +75,7 @@ const BurgerIngridients = () => {
   }
 
   const modalElem = (
-    <Modal title='Детали ингридиента' onClose={handleCloseModal}>
+    <Modal title='Детали ингридиента' onCloseHandlers={[handleCloseModal]}>
       <IngredientDetails />
     </Modal>
   )
