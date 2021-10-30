@@ -21,50 +21,51 @@ const GET_ORDER_FAILED = 'GET_ORDER_FAILED'
 const REMOVE_ORDER = 'REMOVE_ORDER'
 const SET_CUSTOM_ERROR = 'SET_CUSTOM_ERROR'
 
-const setCustomError = (text) => ({
+const setCustomError = text => ({
   type: SET_CUSTOM_ERROR,
-  payload: {text}})
+  payload: { text }
+})
 
 const itemActions = {
-  updateItems: (items) => ({
+  updateItems: items => ({
     type: UPDATE_ITEMS,
     payload: {
       items
-    },
+    }
   }),
-  increaseItem: (item) => ({
+  increaseItem: item => ({
     type: INCREASE_ITEM_COUNT,
     payload: {
       item
-    },
+    }
   }),
-  decreaseItem: (item) => ({
+  decreaseItem: item => ({
     type: DECREASE_ITEM_COUNT,
     payload: {
       item
-    },
-  }),
+    }
+  })
 }
 
 const constrItemActions = {
-  addItem: (item) => ({
+  addItem: item => ({
     type: ADD_CONSTR_ITEM,
     payload: {
       item
-    },
+    }
   }),
-  removeItem: (item) => ({
+  removeItem: item => ({
     type: REMOVE_CONSTR_ITEM,
     payload: {
       item
-    },
+    }
   }),
-  updateItems: (items) => ({
+  updateItems: items => ({
     type: UPDATE_CONSTR_ITEMS,
     payload: {
       items
-    },
-  }),
+    }
+  })
 }
 
 const getItems = () => {
@@ -116,13 +117,13 @@ const getOrder = ids => {
       } else {
         dispatch({
           type: GET_ORDER_FAILED,
-          payload: {text: 'Во время заказа произошла ошибка'}
+          payload: { text: 'Во время заказа произошла ошибка' }
         })
         dispatch(setCustomError('Во время заказа произошла ошибка'))
       }
     } catch (e) {
       dispatch({
-        type: GET_ORDER_FAILED,
+        type: GET_ORDER_FAILED
       })
       dispatch(setCustomError('Во время заказа произошла ошибка'))
       console.log(e)

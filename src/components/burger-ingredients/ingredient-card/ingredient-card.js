@@ -15,7 +15,7 @@ const IngredientCard = React.memo(
     const handleOpenModal = () => {
       dispatch({
         type: ADD_ITEM_DATA,
-        payload: {item: data}
+        payload: { item: data }
       })
       openModal(data)
     }

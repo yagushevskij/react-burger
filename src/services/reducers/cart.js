@@ -69,7 +69,7 @@ const cartReducer = (state = initialState, action) => {
     case REMOVE_CONSTR_ITEM: {
       return {
         ...state,
-        constrItems: [...state.constrItems].filter(el => el.key !== action.payload.item.key),
+        constrItems: [...state.constrItems].filter(el => el.key !== action.payload.item.key)
       }
     }
     case UPDATE_CONSTR_ITEMS: {

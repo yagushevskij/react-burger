@@ -84,7 +84,7 @@ const BurgerIngridients = () => {
       {modal.isOpened && modalElem}
       <section className={burgerIngridients.section}>
         <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
-          <TabList items={grouppedIngredients} activeTab={activeTab} ref={tabsRef}/>
+        <TabList items={grouppedIngredients} activeTab={activeTab} ref={tabsRef} />
         <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: scrollContainer.height }} ref={scrollContainerRef} onScroll={handleScroll}>
           {grouppedIngredients.map((group, index) => {
             return (
