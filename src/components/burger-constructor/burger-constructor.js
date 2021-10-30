@@ -72,12 +72,7 @@ const BurgerConstructor = () => {
     [dispatch]
   )
 
-  // const handleCloseModal = () => {
-  //   // dispatch(setCustomError(null))
-  //   closeModal()
-  // }
-
-  const handleOnClose = () => {
+  const handleCloseModal = () => {
     dispatch({ type: REMOVE_ORDER })
     constrItems.forEach(el => removeItem(el))
     closeModal()
@@ -91,8 +86,9 @@ const BurgerConstructor = () => {
   }
 
   const makeOrder = () => {
+    dispatch(setCustomError(null))
     if (!bun) {
-      dispatch(setCustomError('Нужно добавить хотя бы 1 булочку'))
+      dispatch(setCustomError('Нужно добавить булку'))
       openModal()
       return
     }
@@ -117,7 +113,7 @@ const BurgerConstructor = () => {
   }
 
   const orderModal = (
-    <Modal onClose={handleOnClose}>
+    <Modal onClose={handleCloseModal}>
       <OrderDetails />
     </Modal>
   )
