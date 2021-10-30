@@ -3,10 +3,6 @@
   flex-direction: column;
 }
 
-.tab {
-  display: flex;
-}
-
 .content {
   display: flex;
   flex-direction: column;

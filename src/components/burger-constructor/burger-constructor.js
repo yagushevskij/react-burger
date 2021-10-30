@@ -1,4 +1,4 @@
-import { useState, useReducer } from 'react'
+import { useState, useReducer, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import burgerConstructor from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -33,7 +33,10 @@ const BurgerConstructor = () => {
       border: monitor.isOver() ? '3px solid #4C4CFF' : '3px solid transparent'
     })
   })
-  const { constrItems, orderRequest, orderFailed } = useSelector(store => store.cart)
+const constrItems = useSelector((state) => state.cart.constrItems)
+const orderRequest = useSelector((state) => state.cart.orderRequest)
+const orderFailed = useSelector((state) => state.cart.orderFailed)
+
   const [modal, setModal] = useState({ isOpened: false })
   const [totalCost, totalCostDispatcher] = useReducer(totalCostReducer, totalCostInitialState)
   const bun = constrItems.find(el => el.type === 'bun')
@@ -55,7 +58,8 @@ const BurgerConstructor = () => {
     })
   }
 
-  const removeItem = (item) => {
+  const removeItem = useCallback(
+  (item) => {
     dispatch(constrItemActions.removeItem(item))
     dispatch(itemActions.decreaseItem(item))
     totalCostDispatcher({
@@ -63,7 +67,7 @@ const BurgerConstructor = () => {
       ingredient: item.type,
       cost: item.price
     })
-  }
+  }, [dispatch])
 
   const handleCloseModal = () => {
     setModal({ isOpened: false })

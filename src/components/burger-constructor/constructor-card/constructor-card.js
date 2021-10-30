@@ -1,10 +1,12 @@
+import React from 'react'
 import constructorCard from './constructor-card.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { conCardPropTypes } from '../../../utils/type'
 import PropTypes from 'prop-types'
 import { Draggable } from 'react-beautiful-dnd'
 
-const ConstructorCard = ({ data, handleRemove, index }) => {
+const ConstructorCard = React.memo(
+({ data, handleRemove, index }) => {
   const getItemStyle = (isDragging, draggableStyle) => ({
     border: isDragging ? '1px solid #4C4CFF' : '1px solid transparent',
     ...draggableStyle
@@ -25,7 +27,7 @@ const ConstructorCard = ({ data, handleRemove, index }) => {
       )}
     </Draggable>
   )
-}
+}, (prevProps, nextProps) => prevProps.data === nextProps.data)
 
 ConstructorCard.propTypes = {
   data: conCardPropTypes.isRequired,

@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import modal from './modal.module.css'
@@ -8,19 +8,20 @@ import ErrorBoundary from '../error-boundary/error-boundary.js'
 
 const modalRoot = document.getElementById('modal-root')
 
-const Modal = props => {
-  const { children, title, onClose, errorText } = props
+const Modal = ({children, title, onClose, errorText }) => {
+  const closeByEsc = useCallback(
+  e => {
+    if (e.keyCode === 27) {
+      onClose()
+    }
+  }, [onClose])
+  
   useEffect(() => {
     document.addEventListener('keydown', closeByEsc)
     return () => {
       document.removeEventListener('keydown', closeByEsc)
     }
-  }, [])
-  const closeByEsc = e => {
-    if (e.keyCode === 27) {
-      onClose()
-    }
-  }
+  }, [closeByEsc])
   return ReactDOM.createPortal(
     <ErrorBoundary>
       <ModalOverlay onClose={onClose} />

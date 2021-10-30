@@ -5,7 +5,7 @@ import doneIcon from '../../images/done.png'
 import { useSelector } from 'react-redux'
 
 const OrderDetails = () => {
-  const { number } = useSelector(state => state.cart.order)
+  const number = useSelector(state => state.cart.order.number)
   return (
     <div className={`${orderDetails.wrapper} pb-30`}>
       <span className={`${orderDetails.title} text text_type_digits-large mt-4`}>{number}</span>

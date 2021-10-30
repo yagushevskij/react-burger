@@ -1,27 +1,28 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import burgerIngridients from './burger-ingredients.module.css'
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientCard from './ingredient-card/ingredient-card'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import { getItems } from '../../services/actions/cart'
 import { REMOVE_ITEM_DATA } from '../../services/actions/cart'
+import TabList from './tab-list/tab-list'
 
 const getBoundingClientRectTop = elem => elem.current.getBoundingClientRect().top
 
 const BurgerIngridients = () => {
   const dispatch = useDispatch()
-  const { items, currentItem } = useSelector(store => store.cart)
+  const items = useSelector(store => store.cart.items)
+  const currentItem = useSelector(store => store.cart.currentItem)
 
   const [activeTab, setActiveTab] = useState()
-  const [scrollContainer, setsSrollContainer] = useState({ height: 0 })
+  const [scrollContainer, setSrollContainer] = useState({ height: 0 })
   const [modal, setModal] = useState({ isOpened: false })
 
   useEffect(() => {
     dispatch(getItems())
     setActiveTab(getClosestTab())
-    setsSrollContainer({ height: getScrollContainerHeight() })
+    setSrollContainer({ height: getScrollContainerHeight() })
   }, [])
 
   const scrollContainerRef = useRef()
@@ -58,10 +59,10 @@ const BurgerIngridients = () => {
 
   const closeModal = () => {
     setModal({ isOpened: false })
-  } 
-  const openModal = () => {
-    setModal({ isOpened: true })
   }
+  const openModal = useCallback(() => {
+    setModal({ isOpened: true })
+  }, [])
 
   const getClosestTab = () => {
     const tabsOffsetTop = tabsRef.current.offsetTop
@@ -83,13 +84,7 @@ const BurgerIngridients = () => {
       {modal.isOpened && modalElem}
       <section className={burgerIngridients.section}>
         <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
-        <div className={`${burgerIngridients.tab} mt-5`} ref={tabsRef}>
-          {grouppedIngredients.map((el, index) => (
-            <Tab active={el.type === activeTab} key={index}>
-              {el.title}
-            </Tab>
-          ))}
-        </div>
+          <TabList items={grouppedIngredients} activeTab={activeTab} ref={tabsRef}/>
         <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: scrollContainer.height }} ref={scrollContainerRef} onScroll={handleScroll}>
           {grouppedIngredients.map((group, index) => {
             return (
