@@ -114,10 +114,10 @@ const getOrder = ids => {
           type: GET_ORDER_SUCCESS,
           orderNumber: resData.order.number
         })
+        dispatch(setCustomError(null))
       } else {
         dispatch({
           type: GET_ORDER_FAILED,
-          payload: { text: 'Во время заказа произошла ошибка' }
         })
         dispatch(setCustomError('Во время заказа произошла ошибка'))
       }

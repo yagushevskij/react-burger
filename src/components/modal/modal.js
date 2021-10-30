@@ -8,17 +8,14 @@ import ErrorBoundary from '../error-boundary/error-boundary.js'
 
 const modalRoot = document.getElementById('modal-root')
 
-const Modal = ({ children, title, onCloseHandlers, errorText }) => {
-  const handleOnCloseHandlers = useCallback(() => {
-    onCloseHandlers.forEach(elem => elem())
-  }, [onCloseHandlers])
+const Modal = ({ children, title, onClose, errorText }) => {
   const closeByEsc = useCallback(
     e => {
       if (e.keyCode === 27) {
-        handleOnCloseHandlers()
+        onClose()
       }
     },
-    [handleOnCloseHandlers]
+    [onClose]
   )
 
   useEffect(() => {
@@ -29,12 +26,12 @@ const Modal = ({ children, title, onCloseHandlers, errorText }) => {
   }, [closeByEsc])
   return ReactDOM.createPortal(
     <ErrorBoundary>
-      <ModalOverlay onClose={handleOnCloseHandlers} />
+      <ModalOverlay onClose={onClose} />
       <div className={`${modal.modal}  pt-10 pl-10 pr-10`}>
         <div className={`${modal.header}`}>
           {title && <h3 className={`${modal.header__title} text text_type_main-large`}>{title}</h3>}
           {errorText && <h3 className={`${modal.header__title} ${modal.header__title_type_error} text text_type_main-large`}>{errorText}</h3>}
-          <div className={modal.header__icon} onClick={handleOnCloseHandlers}>
+          <div className={modal.header__icon} onClick={onClose}>
             <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
                 fillRule='evenodd'
@@ -55,7 +52,7 @@ const Modal = ({ children, title, onCloseHandlers, errorText }) => {
 Modal.propTypes = {
   children: PropTypes.element,
   title: PropTypes.string,
-  onCloseHandlers: PropTypes.array.isRequired,
+  onClose: PropTypes.func.isRequired,
   errorText: PropTypes.string
 }
 

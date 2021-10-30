@@ -72,14 +72,15 @@ const BurgerConstructor = () => {
     [dispatch]
   )
 
-  const handleCloseModal = () => {
-    dispatch(setCustomError(null))
-    closeModal()
-  }
+  // const handleCloseModal = () => {
+  //   // dispatch(setCustomError(null))
+  //   closeModal()
+  // }
 
-  const handleSuccessOrder = () => {
+  const handleOnClose = () => {
     dispatch({ type: REMOVE_ORDER })
     constrItems.forEach(el => removeItem(el))
+    closeModal()
   }
 
   const closeModal = () => {
@@ -116,16 +117,15 @@ const BurgerConstructor = () => {
   }
 
   const orderModal = (
-    <Modal onCloseHandlers={[handleCloseModal, handleSuccessOrder]}>
+    <Modal onClose={handleOnClose}>
       <OrderDetails />
     </Modal>
   )
-  const createErrorModal = text => <Modal onCloseHandlers={[handleCloseModal]} errorText={text} />
+  const createErrorModal = text => <Modal onClose={closeModal} errorText={text} />
   return (
     <>
       {modal.isOpened && customError && createErrorModal(customError)}
       {modal.isOpened && !orderRequest && !orderFailed && !customError && orderModal}
-      {/* {modal.isOpened && orderFailed && !orderRequest && createInfoModal('При создании заказа возникла ошибка')} */}
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (
           <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>
