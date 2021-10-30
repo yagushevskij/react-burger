@@ -3,7 +3,10 @@ import { API_URL } from '../../utils/config'
 const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST'
 const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS'
 const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED'
+
 const UPDATE_ITEMS = 'UPDATE_ITEMS'
+const INCREASE_ITEM_COUNT = 'INCREASE_ITEM_COUNT'
+const DECREASE_ITEM_COUNT = 'DECREASE_ITEM_COUNT'
 
 const ADD_CONSTR_ITEM = 'ADD_CONSTR_ITEM'
 const REMOVE_CONSTR_ITEM = 'REMOVE_CONSTR_ITEM'
@@ -16,6 +19,48 @@ const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST'
 const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS'
 const GET_ORDER_FAILED = 'GET_ORDER_FAILED'
 const REMOVE_ORDER = 'REMOVE_ORDER'
+
+const itemActions = {
+  updateItems: (items) => ({
+    type: UPDATE_ITEMS,
+    payload: {
+      items
+    },
+  }),
+  increaseItem: (item) => ({
+    type: INCREASE_ITEM_COUNT,
+    payload: {
+      item
+    },
+  }),
+  decreaseItem: (item) => ({
+    type: DECREASE_ITEM_COUNT,
+    payload: {
+      item
+    },
+  }),
+}
+
+const constrItemActions = {
+  addItem: (item) => ({
+    type: ADD_CONSTR_ITEM,
+    payload: {
+      item
+    },
+  }),
+  removeItem: (item) => ({
+    type: REMOVE_CONSTR_ITEM,
+    payload: {
+      item
+    },
+  }),
+  updateItems: (items) => ({
+    type: UPDATE_CONSTR_ITEMS,
+    payload: {
+      items
+    },
+  }),
+}
 
 const getItems = () => {
   return async function (dispatch) {
@@ -66,12 +111,17 @@ const getOrder = idsArr => {
         })
       }
     } catch (e) {
+      dispatch({
+        type: GET_ORDER_FAILED
+      })
       console.log(e)
     }
   }
 }
 
 export {
+  constrItemActions,
+  itemActions,
   getItems,
   getOrder,
   GET_ITEMS_REQUEST,
@@ -86,5 +136,7 @@ export {
   REMOVE_CONSTR_ITEM,
   UPDATE_CONSTR_ITEMS,
   REMOVE_ORDER,
-  UPDATE_ITEMS
+  UPDATE_ITEMS,
+  INCREASE_ITEM_COUNT,
+  DECREASE_ITEM_COUNT
 }

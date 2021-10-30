@@ -9,7 +9,7 @@ import ErrorBoundary from '../error-boundary/error-boundary.js'
 const modalRoot = document.getElementById('modal-root')
 
 const Modal = props => {
-  const { children, title, onClose } = props
+  const { children, title, onClose, errorText } = props
   useEffect(() => {
     document.addEventListener('keydown', closeByEsc)
     return () => {
@@ -26,7 +26,8 @@ const Modal = props => {
       <ModalOverlay onClose={onClose} />
       <div className={`${modal.modal}  pt-10 pl-10 pr-10`}>
         <div className={`${modal.header}`}>
-          {props.title && <h3 className={`${modal.header__title} text text_type_main-large`}>{title}</h3>}
+          {title && <h3 className={`${modal.header__title} text text_type_main-large`}>{title}</h3>}
+          {errorText && <h3 className={`${modal.header__title} ${modal.header__title_type_error} text text_type_main-large`}>{errorText}</h3>}
           <div className={modal.header__icon} onClick={onClose}>
             <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
@@ -46,9 +47,11 @@ const Modal = props => {
 }
 
 Modal.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.element,
   title: PropTypes.string,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  errorText: PropTypes.string
+
 }
 
 export default Modal

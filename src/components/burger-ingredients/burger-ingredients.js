@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import burgerIngridients from './burger-ingredients.module.css'
@@ -11,7 +10,7 @@ import { REMOVE_ITEM_DATA } from '../../services/actions/cart'
 
 const getBoundingClientRectTop = elem => elem.current.getBoundingClientRect().top
 
-const BurgerIngridients = React.memo(() => {
+const BurgerIngridients = () => {
   const dispatch = useDispatch()
   const { items, currentItem } = useSelector(store => store.cart)
 
@@ -47,16 +46,20 @@ const BurgerIngridients = React.memo(() => {
       { title: 'Начинки', elems: mainArr, ref: mainRef, type: 'main' }
     ]
   }
+  const grouppedIngredients = getGrouppedIngredients()
 
   const handleCloseModal = () => {
     dispatch({
       type: REMOVE_ITEM_DATA,
       item: currentItem
     })
-    setModal({ isOpened: false })
+    closeModal()
   }
 
-  const handleOpenModal = () => {
+  const closeModal = () => {
+    setModal({ isOpened: false })
+  } 
+  const openModal = () => {
     setModal({ isOpened: true })
   }
 
@@ -75,7 +78,6 @@ const BurgerIngridients = React.memo(() => {
       <IngredientDetails />
     </Modal>
   )
-  const grouppedIngredients = getGrouppedIngredients()
   return (
     <>
       {modal.isOpened && modalElem}
@@ -97,7 +99,7 @@ const BurgerIngridients = React.memo(() => {
                 </h2>
                 <div className={`${burgerIngridients.cards} pt-6 pb-10 pl-4 pr-4`}>
                   {group.elems.map((card, i) => (
-                    <IngredientCard data={card} key={i} openModal={handleOpenModal} />
+                    <IngredientCard data={card} key={i} openModal={openModal} />
                   ))}
                 </div>
               </div>
@@ -107,6 +109,6 @@ const BurgerIngridients = React.memo(() => {
       </section>
     </>
   )
-})
+}
 
 export default BurgerIngridients

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { ingridientPropTypes } from '../../../utils/type'
 import ingredientCard from './ingredient-card.module.css'
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -14,7 +15,7 @@ const IngredientCard = React.memo(
     const handleOpenModal = () => {
       dispatch({
         type: ADD_ITEM_DATA,
-        item: data
+        payload: {item: data}
       })
       openModal(data)
     }
@@ -43,7 +44,8 @@ const IngredientCard = React.memo(
 )
 
 ingredientCard.propTypes = {
-  data: ingridientPropTypes.isRequired
+  data: ingridientPropTypes.isRequired,
+  openModal: PropTypes.func.isRequired
 }
 
 export default IngredientCard

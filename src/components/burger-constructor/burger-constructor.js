@@ -1,32 +1,29 @@
 import { useState, useReducer } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 import burgerConstructor from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
-import { getOrder, REMOVE_ORDER, ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS, UPDATE_ITEMS } from '../../services/actions/cart'
+import { getOrder, REMOVE_ORDER, constrItemActions, itemActions } from '../../services/actions/cart'
 import { useDrop } from 'react-dnd'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import ConstructorCard from './constructor-card/constructor-card'
 
-const itemsInitialState = { total: 0 }
-
-const itemsReducer = (state, action) => {
+const totalCostInitialState = { total: 0 }
+const totalCostReducer = (state, action) => {
   const ingredientCost = action.ingredient === 'bun' ? action.cost * 2 : action.cost
   switch (action.type) {
     case 'add':
       return { total: state.total + ingredientCost }
     case 'remove':
       return { total: state.total - ingredientCost }
-    case 'clear':
-      return { total: 0 }
     default:
       throw new Error(`Wrong type of action: ${action.type}`)
   }
 }
 
 const BurgerConstructor = () => {
+  const dispatch = useDispatch()
   const [{ border }, sectionTarget] = useDrop({
     accept: 'ingredient-card',
     drop(item) {
@@ -36,30 +33,33 @@ const BurgerConstructor = () => {
       border: monitor.isOver() ? '3px solid #4C4CFF' : '3px solid transparent'
     })
   })
-  const dispatch = useDispatch()
-  const { constrItems, items, orderRequest, orderFailed } = useSelector(store => store.cart)
+  const { constrItems, orderRequest, orderFailed } = useSelector(store => store.cart)
   const [modal, setModal] = useState({ isOpened: false })
-  const [totalCost, totalCostDispatcher] = useReducer(itemsReducer, itemsInitialState)
+  const [totalCost, totalCostDispatcher] = useReducer(totalCostReducer, totalCostInitialState)
+  const bun = constrItems.find(el => el.type === 'bun')
 
   const handleDrop = item => {
-    const existedBun = constrItems.find(el => el.type === 'bun')
-    if (item.type === 'bun' && existedBun) {
-      dispatch({
-        type: REMOVE_CONSTR_ITEM,
-        item: existedBun
-      })
-      totalCostDispatcher({
-        type: 'remove',
-        ingredient: existedBun.type,
-        cost: existedBun.price
-      })
+    if (item.type === 'bun' && bun) {
+      removeItem(bun)
     }
-    dispatch({
-      type: ADD_CONSTR_ITEM,
-      item: item
-    })
+    addItem(item)
+  }
+
+  const addItem = item => {
+    dispatch(constrItemActions.addItem(item))
+    dispatch(itemActions.increaseItem(item))
     totalCostDispatcher({
       type: 'add',
+      ingredient: item.type,
+      cost: item.price
+    })
+  }
+
+  const removeItem = (item) => {
+    dispatch(constrItemActions.removeItem(item))
+    dispatch(itemActions.decreaseItem(item))
+    totalCostDispatcher({
+      type: 'remove',
       ingredient: item.type,
       cost: item.price
     })
@@ -68,43 +68,21 @@ const BurgerConstructor = () => {
   const handleCloseModal = () => {
     setModal({ isOpened: false })
     dispatch({ type: REMOVE_ORDER })
-    dispatchUpdateItems()
-  }
-  const handleOpenModal = () => {
-    setModal({ isOpened: true })
+    constrItems.forEach(el => removeItem(el))
+    closeModal()
   }
 
-  const dispatchUpdateItems = () => {
-    dispatch({
-      type: UPDATE_CONSTR_ITEMS,
-      items: []
-    })
-    const updatedItems = items.map(el => {
-      return { ...el, qty: 0 }
-    })
-    dispatch({
-      type: UPDATE_ITEMS,
-      items: updatedItems
-    })
-    totalCostDispatcher({ type: 'clear' })
+  const closeModal = () => {
+    setModal({ isOpened: false })
+  }
+  const openModal = () => {
+    setModal({ isOpened: true })
   }
 
   const makeOrder = () => {
     const idsArr = constrItems.map(el => el._id)
     dispatch(getOrder(idsArr))
-    !orderRequest && !orderFailed && handleOpenModal()
-  }
-
-  const moveCard = (dragIndex, hoverIndex) => {
-    const DragItem = constrItems[dragIndex]
-    if (DragItem) {
-      const prevItem = constrItems.splice(hoverIndex, 1, DragItem)
-      constrItems.splice(dragIndex, 1, prevItem[0])
-      dispatch({
-        type: UPDATE_CONSTR_ITEMS,
-        items: constrItems
-      })
-    }
+    openModal()
   }
 
   const reorder = (list, startIndex, endIndex) => {
@@ -119,21 +97,21 @@ const BurgerConstructor = () => {
       return
     }
     const items = reorder(constrItems, result.source.index, result.destination.index)
-    dispatch({
-      type: UPDATE_CONSTR_ITEMS,
-      items: items
-    })
+    dispatch(constrItemActions.updateItems(items))
   }
 
-  const modalComp = (
+  const orderModal = (
     <Modal onClose={handleCloseModal}>
       <OrderDetails />
     </Modal>
   )
-  const bun = constrItems.find(el => el.type === 'bun')
+  const errorModal = (
+    <Modal onClose={closeModal} errorText='При создании заказа возникла ошибка'/>
+  )
   return (
     <>
-      {modal.isOpened && modalComp}
+      {modal.isOpened && !orderRequest && !orderFailed && orderModal}
+      {modal.isOpened && orderFailed && !orderRequest && errorModal}
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (
           <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>
@@ -145,7 +123,6 @@ const BurgerConstructor = () => {
                   <ConstructorElement type='top' isLocked={true} text={`${bun.name} (верх)`} price={bun.price} thumbnail={bun.image} />
                 </li>
               )}
-
               <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId='droppable'>
                   {(provided, snapshot) => (
@@ -153,7 +130,7 @@ const BurgerConstructor = () => {
                       {constrItems &&
                         constrItems.map((item, index) => {
                           if (item.type !== 'bun') {
-                            return <ConstructorCard key={index} data={item} totalCostDispatcher={totalCostDispatcher} index={index} moveCard={moveCard} />
+                            return <ConstructorCard key={index} data={item} handleRemove={removeItem} index={index} />
                           }
                         })}
                       {provided.placeholder}
@@ -161,7 +138,6 @@ const BurgerConstructor = () => {
                   )}
                 </Droppable>
               </DragDropContext>
-
               {bun && (
                 <li className={`${burgerConstructor.item} pl-8 pr-5`} key={'bun-bottom' + bun._id}>
                   <ConstructorElement type='bottom' isLocked={true} text={`${bun.name} (низ)`} price={bun.price} thumbnail={bun.image} />
@@ -174,7 +150,7 @@ const BurgerConstructor = () => {
                 <CurrencyIcon type='primary' />
               </p>
               {bun && (
-                <Button type='primary' size='large' onClick={makeOrder}>
+                <Button type='primary' size='large' onClick={makeOrder} disabled={orderRequest ? 'disabled' : null}>
                   Оформить заказ
                 </Button>
               )}

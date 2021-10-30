@@ -11,7 +11,9 @@ import {
   REMOVE_CONSTR_ITEM,
   UPDATE_CONSTR_ITEMS,
   REMOVE_ORDER,
-  UPDATE_ITEMS
+  UPDATE_ITEMS,
+  INCREASE_ITEM_COUNT,
+  DECREASE_ITEM_COUNT
 } from '../actions/cart'
 import { getKeyByGenerate } from '../../utils/helpers'
 
@@ -48,27 +50,31 @@ const cartReducer = (state = initialState, action) => {
       return { ...state, itemsFailed: true, itemsRequest: false }
     }
     case UPDATE_ITEMS: {
-      return { ...state, items: action.items }
+      return { ...state, items: action.payload.items }
+    }
+    case INCREASE_ITEM_COUNT: {
+      return { ...state, items: [...state.items].map(el => (el._id === action.payload.item._id ? { ...el, qty: ++el.qty } : el)) }
+    }
+    case DECREASE_ITEM_COUNT: {
+      return { ...state, items: [...state.items].map(el => (el._id === action.payload.item._id ? { ...el, qty: --el.qty } : el)) }
     }
     case ADD_CONSTR_ITEM: {
       return {
         ...state,
-        constrItems: [...state.constrItems, { ...action.item, key: getKeyByGenerate() }],
-        items: [...state.items].map(el => (el._id === action.item._id ? { ...el, qty: ++el.qty } : el))
+        constrItems: [...state.constrItems, { ...action.payload.item, key: getKeyByGenerate() }]
       }
     }
     case REMOVE_CONSTR_ITEM: {
       return {
         ...state,
-        constrItems: [...state.constrItems].filter(el => el.key !== action.item.key),
-        items: [...state.items].map(el => (el._id === action.item._id ? { ...el, qty: --el.qty } : el))
+        constrItems: [...state.constrItems].filter(el => el.key !== action.payload.item.key),
       }
     }
     case UPDATE_CONSTR_ITEMS: {
-      return { ...state, constrItems: action.items }
+      return { ...state, constrItems: action.payload.items }
     }
     case ADD_ITEM_DATA: {
-      return { ...state, currentItem: action.item }
+      return { ...state, currentItem: action.payload.item }
     }
     case REMOVE_ITEM_DATA: {
       return { ...state, currentItem: {} }
