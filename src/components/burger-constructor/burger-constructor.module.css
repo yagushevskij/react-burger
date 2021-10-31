@@ -1,5 +1,6 @@
 .section {
   display: flex;
+  flex: 1;
   flex-direction: column;
 }
 
@@ -20,15 +21,6 @@
   align-items: center;
 }
 
-.item {
-  display: flex;
-  align-items: center;
-}
-
-.item svg {
-  margin-right: 7px;
-}
-
 .list {
   display: grid;
   gap: 16px;
@@ -39,10 +31,22 @@
   list-style-type: none;
 }
 
+.info {
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .scroll {
   max-height: 370px;
   overflow: auto;
   padding-right: 8px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .scroll::-webkit-scrollbar {
