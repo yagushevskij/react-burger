@@ -1,7 +1,13 @@
 import { combineReducers } from 'redux'
 
-import cartReducer from './cart'
+import orderReducer from './order'
+import modalReducer from './modal'
+import constructorReducer from './constructor'
+import ingredientsReducer from './ingredients'
 
 export const rootReducer = combineReducers({
-  cart: cartReducer
+  order: orderReducer,
+  modal: modalReducer,
+  contructor: constructorReducer,
+  ingredients: ingredientsReducer
 })

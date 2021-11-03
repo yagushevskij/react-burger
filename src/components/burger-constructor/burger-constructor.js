@@ -1,29 +1,18 @@
-import { useState, useReducer, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import burgerConstructor from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import Modal from '../modal/modal'
-import OrderDetails from '../order-details/order-details'
-import { getOrder, REMOVE_ORDER, constrItemActions, itemActions, setCustomError } from '../../services/actions/cart'
+import { getOrder, GET_ORDER_FAILED } from '../../services/actions/order'
+import { openModal } from '../../services/actions/modal'
+import { constrItemActions } from '../../services/actions/constructor'
+import { itemActions } from '../../services/actions/ingredients'
 import { useDrop } from 'react-dnd'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import ConstructorCard from './constructor-card/constructor-card'
 
-const totalCostInitialState = { total: 0 }
-const totalCostReducer = (state, action) => {
-  const ingredientCost = action.ingredient === 'bun' ? action.cost * 2 : action.cost
-  switch (action.type) {
-    case 'add':
-      return { total: state.total + ingredientCost }
-    case 'remove':
-      return { total: state.total - ingredientCost }
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`)
-  }
-}
-
 const BurgerConstructor = () => {
   const dispatch = useDispatch()
+  const [totalCost, setTotalCost] = useState(0)
   const [{ border }, sectionTarget] = useDrop({
     accept: 'ingredient-card',
     drop(item) {
@@ -33,13 +22,25 @@ const BurgerConstructor = () => {
       border: monitor.isOver() ? '3px solid #4C4CFF' : '3px solid transparent'
     })
   })
-  const constrItems = useSelector(state => state.cart.constrItems)
-  const orderRequest = useSelector(state => state.cart.orderRequest)
-  const orderFailed = useSelector(state => state.cart.orderFailed)
-  const customError = useSelector(state => state.cart.customError)
+  const orderRequest = useSelector(state => state.order.orderRequest)
+  const orderFailed = useSelector(state => state.order.orderFailed)
+  const wasModalClosed = useSelector(state => state.modal.wasClosed)
+  const constrItems = useSelector(state => state.contructor.items)
 
-  const [modal, setModal] = useState({ isOpened: false })
-  const [totalCost, totalCostDispatcher] = useReducer(totalCostReducer, totalCostInitialState)
+  useEffect(() => {
+    if (wasModalClosed && !orderFailed && !orderRequest) {
+      constrItems.forEach(el => removeItem(el))
+    }
+  }, [wasModalClosed])
+
+  useEffect(() => {
+    setTotalCost(() =>
+      constrItems.reduce((acc, item) => {
+        return item.type === 'bun' ? acc + item.price * 2 : acc + item.price
+      }, 0)
+    )
+  }, [constrItems])
+
   const bun = constrItems.find(el => el.type === 'bun')
 
   const handleDrop = item => {
@@ -52,49 +53,28 @@ const BurgerConstructor = () => {
   const addItem = item => {
     dispatch(constrItemActions.addItem(item))
     dispatch(itemActions.increaseItem(item))
-    totalCostDispatcher({
-      type: 'add',
-      ingredient: item.type,
-      cost: item.price
-    })
   }
 
   const removeItem = useCallback(
     item => {
       dispatch(constrItemActions.removeItem(item))
       dispatch(itemActions.decreaseItem(item))
-      totalCostDispatcher({
-        type: 'remove',
-        ingredient: item.type,
-        cost: item.price
-      })
     },
     [dispatch]
   )
 
-  const handleCloseModal = () => {
-    dispatch({ type: REMOVE_ORDER })
-    constrItems.forEach(el => removeItem(el))
-    closeModal()
-  }
-
-  const closeModal = () => {
-    setModal({ isOpened: false })
-  }
-  const openModal = () => {
-    setModal({ isOpened: true })
-  }
-
   const makeOrder = () => {
-    dispatch(setCustomError(null))
     if (!bun) {
-      dispatch(setCustomError('Нужно добавить булку'))
-      openModal()
+      dispatch({
+        type: GET_ORDER_FAILED
+      })
+      dispatch(openModal({ name: 'error', title: 'Нужно добавить хотя бы 1 булку' }))
       return
     }
     const ids = constrItems.map(el => el._id)
-    dispatch(getOrder(ids))
-    openModal()
+    dispatch(getOrder(ids)).then(res => {
+      res ? dispatch(openModal({ name: 'orderDetails' })) : dispatch(openModal({ name: 'error', title: 'Во время заказа произошла ошибка' }))
+    })
   }
 
   const reorder = (list, startIndex, endIndex) => {
@@ -111,17 +91,8 @@ const BurgerConstructor = () => {
     const items = reorder(constrItems, result.source.index, result.destination.index)
     dispatch(constrItemActions.updateItems(items))
   }
-
-  const orderModal = (
-    <Modal onClose={handleCloseModal}>
-      <OrderDetails />
-    </Modal>
-  )
-  const createErrorModal = text => <Modal onClose={closeModal} errorText={text} />
   return (
     <>
-      {modal.isOpened && customError && createErrorModal(customError)}
-      {modal.isOpened && !orderRequest && !orderFailed && !customError && orderModal}
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (
           <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>
@@ -156,10 +127,10 @@ const BurgerConstructor = () => {
             </ul>
             <div className={`${burgerConstructor.total} mt-10`}>
               <p className={`${burgerConstructor.total__cost} mr-10`}>
-                <span className='text text_type_digits-medium mr-2'>{totalCost.total}</span>
+                <span className='text text_type_digits-medium mr-2'>{totalCost}</span>
                 <CurrencyIcon type='primary' />
               </p>
-              <Button type='primary' size='large' onClick={makeOrder} disabled={orderRequest ? 'disabled' : null}>
+              <Button type='primary' size='large' onClick={makeOrder} disabled={orderRequest}>
                 Оформить заказ
               </Button>
             </div>
