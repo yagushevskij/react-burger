@@ -71,8 +71,7 @@ const BurgerConstructor = () => {
       dispatch(openModal({ name: 'error', title: 'Нужно добавить хотя бы 1 булку' }))
       return
     }
-    const ids = constrItems.map(el => el._id)
-    dispatch(getOrder(ids)).then(res => {
+    dispatch(getOrder(constrItems)).then(res => {
       res ? dispatch(openModal({ name: 'orderDetails' })) : dispatch(openModal({ name: 'error', title: 'Во время заказа произошла ошибка' }))
     })
   }
