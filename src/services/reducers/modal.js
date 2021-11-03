@@ -3,7 +3,7 @@ import { SET_CURRENT_MODAL, SET_WAS_CLOSED_FLAG } from '../actions/modal'
 const initialState = {
   current: null,
   wasClosed: false,
-  title: null,
+  title: null
 }
 
 const modalReducer = (state = initialState, action) => {
@@ -12,8 +12,8 @@ const modalReducer = (state = initialState, action) => {
       return { ...state, current: action.payload.name, wasClosed: false, title: action.payload.title }
     }
     case SET_WAS_CLOSED_FLAG: {
-        return { ...state, wasClosed: true }
-      }
+      return { ...state, wasClosed: true }
+    }
     default: {
       return state
     }

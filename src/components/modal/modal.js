@@ -15,8 +15,7 @@ const Modal = () => {
   const currentModal = useSelector(state => state.modal.current)
   const title = useSelector(state => state.modal.title)
 
-  const close = useCallback(
-  () => {
+  const close = useCallback(() => {
     dispatch(openModal({ name: null }))
     dispatch({
       type: SET_WAS_CLOSED_FLAG
@@ -55,8 +54,8 @@ const Modal = () => {
               </svg>
             </div>
           </div>
-          { currentModal === 'orderDetails' && <OrderDetails/>}
-          { currentModal === 'ingredientDetails' && <IngredientDetails />}
+          {currentModal === 'orderDetails' && <OrderDetails />}
+          {currentModal === 'ingredientDetails' && <IngredientDetails />}
         </div>
       </>
     ),

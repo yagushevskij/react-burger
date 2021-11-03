@@ -24,19 +24,19 @@ export const getOrder = ids => {
           type: GET_ORDER_SUCCESS,
           orderNumber: resData.order.number
         })
-        return true;
+        return true
       } else {
         dispatch({
-          type: GET_ORDER_FAILED,
+          type: GET_ORDER_FAILED
         })
-        return false;
+        return false
       }
     } catch (e) {
       dispatch({
-        type: GET_ORDER_FAILED,
+        type: GET_ORDER_FAILED
       })
       console.log(e)
-      return false;
+      return false
     }
   }
 }

@@ -9,14 +9,13 @@ import TabList from './tab-list/tab-list'
 const getBoundingClientRectTop = elem => elem.current.getBoundingClientRect().top
 
 const BurgerIngridients = () => {
-
   const scrollContainerRef = useRef()
   const tabsRef = useRef()
   const sauceRef = useRef()
   const mainRef = useRef()
   const bunRef = useRef()
 
-  const getGrouppedIngredients = (items) => {
+  const getGrouppedIngredients = items => {
     const filterArr = good => items.filter(el => el.type === good)
     const mainArr = filterArr('main')
     const sauceArr = filterArr('sauce')
@@ -44,7 +43,7 @@ const BurgerIngridients = () => {
     if (wasModalClosed) {
       dispatch({
         type: SET_CURRENT_ITEM,
-        payload: {item: null}
+        payload: { item: null }
       })
     }
   }, [wasModalClosed, dispatch])
