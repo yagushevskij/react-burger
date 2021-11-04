@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ingridientPropTypes } from '../../../utils/type'
 import ingredientCard from './ingredient-card.module.css'
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ADD_ITEM_DATA } from '../../../services/actions/cart'
+import { SET_CURRENT_ITEM } from '../../../services/actions/ingredients'
 import { useDispatch } from 'react-redux'
 import { useDrag } from 'react-dnd'
 
@@ -14,7 +14,7 @@ const IngredientCard = React.memo(
 
     const handleOpenModal = () => {
       dispatch({
-        type: ADD_ITEM_DATA,
+        type: SET_CURRENT_ITEM,
         payload: { item: data }
       })
       openModal(data)

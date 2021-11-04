@@ -2,9 +2,9 @@ import { useSelector } from 'react-redux'
 import ingredientDetails from './ingredient-details.module.css'
 
 const IngredientDetails = () => {
-  const data = useSelector(store => store.cart.currentItem)
+  const data = useSelector(store => store.ingredients.current)
   return (
-    <div className={`${ingredientDetails.wrapper} pb-15`}>
+    <div className={`${ingredientDetails.wrapper}`}>
       <img className={ingredientDetails.image} src={data.image} alt={data.name} />
       <p className='text text_type_main-default mt-4'>{data.name}</p>
       <div className={`${ingredientDetails.addition} text text_type_main-default text_color_inactive mt-8`}>
