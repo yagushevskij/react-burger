@@ -1,15 +1,18 @@
-import { SET_CURRENT_MODAL, SET_WAS_CLOSED_FLAG } from '../actions/modal'
+import { SET_WAS_CLOSED_FLAG, OPEN_MODAL, CLOSE_MODAL } from '../actions/modal'
 
 const initialState = {
-  current: null,
+  isOpened: false,
   wasClosed: false,
   title: null
 }
 
 const modalReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_CURRENT_MODAL: {
-      return { ...state, current: action.payload.name, wasClosed: false, title: action.payload.title }
+    case OPEN_MODAL: {
+      return { ...state, isOpened: true, wasClosed: false, title: action.payload.title }
+    }
+    case CLOSE_MODAL: {
+      return { ...initialState, isOpened: false, wasClosed: true }
     }
     case SET_WAS_CLOSED_FLAG: {
       return { ...state, wasClosed: true }

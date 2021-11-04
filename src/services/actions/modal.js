@@ -1,9 +1,10 @@
-export const SET_CURRENT_MODAL = 'SET_CURRENT_MODAL'
 export const SET_WAS_CLOSED_FLAG = 'SET_WAS_CLOSED_FLAG'
+export const OPEN_MODAL = 'OPEN_MODAL'
+export const CLOSE_MODAL='CLOSE_MODAL'
 
-export const openModal = ({ title, name }) => {
+export const openModal = ({ title }) => {
   return {
-    type: SET_CURRENT_MODAL,
-    payload: { name, title }
+    type: OPEN_MODAL,
+    payload: { title }
   }
 }

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import burgerConstructor from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { getOrder, GET_ORDER_FAILED } from '../../services/actions/order'
+import { getOrder, GET_ORDER_FAILED, SET_INITIAL_ORDER_STATE } from '../../services/actions/order'
 import { openModal } from '../../services/actions/modal'
 import { constrItemActions } from '../../services/actions/constructor'
 import { itemActions } from '../../services/actions/ingredients'
@@ -22,14 +22,15 @@ const BurgerConstructor = () => {
       border: monitor.isOver() ? '3px solid #4C4CFF' : '3px solid transparent'
     })
   })
-  const orderRequest = useSelector(state => state.order.orderRequest)
-  const orderFailed = useSelector(state => state.order.orderFailed)
+  const orderRequest = useSelector(state => state.order.request)
+  const orderSuccess = useSelector(state => state.order.success)
   const wasModalClosed = useSelector(state => state.modal.wasClosed)
   const constrItems = useSelector(state => state.contructor.items)
 
   useEffect(() => {
-    if (wasModalClosed && !orderFailed && !orderRequest) {
+    if (wasModalClosed && orderSuccess) {
       constrItems.forEach(el => removeItem(el))
+      dispatch({ type: SET_INITIAL_ORDER_STATE })
     }
   }, [wasModalClosed])
 
@@ -68,12 +69,11 @@ const BurgerConstructor = () => {
       dispatch({
         type: GET_ORDER_FAILED
       })
-      dispatch(openModal({ name: 'error', title: 'Нужно добавить хотя бы 1 булку' }))
+      dispatch(openModal({ title: 'Нужно добавить хотя бы 1 булку' }))
       return
     }
-    dispatch(getOrder(constrItems)).then(res => {
-      res ? dispatch(openModal({ name: 'orderDetails' })) : dispatch(openModal({ name: 'error', title: 'Во время заказа произошла ошибка' }))
-    })
+    dispatch(getOrder(constrItems))
+    dispatch(openModal({title: null}))
   }
 
   const reorder = (list, startIndex, endIndex) => {

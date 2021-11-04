@@ -55,7 +55,7 @@ const BurgerIngridients = () => {
   }
 
   const handleOpenModal = () => {
-    dispatch(openModal({ name: 'ingredientDetails', title: 'Детали ингридиента' }))
+    dispatch(openModal({ title: 'Детали ингридиента' }))
   }
 
   const getClosestTab = () => {

@@ -1,9 +1,11 @@
 import { API_URL } from '../../utils/config'
+import { openModal } from './modal'
 
 export const ADD_ITEM_DATA = 'ADD_ITEM_DATA'
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST'
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS'
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED'
+export const SET_INITIAL_ORDER_STATE = 'SET_INITIAL_ORDER_STATE'
 
 export const getOrder = items => {
   return async function (dispatch) {
@@ -25,19 +27,18 @@ export const getOrder = items => {
           type: GET_ORDER_SUCCESS,
           orderNumber: resData.order.number
         })
-        return true
       } else {
         dispatch({
           type: GET_ORDER_FAILED
         })
-        return false
+        dispatch(openModal({ title: 'Ошибка при создании заказа. Пожалуйста, повторите позже.' }))
       }
     } catch (e) {
       dispatch({
         type: GET_ORDER_FAILED
       })
+      dispatch(openModal({ title: 'Ошибка при создании заказа. Пожалуйста, повторите позже.' }))
       console.log(e)
-      return false
     }
   }
 }
