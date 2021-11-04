@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import burgerIngridients from './burger-ingredients.module.css'
 import IngredientCard from './ingredient-card/ingredient-card'
 import { getItems, SET_CURRENT_ITEM } from '../../services/actions/ingredients'
-import { openModal } from '../../services/actions/modal'
 import TabList from './tab-list/tab-list'
+import Modal from '../modal/modal'
+import IngredientDetails from '../ingredient-details/ingredient-details'
 
 const getBoundingClientRectTop = elem => elem.current.getBoundingClientRect().top
 
@@ -28,8 +29,8 @@ const BurgerIngridients = () => {
   }
 
   const dispatch = useDispatch()
-  const wasModalClosed = useSelector(store => store.modal.wasClosed)
   const ingredients = useSelector(store => getGrouppedIngredients(store.ingredients.items))
+  const currentIngredient = useSelector(store => store.ingredients.current)
 
   const [activeTab, setActiveTab] = useState()
   const [scrollContainer, setSrollContainer] = useState({ height: 0 })
@@ -39,14 +40,6 @@ const BurgerIngridients = () => {
     setActiveTab(getClosestTab())
     setSrollContainer({ height: getScrollContainerHeight() })
   }, [])
-  useEffect(() => {
-    if (wasModalClosed) {
-      dispatch({
-        type: SET_CURRENT_ITEM,
-        payload: { item: null }
-      })
-    }
-  }, [wasModalClosed, dispatch])
 
   const getScrollContainerHeight = () => {
     const windowHeight = window.innerHeight
@@ -54,8 +47,11 @@ const BurgerIngridients = () => {
     return windowHeight - scrollContainerOffsetTop
   }
 
-  const handleOpenModal = () => {
-    dispatch(openModal({ title: 'Детали ингридиента' }))
+  const handleCloseModal = () => {
+    dispatch({
+      type: SET_CURRENT_ITEM,
+      payload: { item: null }
+    })
   }
 
   const getClosestTab = () => {
@@ -69,6 +65,12 @@ const BurgerIngridients = () => {
   }
   return (
     <>
+      {currentIngredient && (
+        <Modal title='Детали ингридиента' handleCloseModal={handleCloseModal}>
+          <IngredientDetails />
+        </Modal>
+      )}
+
       <section className={burgerIngridients.section}>
         <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
         <TabList items={ingredients} activeTab={activeTab} ref={tabsRef} />
@@ -81,7 +83,7 @@ const BurgerIngridients = () => {
                 </h2>
                 <div className={`${burgerIngridients.cards} pt-6 pb-10 pl-4 pr-4`}>
                   {group.elems.map((card, i) => (
-                    <IngredientCard data={card} key={i} openModal={handleOpenModal} />
+                    <IngredientCard data={card} key={i} />
                   ))}
                 </div>
               </div>

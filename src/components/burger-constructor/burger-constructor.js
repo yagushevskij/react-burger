@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import burgerConstructor from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { getOrder, GET_ORDER_FAILED, SET_INITIAL_ORDER_STATE } from '../../services/actions/order'
-import { openModal } from '../../services/actions/modal'
 import { constrItemActions } from '../../services/actions/constructor'
 import { itemActions } from '../../services/actions/ingredients'
 import { useDrop } from 'react-dnd'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import ConstructorCard from './constructor-card/constructor-card'
+import OrderDetails from '../order-details/order-details'
+import Modal from '../modal/modal'
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch()
@@ -23,16 +24,9 @@ const BurgerConstructor = () => {
     })
   })
   const orderRequest = useSelector(state => state.order.request)
-  const orderSuccess = useSelector(state => state.order.success)
-  const wasModalClosed = useSelector(state => state.modal.wasClosed)
+  const orderFailed = useSelector(state => state.order.failed)
   const constrItems = useSelector(state => state.contructor.items)
-
-  useEffect(() => {
-    if (wasModalClosed && orderSuccess) {
-      constrItems.forEach(el => removeItem(el))
-      dispatch({ type: SET_INITIAL_ORDER_STATE })
-    }
-  }, [wasModalClosed])
+  const orderNumber = useSelector(state => state.order.number)
 
   useEffect(() => {
     setTotalCost(() =>
@@ -67,13 +61,12 @@ const BurgerConstructor = () => {
   const makeOrder = () => {
     if (!bun) {
       dispatch({
-        type: GET_ORDER_FAILED
+        type: GET_ORDER_FAILED,
+        payload: { message: 'Нужно добавить хотя бы 1 булку' }
       })
-      dispatch(openModal({ title: 'Нужно добавить хотя бы 1 булку' }))
       return
     }
     dispatch(getOrder(constrItems))
-    dispatch(openModal({title: null}))
   }
 
   const reorder = (list, startIndex, endIndex) => {
@@ -90,8 +83,24 @@ const BurgerConstructor = () => {
     const items = reorder(constrItems, result.source.index, result.destination.index)
     dispatch(constrItemActions.updateItems(items))
   }
+
+  const handleCloseOrderModal = () => {
+    dispatch({ type: SET_INITIAL_ORDER_STATE })
+    constrItems.forEach(el => removeItem(el))
+  }
+  const handleCloseErrorModal = () => {
+    dispatch({ type: SET_INITIAL_ORDER_STATE })
+  }
+
   return (
     <>
+      {orderNumber && (
+        <Modal handleCloseModal={handleCloseOrderModal}>
+          <OrderDetails />
+        </Modal>
+      )}
+      {orderFailed && <Modal handleCloseModal={handleCloseErrorModal} />}
+
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (
           <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>

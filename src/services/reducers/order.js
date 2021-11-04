@@ -4,7 +4,7 @@ const initialState = {
   number: null,
   request: false,
   failed: false,
-  success: false
+  errorMessage: null
 }
 
 const orderReducer = (state = initialState, action) => {
@@ -13,10 +13,10 @@ const orderReducer = (state = initialState, action) => {
       return { ...initialState, request: true }
     }
     case GET_ORDER_SUCCESS: {
-      return { ...state, success: true, number: action.orderNumber, request: false }
+      return { ...state, number: action.orderNumber, request: false }
     }
     case GET_ORDER_FAILED: {
-      return { ...initialState, failed: true }
+      return { ...initialState, failed: true, errorMessage: action.payload.message }
     }
     case SET_INITIAL_ORDER_STATE: {
       return { ...initialState }

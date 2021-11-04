@@ -6,11 +6,8 @@ import BurgerIngridients from '../burger-ingredients/burger-ingredients.js'
 import BurgerConstructor from '../burger-constructor/burger-constructor.js'
 import ErrorBoundary from '../error-boundary/error-boundary.js'
 import app from './app.module.css'
-import Modal from '../modal/modal'
-import { useSelector } from 'react-redux'
 
 const App = () => {
-  const isModalOpened = useSelector(state => state.modal.isOpened)
   return (
     <ErrorBoundary>
       <AppHeader />
@@ -20,7 +17,6 @@ const App = () => {
           <BurgerConstructor />
         </DndProvider>
       </main>
-      {isModalOpened && <Modal />}
     </ErrorBoundary>
   )
 }

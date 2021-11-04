@@ -1,5 +1,4 @@
 import { API_URL } from '../../utils/config'
-import { openModal } from './modal'
 
 export const ADD_ITEM_DATA = 'ADD_ITEM_DATA'
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST'
@@ -29,15 +28,15 @@ export const getOrder = items => {
         })
       } else {
         dispatch({
-          type: GET_ORDER_FAILED
+          type: GET_ORDER_FAILED,
+          payload: { message: 'Ошибка при создании заказа. Пожалуйста, повторите позже.' }
         })
-        dispatch(openModal({ title: 'Ошибка при создании заказа. Пожалуйста, повторите позже.' }))
       }
     } catch (e) {
       dispatch({
-        type: GET_ORDER_FAILED
+        type: GET_ORDER_FAILED,
+        payload: { message: 'Ошибка при создании заказа. Пожалуйста, повторите позже.' }
       })
-      dispatch(openModal({ title: 'Ошибка при создании заказа. Пожалуйста, повторите позже.' }))
       console.log(e)
     }
   }
