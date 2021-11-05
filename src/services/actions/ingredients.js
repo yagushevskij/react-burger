@@ -1,5 +1,3 @@
-import { API_URL } from '../../utils/config'
-
 export const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST'
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS'
 export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED'
@@ -27,33 +25,4 @@ export const itemActions = {
       item
     }
   })
-}
-
-export const getItems = () => {
-  return async function (dispatch) {
-    dispatch({
-      type: GET_ITEMS_REQUEST
-    })
-    try {
-      const res = await fetch(API_URL + 'ingredients')
-      if (res && res.ok) {
-        const resData = await res.json()
-        dispatch({
-          type: GET_ITEMS_SUCCESS,
-          items: resData.data.map(el => {
-            return { ...el, qty: 0 }
-          })
-        })
-      } else {
-        dispatch({
-          type: GET_ITEMS_FAILED
-        })
-      }
-    } catch (e) {
-      dispatch({
-        type: GET_ITEMS_FAILED
-      })
-      console.log(e)
-    }
-  }
 }

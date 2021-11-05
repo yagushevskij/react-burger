@@ -3,6 +3,7 @@ import { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import modal from './modal.module.css'
 import ModalOverlay from '../modal-overlay/modal-overlay'
+import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById('modal-root')
 
@@ -11,7 +12,7 @@ const Modal = ({ title, children, handleCloseModal }) => {
 
   const close = useCallback(() => {
     handleCloseModal()
-  }, [])
+  }, [handleCloseModal])
   const closeByEsc = useCallback(
     e => {
       if (e.keyCode === 27) {
@@ -49,6 +50,12 @@ const Modal = ({ title, children, handleCloseModal }) => {
     </>,
     modalRoot
   )
+}
+
+Modal.propTypes = {
+  children: PropTypes.element,
+  title: PropTypes.string,
+  handleCloseModal: PropTypes.func.isRequired
 }
 
 export default Modal

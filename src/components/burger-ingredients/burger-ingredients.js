@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import burgerIngridients from './burger-ingredients.module.css'
 import IngredientCard from './ingredient-card/ingredient-card'
-import { getItems, SET_CURRENT_ITEM } from '../../services/actions/ingredients'
+import { SET_CURRENT_ITEM } from '../../services/actions/ingredients'
+import { getItems } from '../../services/actions/thunk/ingredients'
 import TabList from './tab-list/tab-list'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
@@ -16,7 +17,7 @@ const BurgerIngridients = () => {
   const mainRef = useRef()
   const bunRef = useRef()
 
-  const getGrouppedIngredients = items => {
+  const createGrouppedIngredients = items => {
     const filterArr = good => items.filter(el => el.type === good)
     const mainArr = filterArr('main')
     const sauceArr = filterArr('sauce')
@@ -29,7 +30,7 @@ const BurgerIngridients = () => {
   }
 
   const dispatch = useDispatch()
-  const ingredients = useSelector(store => getGrouppedIngredients(store.ingredients.items))
+  const ingredients = useSelector(store => createGrouppedIngredients(store.ingredients.items))
   const currentIngredient = useSelector(store => store.ingredients.current)
 
   const [activeTab, setActiveTab] = useState()
@@ -60,9 +61,6 @@ const BurgerIngridients = () => {
     return closestElem.type
   }
 
-  const handleScroll = () => {
-    setActiveTab(getClosestTab())
-  }
   return (
     <>
       {currentIngredient && (
@@ -74,7 +72,7 @@ const BurgerIngridients = () => {
       <section className={burgerIngridients.section}>
         <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
         <TabList items={ingredients} activeTab={activeTab} ref={tabsRef} />
-        <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: scrollContainer.height }} ref={scrollContainerRef} onScroll={handleScroll}>
+        <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: scrollContainer.height }} ref={scrollContainerRef} onScroll={() => setActiveTab(getClosestTab())}>
           {ingredients.map((group, index) => {
             return (
               <div key={index}>
