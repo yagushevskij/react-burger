@@ -1,7 +1,7 @@
 import React from 'react'
 import constructorCard from './constructor-card.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { conCardPropTypes } from '../../../utils/type'
+import { conCardPropTypes } from '../../../utils/types'
 import PropTypes from 'prop-types'
 import { Draggable } from 'react-beautiful-dnd'
 

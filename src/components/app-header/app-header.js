@@ -1,3 +1,4 @@
+import React from 'react'
 import appHeader from './app-header.module.css'
 import { Logo, ProfileIcon, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -29,4 +30,4 @@ const AppHeader = () => {
   )
 }
 
-export default AppHeader
+export default React.memo(AppHeader)

@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { ingridientPropTypes } from '../../../utils/type'
+import { ingredientPropTypes } from '../../../utils/types'
 import ingredientCard from './ingredient-card.module.css'
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { SET_CURRENT_ITEM } from '../../../services/actions/ingredients'
@@ -8,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import { useDrag } from 'react-dnd'
 
 const IngredientCard = React.memo(
-  ({ data, openModal }) => {
+  ({ data }) => {
     const dispatch = useDispatch()
     const { qty, ...restData } = data
 
@@ -17,7 +16,6 @@ const IngredientCard = React.memo(
         type: SET_CURRENT_ITEM,
         payload: { item: data }
       })
-      openModal(data)
     }
 
     const [{ border }, dragRef] = useDrag({
@@ -44,8 +42,7 @@ const IngredientCard = React.memo(
 )
 
 ingredientCard.propTypes = {
-  data: ingridientPropTypes.isRequired,
-  openModal: PropTypes.func.isRequired
+  data: ingredientPropTypes.isRequired,
 }
 
 export default IngredientCard

@@ -3,25 +3,24 @@ import { GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, GET_ITEMS_FAILED, UPDATE_ITEMS, I
 const initialState = {
   items: [],
   itemsRequest: false,
-  itemsFailed: false,
-  current: {}
+  itemsRequestFailed: false,
+  current: null
 }
 
 const ingredientsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
-      return { ...state, itemsRequest: true }
+      return { ...state, itemsRequest: true, itemsRequestFailed: false }
     }
     case GET_ITEMS_SUCCESS: {
       return {
         ...state,
-        itemsFailed: false,
         itemsRequest: false,
         items: action.items
       }
     }
     case GET_ITEMS_FAILED: {
-      return { ...state, itemsFailed: true, itemsRequest: false }
+      return { ...initialState, itemsRequestFailed: true }
     }
     case UPDATE_ITEMS: {
       return { ...state, items: action.payload.items }

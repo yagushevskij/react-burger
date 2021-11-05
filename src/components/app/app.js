@@ -6,7 +6,6 @@ import BurgerIngridients from '../burger-ingredients/burger-ingredients.js'
 import BurgerConstructor from '../burger-constructor/burger-constructor.js'
 import ErrorBoundary from '../error-boundary/error-boundary.js'
 import app from './app.module.css'
-import Modal from '../modal/modal'
 
 const App = () => {
   return (
@@ -18,7 +17,6 @@ const App = () => {
           <BurgerConstructor />
         </DndProvider>
       </main>
-      <Modal />
     </ErrorBoundary>
   )
 }

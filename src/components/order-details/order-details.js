@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 const OrderDetails = () => {
   const number = useSelector(state => state.order.number)
-  const orderRequest = useSelector(state => state.order.orderRequest)
+  const orderRequest = useSelector(state => state.order.request)
   return (
     <div className={`${orderDetails.wrapper} pb-15`}>
       <span className={`${orderDetails.title} text text_type_digits-large mt-4`}>{!orderRequest && number}</span>

@@ -21,6 +21,12 @@
   align-items: center;
 }
 
+.info {
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .list {
   display: grid;
   gap: 16px;
@@ -29,18 +35,6 @@
   margin-bottom: 0;
   padding-left: 0;
   list-style-type: none;
-}
-
-.info {
-  align-self: center;
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-.scroll {
-  max-height: 370px;
-  overflow: auto;
-  padding-right: 8px;
 }
 
 .item {
