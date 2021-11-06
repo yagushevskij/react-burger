@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import modal from './modal.module.css'
 import ModalOverlay from '../modal-overlay/modal-overlay'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const modalRoot = document.getElementById('modal-root')
 
