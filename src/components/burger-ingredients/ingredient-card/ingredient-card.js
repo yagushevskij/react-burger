@@ -37,8 +37,7 @@ const IngredientCard = React.memo(
         <h3 className={`${ingredientCard.card__title} text text_type_main-default mt-1`}>{data.name}</h3>
       </article>
     )
-  },
-  (prevProps, nextProps) => prevProps.data === nextProps.data
+  }
 )
 
 ingredientCard.propTypes = {

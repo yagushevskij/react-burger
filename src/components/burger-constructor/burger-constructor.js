@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import burgerConstructor from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -35,7 +35,7 @@ const BurgerConstructor = () => {
     )
   }, [constrItems])
 
-  const bun = constrItems.find(el => el.type === 'bun')
+  const bun = useMemo(() => constrItems.find(el => el.type === 'bun'), [constrItems])
 
   const handleDrop = item => {
     if (item.type === 'bun' && bun) {
@@ -44,10 +44,13 @@ const BurgerConstructor = () => {
     addItem(item)
   }
 
-  const addItem = item => {
-    dispatch(constrItemActions.addItem(item))
-    dispatch(itemActions.increaseItem(item))
-  }
+  const addItem = useCallback(
+    item => {
+      dispatch(constrItemActions.addItem(item))
+      dispatch(itemActions.increaseItem(item))
+    },
+    [dispatch]
+  )
 
   const removeItem = useCallback(
     item => {
@@ -61,6 +64,7 @@ const BurgerConstructor = () => {
     dispatch({ type: SET_INITIAL_ORDER_STATE })
     constrItems.forEach(el => removeItem(el))
   }
+
   const handleCloseErrorModal = () => {
     dispatch({ type: SET_INITIAL_ORDER_STATE })
   }
@@ -85,7 +89,7 @@ const BurgerConstructor = () => {
                   <ConstructorElement type='top' isLocked={true} text={`${bun.name} (верх)`} price={bun.price} thumbnail={bun.image} />
                 </li>
               )}
-                <ScrollContainer items={constrItems} removeItem={removeItem} />
+              <ScrollContainer items={constrItems} removeItem={removeItem} />
               {bun && (
                 <li className={`${burgerConstructor.item} pl-8 pr-5`} key={'bun-bottom' + bun._id}>
                   <ConstructorElement type='bottom' isLocked={true} text={`${bun.name} (низ)`} price={bun.price} thumbnail={bun.image} />
@@ -97,7 +101,7 @@ const BurgerConstructor = () => {
                 <span className='text text_type_digits-medium mr-2'>{totalCost}</span>
                 <CurrencyIcon type='primary' />
               </p>
-                <Order items={constrItems} bun={bun} />
+              <Order items={constrItems} bun={bun} />
             </div>
           </>
         )}

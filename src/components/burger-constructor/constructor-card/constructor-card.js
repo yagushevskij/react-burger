@@ -4,6 +4,7 @@ import { conCardPropTypes } from '../../../utils/types'
 import PropTypes from 'prop-types'
 import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
+import React from 'react'
 
 const ConstructorCard = ({ data, handleRemove, index, moveCard, id }) => {
   const ref = useRef()
@@ -64,4 +65,4 @@ ConstructorCard.propTypes = {
   id: PropTypes.string.isRequired
 }
 
-export default ConstructorCard
+export default React.memo(ConstructorCard)
