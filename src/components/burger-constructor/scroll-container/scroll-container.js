@@ -1,42 +1,29 @@
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { useDispatch } from 'react-redux'
 import ConstructorCard from '../constructor-card/constructor-card'
 import { constrItemActions } from '../../../services/actions/constructor'
 import scrollContainer from './scroll-container.module.css'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import { ingredientPropTypes } from '../../../utils/types'
+import { useCallback } from 'react'
 
 const ScrollContainer = ({ items, removeItem }) => {
-    const dispatch = useDispatch()
-    const onDragEnd = result => {
-        if (!result.destination) {
-          return
-        }
-        const resultItems = reorder(items, result.source.index, result.destination.index)
-        dispatch(constrItemActions.updateItems(resultItems))
-      }
-      const reorder = (list, startIndex, endIndex) => {
-        const result = Array.from(list)
-        const [removed] = result.splice(startIndex, 1)
-        result.splice(endIndex, 0, removed)
-        return result
-      }
+  const dispatch = useDispatch()
+
+  const moveCard = useCallback((dragIndex, hoverIndex) => {
+    const dragCard = items[dragIndex]
+    const copyItems = [...items]
+    copyItems.splice(dragIndex, 1)
+    copyItems.splice(hoverIndex, 0, dragCard)
+    dispatch(constrItemActions.updateItems(copyItems))
+  }, [items, dispatch])
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-    <Droppable droppableId='droppable'>
-      {(provided, snapshot) => (
-        <ul className={`${scrollContainer.list} ${scrollContainer.scroll}`} {...provided.droppableProps} ref={provided.innerRef}>
-          {items &&
-            items.map((item, index) => {
-              if (item.type !== 'bun') {
-                return <ConstructorCard key={index} data={item} handleRemove={removeItem} index={index} />
-              }
-            })}
-          {provided.placeholder}
-        </ul>
-      )}
-    </Droppable>
-  </DragDropContext>
+    <ul className={`${scrollContainer.list} ${scrollContainer.scroll}`}>
+      {items.map((item, index) => {
+        if (item.type !== 'bun') {
+          return <ConstructorCard key={item.key} id={item.key} data={item} handleRemove={removeItem} index={index} moveCard={moveCard} />
+        }
+      })}
+    </ul>
   )
 }
 

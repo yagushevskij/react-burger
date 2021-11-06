@@ -15,7 +15,7 @@ const constructorReducer = (state = initialState, action) => {
     case REMOVE_CONSTR_ITEM: {
       return {
         ...state,
-        items: [...state.items].filter(el => el.key !== action.payload.item.key)
+        items: state.items.filter(el => el.key !== action.payload.item.key)
       }
     }
     case UPDATE_CONSTR_ITEMS: {
