@@ -1,0 +1,3 @@
+.main {
+  composes: main from '../../components/app/app.module.css'
+}
