@@ -1,20 +1,29 @@
-import styles from './login.module.css'
-import useInput from '../../services/customHooks/useInput'
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from 'react-router-dom'
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import styles from './register.module.css'
+import useInput from '../../services/customHooks/useInput'
 import usePrivatePass from '../../services/customHooks/usePrivatePass'
 
-const Login = () => {
+const Register = () => {
   const { data, handleInputChange } = useInput()
-  const { email = '', password = '' } = data
+  const { email = '', password = '', name = '' } = data
   const {inputData, onIconClick, inputRef} = usePrivatePass()
 
   return (
     <section className={`${styles.main} text text_type_main-default`}>
-      <h1 className={styles.title}>Вход</h1>
+      <h1 className={styles.title}>Регистрация</h1>
       <form className={`${styles.form} mt-6`}>
         <div className={styles.inputs}>
+        <Input
+            type={'name'}
+            placeholder={'Имя'}
+            onChange={event => handleInputChange(event)}
+            name={'name'}
+            error={false}
+            size={'default'}
+            value={name}
+            errorText={'Ошибка'}
+          />
           <Input
             type={'email'}
             placeholder={'E-mail'}
@@ -41,24 +50,18 @@ const Login = () => {
         </div>
         <div className='mt-6'>
           <Button type='primary' size='medium'>
-            Войти
+            Зарегистрироваться
           </Button>
         </div>
       </form>
       <div className={`${styles.line} mt-20`}>
-        <p className={`text text_type_main-default text_color_inactive mr-2`}>Вы — новый пользователь?</p>
-        <Link className={styles.line} to='/register'>
-          Зарегистрироваться
-        </Link>
-      </div>
-      <div className={`${styles.line} mt-4`}>
-        <p className={`text text_type_main-default text_color_inactive mr-2`}>Забыли пароль?</p>
-        <Link className={styles.line} to='/forgot-password'>
-          Восстановить пароль
+        <p className={`text text_type_main-default text_color_inactive mr-2`}>Уже зарегистрированы?</p>
+        <Link className={styles.line} to='/login'>
+          Войти
         </Link>
       </div>
     </section>
   )
 }
 
-export default Login
+export default Register
