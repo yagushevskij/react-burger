@@ -3,27 +3,42 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import styles from './register.module.css'
 import useInput from '../../services/customHooks/useInput'
 import usePrivatePass from '../../services/customHooks/usePrivatePass'
+import { register } from '../../services/actions/thunk/register'
+import { useDispatch, useSelector } from 'react-redux'
+import { useCallback } from 'react'
+import { Navigate } from 'react-router-dom'
 
 const Register = () => {
+  const dispatch = useDispatch()
   const { data, handleInputChange } = useInput()
   const { email = '', password = '', name = '' } = data
-  const {inputData, onIconClick, inputRef} = usePrivatePass()
+  const { inputData, onIconClick, inputRef } = usePrivatePass()
+  const user = useSelector(state => state.auth.user)
+  const isRequest = useSelector(state => state.auth.request)
+
+  const onSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      dispatch(register(data))
+    },
+    [data, dispatch]
+  )
+
+  if (user)
+    return (
+      <Navigate
+        to={{
+          pathname: '/'
+        }}
+      />
+    )
 
   return (
     <section className={`${styles.main} text text_type_main-default`}>
       <h1 className={styles.title}>Регистрация</h1>
-      <form className={`${styles.form} mt-6`}>
+      <form className={`${styles.form} mt-6`} onSubmit={event => onSubmit(event)}>
         <div className={styles.inputs}>
-        <Input
-            type={'name'}
-            placeholder={'Имя'}
-            onChange={event => handleInputChange(event)}
-            name={'name'}
-            error={false}
-            size={'default'}
-            value={name}
-            errorText={'Ошибка'}
-          />
+          <Input type={'name'} placeholder={'Имя'} onChange={event => handleInputChange(event)} name={'name'} error={false} size={'default'} value={name} errorText={'Ошибка'} />
           <Input
             type={'email'}
             placeholder={'E-mail'}
@@ -49,7 +64,7 @@ const Register = () => {
           />
         </div>
         <div className='mt-6'>
-          <Button type='primary' size='medium'>
+          <Button type='primary' size='medium' disabled={isRequest}>
             Зарегистрироваться
           </Button>
         </div>

@@ -5,4 +5,26 @@ const getKeyByGenerate = () => {
   return text
 }
 
-export { getKeyByGenerate }
+const setCookie = (name, value, options = {}) => {
+  options = {
+    path: '/',
+    ...options
+  };
+  let exp = options.expires;
+  if (typeof exp == 'number' && exp) {
+    const date = new Date();
+    date.setTime(date.getTime() + exp * 1000);
+    exp = options.expires = date;
+  }
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+  document.cookie = updatedCookie;
+}
+
+export { getKeyByGenerate, setCookie }
