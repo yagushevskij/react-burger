@@ -3,7 +3,6 @@ import { API_URL } from '../../../utils/config'
 import { getCookie } from '../../../utils/helpers'
 
 export const getUser = () => {
-  console.log('Bearer ' + getCookie('accessToken'))
   return async function (dispatch) {
     dispatch({
       type: GET_USER_REQUEST

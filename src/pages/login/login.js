@@ -17,7 +17,6 @@ const Login = () => {
 
   const onSubmit = useCallback(
     event => {
-      console.log(data)
       event.preventDefault()
       dispatch(login(data))
     },

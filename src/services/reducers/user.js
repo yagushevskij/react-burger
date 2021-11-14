@@ -1,7 +1,7 @@
 import { GET_USER_REQUEST, GET_USER_REQUEST_SUCCESS, GET_USER_REQUEST_FAILED } from '../actions/user'
 
 const initialState = {
-  data: null,
+  data: {},
   request: false,
   failed: false,
   errorMessage: null

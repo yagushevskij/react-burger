@@ -1,3 +1,6 @@
 .main {
-  composes: main from '../../components/app/app.module.css'
+  display: flex;
+  justify-content: space-between;
+  background-color: #131316;
+  composes: container from '../../components/app/app.module.css'
 }
