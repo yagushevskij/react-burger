@@ -22,11 +22,13 @@ const ForgotPassword = () => {
     [data, dispatch]
   )
 
-  return isRequestSuccess ? (
-    <Navigate replace to={'/reset-password'} />
-  ) : (
+  if (isRequestSuccess) {
+    return <Navigate replace to={'/reset-password'} />
+  }
+
+  return (
     <section className={`${styles.main} text text_type_main-default`}>
-      <AuthForm title='Восстановление пароля' buttonText='Восстановить' onSubmit={onSubmit}>
+      <AuthForm title='Восстановление пароля' buttonText='Восстановить' onSubmit={onSubmit} isButtonDisabled={isRequest}>
         <Input
           type={'email'}
           placeholder={'Укажите e-mail'}

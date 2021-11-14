@@ -14,7 +14,7 @@ const Register = () => {
   const { data, handleInputChange } = useInput()
   const { email = '', password = '', name = '' } = data
   const { inputData, onIconClick, inputRef } = usePrivatePass()
-  const user = useSelector(state => state.auth.user)
+  const {user, request: isRequest} = useSelector(state => state.auth)
 
   const onSubmit = useCallback(
     event => {
@@ -28,7 +28,7 @@ const Register = () => {
 
   return (
     <section className={`${styles.main} text text_type_main-default`}>
-      <AuthForm onSubmit={onSubmit} title='Регистрация' buttonText={'Зарегистрироваться'}>
+      <AuthForm onSubmit={onSubmit} title='Регистрация' buttonText={'Зарегистрироваться'} isButtonDisabled={isRequest}>
         <>
           <Input type={'name'} placeholder={'Имя'} onChange={event => handleInputChange(event)} name={'name'} error={false} size={'default'} value={name} errorText={'Ошибка'} />
           <Input

@@ -1,18 +1,34 @@
 import styles from './login.module.css'
 import useInput from '../../services/customHooks/useInput'
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import usePrivatePass from '../../services/customHooks/usePrivatePass'
 import AuthForm from '../../components/auth-form/auth-form'
+import { useSelector, useDispatch } from 'react-redux'
+import { useCallback } from 'react'
+import { login } from '../../services/actions/thunk/auth'
 
 const Login = () => {
+  const dispatch = useDispatch()
   const { data, handleInputChange } = useInput()
   const { email = '', password = '' } = data
   const { inputData, onIconClick, inputRef } = usePrivatePass()
+  const {user, request: isRequest} = useSelector(state => state.auth)
+
+  const onSubmit = useCallback(
+    event => {
+      console.log(data)
+      event.preventDefault()
+      dispatch(login(data))
+    },
+    [data, dispatch]
+  )
+
+  if (user) return <Navigate to={'/'} />
 
   return (
     <section className={`${styles.main} text text_type_main-default`}>
-      <AuthForm title='Вход' buttonText='Войти' onChange={''}>
+      <AuthForm title='Вход' buttonText='Войти' onSubmit={onSubmit} isButtonDisabled={isRequest}>
         <>
           <Input
             type={'email'}

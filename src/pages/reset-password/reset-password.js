@@ -13,7 +13,7 @@ const ResetPassword = () => {
   const dispatch = useDispatch()
   const { success: isRequestSuccess, request: isRequest } = useSelector(state => state.resetPass)
   const { data, handleInputChange } = useInput()
-  const {code = '', password = '' } = data
+  const { code = '', password = '' } = data
   const { inputData, onIconClick, inputRef } = usePrivatePass()
 
   const onSubmit = useCallback(
@@ -24,13 +24,15 @@ const ResetPassword = () => {
     [data, dispatch]
   )
 
-  return isRequestSuccess ? (
-    <Navigate replace to={'/'} />
-  ) : (
+  if (isRequestSuccess) {
+    return <Navigate replace to={'/'} />
+  }
+
+  return (
     <section className={`${styles.main} text text_type_main-default`}>
-      <AuthForm title='Восстановление пароля' buttonText='Восстановить' onSubmit={onSubmit}>
+      <AuthForm title='Восстановление пароля' buttonText='Восстановить' onSubmit={onSubmit} isButtonDisabled={isRequest}>
         <>
-        <Input
+          <Input
             type={inputData.type}
             placeholder={'Введите новый пароль'}
             onChange={event => handleInputChange(event)}

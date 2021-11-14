@@ -1,11 +1,7 @@
 import styles from './auth-form.module.css'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector } from 'react-redux'
 
-
-const AuthForm = ({title, buttonText, children, onSubmit }) => {
-  const isRequest = useSelector(state => state.auth.request)
-
+const AuthForm = ({title, buttonText, isButtonDisabled, children, onSubmit }) => {
   return (
     <>
     {title && <h1 className={styles.title}>{title}</h1>}
@@ -14,7 +10,7 @@ const AuthForm = ({title, buttonText, children, onSubmit }) => {
         {children}
       </div>
       <div className='mt-6'>
-        <Button type='primary' size='medium' disabled={isRequest}>
+        <Button type='primary' size='medium' disabled={isButtonDisabled}>
           {buttonText}
         </Button>
       </div>
