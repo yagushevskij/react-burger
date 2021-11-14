@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './register.module.css'
 import useInput from '../../services/customHooks/useInput'
 import usePrivatePass from '../../services/customHooks/usePrivatePass'
@@ -23,8 +23,6 @@ const Register = () => {
     },
     [data, dispatch]
   )
-
-  console.log(new Date())
 
   if (user) return <Navigate to={'/'} />
 
