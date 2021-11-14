@@ -1,5 +1,5 @@
 import { API_URL } from '../../../utils/config'
-import { REGISTER_REQUEST, REGISTER_REQUEST_SUCCESS, REGISTER_REQUEST_FAILED } from '../auth'
+import { AUTH_REQUEST, AUTH_REQUEST_SUCCESS, AUTH_REQUEST_FAILED } from '../auth'
 import { setCookie, getExpiredDate } from '../../../utils/helpers'
 
 export const register = data => {
@@ -18,7 +18,7 @@ export const login = data => {
 
 const auth = async (data, url, dispatch) => {
   dispatch({
-    type: REGISTER_REQUEST
+    type: AUTH_REQUEST
   })
   try {
     const res = await fetch(url, {
@@ -35,20 +35,21 @@ const auth = async (data, url, dispatch) => {
       if (accessToken) {
         setCookie('accessToken', accessToken, {expires: 1200});
         setCookie('refreshToken', refreshToken);
+        localStorage.setItem('accessTokenExpiration', getExpiredDate(1200))
       }
       dispatch({
-        type: REGISTER_REQUEST_SUCCESS,
-        payload: { user: resData.user, tokenExpiration: getExpiredDate(1200) }
+        type: AUTH_REQUEST_SUCCESS,
+        payload: { user: resData.user }
       })
     } else {
       dispatch({
-        type: REGISTER_REQUEST_FAILED,
+        type: AUTH_REQUEST_FAILED,
         payload: {errorMessage: 'Возникла ошибка при регистрации. Пожалуйста, попробуйте позже'}
       })
     }
   } catch (e) {
     dispatch({
-      type: REGISTER_REQUEST_FAILED,
+      type: AUTH_REQUEST_FAILED,
       payload: {errorMessage: 'Возникла ошибка при регистрации. Пожалуйста, попробуйте позже'}
     })
     console.log(e)
