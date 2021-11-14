@@ -1,6 +1,6 @@
 import { API_URL } from '../../../utils/config'
 import { REGISTER_REQUEST, REGISTER_REQUEST_SUCCESS, REGISTER_REQUEST_FAILED } from '../auth'
-import { setCookie } from '../../../utils/helpers'
+import { setCookie, getExpiredDate } from '../../../utils/helpers'
 
 export const register = data => {
   return async function (dispatch) {
@@ -17,14 +17,16 @@ export const register = data => {
       })
       if (res && res.ok) {
         const resData = await res.json()
+        const accessToken = resData.accessToken.split('Bearer ')[1];
+        const refreshToken = resData.refreshToken
+        if (accessToken) {
+          setCookie('accessToken', accessToken, {expires: 1200});
+          setCookie('refreshToken', refreshToken);
+        }
         dispatch({
           type: REGISTER_REQUEST_SUCCESS,
-          payload: { user: resData.user }
+          payload: { user: resData.user, tokenExpiration: getExpiredDate(1200) }
         })
-        const authToken = resData.accessToken.split('Bearer ')[1];
-        if (authToken) {
-          setCookie('token', authToken);
-        }
       } else {
         dispatch({
           type: REGISTER_REQUEST_FAILED,

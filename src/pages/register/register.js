@@ -3,7 +3,7 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import styles from './register.module.css'
 import useInput from '../../services/customHooks/useInput'
 import usePrivatePass from '../../services/customHooks/usePrivatePass'
-import { register } from '../../services/actions/thunk/register'
+import { register } from '../../services/actions/thunk/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback } from 'react'
 import { Navigate } from 'react-router-dom'
@@ -24,12 +24,12 @@ const Register = () => {
     [data, dispatch]
   )
 
+  console.log(new Date())
+
   if (user)
     return (
       <Navigate
-        to={{
-          pathname: '/'
-        }}
+        to={'/'}
       />
     )
 

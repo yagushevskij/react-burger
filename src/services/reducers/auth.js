@@ -4,7 +4,8 @@ const initialState = {
   user: null,
   request: false,
   failed: false,
-  errorMessage: null
+  errorMessage: null,
+  tokenExpiration: null
 }
 
 const authReducer = (state = initialState, action) => {
@@ -22,7 +23,8 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         request: false,
-        user: action.payload.user
+        user: action.payload.user,
+        tokenExpiration: action.payload.tokenExpiration
       }
     case LOGIN_REQUEST_FAILED:
     case REGISTER_REQUEST_FAILED:

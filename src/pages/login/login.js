@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import usePrivatePass from '../../services/customHooks/usePrivatePass'
 
+
 const Login = () => {
   const { data, handleInputChange } = useInput()
   const { email = '', password = '' } = data

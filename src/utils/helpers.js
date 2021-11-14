@@ -5,6 +5,12 @@ const getKeyByGenerate = () => {
   return text
 }
 
+const getExpiredDate = (sec) => {
+  const date = new Date();
+  date.setTime(date.getTime() + sec * 1000);
+  return date
+}
+
 const setCookie = (name, value, options = {}) => {
   options = {
     path: '/',
@@ -12,9 +18,7 @@ const setCookie = (name, value, options = {}) => {
   };
   let exp = options.expires;
   if (typeof exp == 'number' && exp) {
-    const date = new Date();
-    date.setTime(date.getTime() + exp * 1000);
-    exp = options.expires = date;
+    exp = options.expires = getExpiredDate(exp);
   }
   let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
   for (let optionKey in options) {
@@ -27,4 +31,15 @@ const setCookie = (name, value, options = {}) => {
   document.cookie = updatedCookie;
 }
 
-export { getKeyByGenerate, setCookie }
+const getCookie = (name) => {
+  const matches = document.cookie.match(
+    new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+const deleteCookie = (name) => {
+  setCookie(name, null, { expires: -1 });
+}
+
+export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate }

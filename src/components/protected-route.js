@@ -1,35 +1,15 @@
-// import { useAuth } from '../services/auth';
-import { Navigate, Outlet } from 'react-router-dom';
-// import { useEffect, useState } from 'react';
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-export function ProtectedRoute({ children, ...rest }) {
-  // let { getUser, ...auth } = useAuth();
-  // const [isUserLoaded, setUserLoaded] = useState(false);
+const ProtectedRoute = () => {
+  const { user, isRequest } = useSelector(state => state.auth)
+  const location = useLocation()
 
-  // const init = async () => {
-  //   await getUser();
-  //   setUserLoaded(true);
-  // };
+  if (isRequest) {
+    return null
+  }
 
-  // useEffect(() => {
-  //   init();
-  // }, []);
-
-  // if (!isUserLoaded) {
-  //   return null;
-  // }
-
-  const currentLocation = window.location;
-  const auth = {user: null} // Пока нет авторизации
-
-  return auth.user ? (
-          <Outlet />
-        ) : (
-          <Navigate
-            to={{
-              pathname: '/login',
-              state: { from: currentLocation }
-            }}
-          />
-        )
+  return user ? <Outlet /> : <Navigate replace to={'/login'} state={{ from: location }} />
 }
+
+export default ProtectedRoute
