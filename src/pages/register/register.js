@@ -7,6 +7,7 @@ import { register } from '../../services/actions/thunk/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback } from 'react'
 import { Navigate } from 'react-router-dom'
+import AuthForm from '../../components/auth-form/auth-form'
 
 const Register = () => {
   const dispatch = useDispatch()
@@ -14,7 +15,6 @@ const Register = () => {
   const { email = '', password = '', name = '' } = data
   const { inputData, onIconClick, inputRef } = usePrivatePass()
   const user = useSelector(state => state.auth.user)
-  const isRequest = useSelector(state => state.auth.request)
 
   const onSubmit = useCallback(
     event => {
@@ -26,18 +26,12 @@ const Register = () => {
 
   console.log(new Date())
 
-  if (user)
-    return (
-      <Navigate
-        to={'/'}
-      />
-    )
+  if (user) return <Navigate to={'/'} />
 
   return (
     <section className={`${styles.main} text text_type_main-default`}>
-      <h1 className={styles.title}>Регистрация</h1>
-      <form className={`${styles.form} mt-6`} onSubmit={event => onSubmit(event)}>
-        <div className={styles.inputs}>
+      <AuthForm onSubmit={onSubmit} title='Регистрация' buttonText={'Зарегистрироваться'}>
+        <>
           <Input type={'name'} placeholder={'Имя'} onChange={event => handleInputChange(event)} name={'name'} error={false} size={'default'} value={name} errorText={'Ошибка'} />
           <Input
             type={'email'}
@@ -62,13 +56,8 @@ const Register = () => {
             value={password}
             errorText={'Ошибка'}
           />
-        </div>
-        <div className='mt-6'>
-          <Button type='primary' size='medium' disabled={isRequest}>
-            Зарегистрироваться
-          </Button>
-        </div>
-      </form>
+        </>
+      </AuthForm>
       <div className={`${styles.line} mt-20`}>
         <p className={`text text_type_main-default text_color_inactive mr-2`}>Уже зарегистрированы?</p>
         <Link className={styles.line} to='/login'>

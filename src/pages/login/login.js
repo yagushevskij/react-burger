@@ -2,20 +2,18 @@ import styles from './login.module.css'
 import useInput from '../../services/customHooks/useInput'
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from 'react-router-dom'
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import usePrivatePass from '../../services/customHooks/usePrivatePass'
-
+import AuthForm from '../../components/auth-form/auth-form'
 
 const Login = () => {
   const { data, handleInputChange } = useInput()
   const { email = '', password = '' } = data
-  const {inputData, onIconClick, inputRef} = usePrivatePass()
+  const { inputData, onIconClick, inputRef } = usePrivatePass()
 
   return (
     <section className={`${styles.main} text text_type_main-default`}>
-      <h1 className={styles.title}>Вход</h1>
-      <form className={`${styles.form} mt-6`}>
-        <div className={styles.inputs}>
+      <AuthForm title='Вход' buttonText='Войти' onChange={''}>
+        <>
           <Input
             type={'email'}
             placeholder={'E-mail'}
@@ -39,13 +37,8 @@ const Login = () => {
             value={password}
             errorText={'Ошибка'}
           />
-        </div>
-        <div className='mt-6'>
-          <Button type='primary' size='medium'>
-            Войти
-          </Button>
-        </div>
-      </form>
+        </>
+      </AuthForm>
       <div className={`${styles.line} mt-20`}>
         <p className={`text text_type_main-default text_color_inactive mr-2`}>Вы — новый пользователь?</p>
         <Link className={styles.line} to='/register'>
