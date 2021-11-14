@@ -4,15 +4,31 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from 'react-router-dom'
 import AuthForm from '../../components/auth-form/auth-form'
 import usePrivatePass from '../../services/customHooks/usePrivatePass'
+import { useDispatch, useSelector } from 'react-redux'
+import { resetPass } from '../../services/actions/thunk/reset-pass'
+import { Navigate } from 'react-router-dom'
+import { useCallback } from 'react'
 
 const ResetPassword = () => {
+  const dispatch = useDispatch()
+  const { success: isRequestSuccess, request: isRequest } = useSelector(state => state.resetPass)
   const { data, handleInputChange } = useInput()
   const {code = '', password = '' } = data
   const { inputData, onIconClick, inputRef } = usePrivatePass()
 
-  return (
+  const onSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      dispatch(resetPass(data))
+    },
+    [data, dispatch]
+  )
+
+  return isRequestSuccess ? (
+    <Navigate replace to={'/'} />
+  ) : (
     <section className={`${styles.main} text text_type_main-default`}>
-      <AuthForm title='Восстановление пароля' buttonText='Восстановить' onChange={''}>
+      <AuthForm title='Восстановление пароля' buttonText='Восстановить' onSubmit={onSubmit}>
         <>
         <Input
             type={inputData.type}
