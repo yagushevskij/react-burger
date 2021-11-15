@@ -45,6 +45,7 @@ export const getUser = () => {
 export const updateAccessToken = async () => {
   const refreshToken = getCookie('refreshToken')
   const data = { "token": {refreshToken} } 
+  console.log(data)
   try {
     const res = await fetch(API_URL + 'auth/token', {
       method: 'POST',

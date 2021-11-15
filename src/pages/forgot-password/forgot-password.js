@@ -1,26 +1,11 @@
 import styles from './forgot-password.module.css'
-import useInput from '../../services/customHooks/useInput'
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from 'react-router-dom'
-import AuthForm from '../../components/auth-form/auth-form'
-import { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { restorePass } from '../../services/actions/thunk/restore-pass'
+import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
+import ForgotPasswordForm from '../../components/forgot-password-form/forgot-password-form'
 
 const ForgotPassword = () => {
-  const dispatch = useDispatch()
-  const { success: isRequestSuccess, request: isRequest } = useSelector(state => state.restorePass)
-  const { data, handleInputChange } = useInput()
-  const { email = '' } = data
-
-  const onSubmit = useCallback(
-    event => {
-      event.preventDefault()
-      dispatch(restorePass(data))
-    },
-    [data, dispatch]
-  )
+  const isRequestSuccess = useSelector(state => state.restorePass.success)
 
   if (isRequestSuccess) {
     return <Navigate replace to={'/reset-password'} />
@@ -28,18 +13,7 @@ const ForgotPassword = () => {
 
   return (
     <section className={`${styles.main} text text_type_main-default`}>
-      <AuthForm title='Восстановление пароля' buttonText='Восстановить' onSubmit={onSubmit} isButtonDisabled={isRequest}>
-        <Input
-          type={'email'}
-          placeholder={'Укажите e-mail'}
-          onChange={event => handleInputChange(event)}
-          name={'email'}
-          error={false}
-          size={'default'}
-          value={email}
-          errorText={'Ошибка'}
-        />
-      </AuthForm>
+        <ForgotPasswordForm />
       <div className={`${styles.line} mt-20`}>
         <p className={`text text_type_main-default text_color_inactive mr-2`}>Вспомнили пароль?</p>
         <Link className={styles.line} to='/login'>
