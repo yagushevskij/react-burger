@@ -1,7 +1,15 @@
-import { GET_USER_REQUEST, GET_USER_REQUEST_SUCCESS, GET_USER_REQUEST_FAILED, UPDATE_USER_REQUEST, UPDATE_USER_REQUEST_SUCCESS, UPDATE_USER_REQUEST_FAILED } from '../actions/user'
+import {
+  GET_USER_REQUEST,
+  GET_USER_REQUEST_SUCCESS,
+  GET_USER_REQUEST_FAILED,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_REQUEST_SUCCESS,
+  UPDATE_USER_REQUEST_FAILED,
+  SET_USER
+} from '../actions/user'
 
 const initialState = {
-  data: {},
+  data: null,
   request: false,
   failed: false,
   errorMessage: null
@@ -35,6 +43,12 @@ const userReducer = (state = initialState, action) => {
         ...state,
         failed: true,
         errorMessage: action.payload.errorMessage
+      }
+    case SET_USER:
+      console.log(action)
+      return {
+        ...initialState,
+        data: action.payload.data
       }
     default:
       return state

@@ -15,11 +15,11 @@ const initialInputsState = {
 
 const ProfileForm = () => {
   const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(getUser())
-  // }, [])
-  const data = useSelector(state => state.user.data)
-  const { name = '', email = '' } = data
+  useEffect(() => {
+    dispatch(getUser())
+  }, [])
+  const user = useSelector(state => state.user.data)
+  const { name = '', email = '' } = user
   // const isUserRequest = useSelector(state => state.user.request)
 
   const { data: inputedData, handleInputChange, resetInputedData } = useInput()
@@ -40,7 +40,7 @@ const ProfileForm = () => {
 
   const onSubmit = event => {
     event.preventDefault()
-    const combinedData = Object.assign({}, data, inputedData)
+    const combinedData = Object.assign({}, user, inputedData)
     dispatch(updateUser(combinedData))
     setInitialFormState()
   }

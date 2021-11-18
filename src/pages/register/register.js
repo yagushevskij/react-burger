@@ -5,7 +5,7 @@ import RegisterForm from '../../components/register-form/register-form'
 import { useSelector } from 'react-redux'
 
 const Register = () => {
-  const user = useSelector(state => state.auth.user)
+  const user = useSelector(state => state.user.data)
 
   if (user) return <Navigate to={'/'} />
 

@@ -8,20 +8,23 @@ import { useEffect } from 'react'
 import { getUser } from '../../services/actions/thunk/user'
 import { useSelector } from 'react-redux'
 import { getItems } from '../../services/actions/thunk/ingredients'
+import Logout from '../logout/logout'
 
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getUser())
-    dispatch(getItems())
   }, [])
-  const {request: isUserRequest } = useSelector((state) => state.user)
+  useEffect(() => {
+    dispatch(getItems())
+  })
+  // const {request: isUserRequest } = useSelector((state) => state.auth)
 
-  console.log(isUserRequest)
+  // console.log(isUserRequest)
 
-  if (isUserRequest) {
-    return null
-  }
+  // if (isUserRequest) {
+  //   return null
+  // }
 
   return (
     <ErrorBoundary>
@@ -37,6 +40,7 @@ const App = () => {
             <Route path='/profile' element={<Profile />} />
             <Route path='/profile/orders' element={<Profile />} />
           </Route>
+          <Route path='/logout' element={<Logout />} />
         </Routes>
       </Router>
     </ErrorBoundary>
