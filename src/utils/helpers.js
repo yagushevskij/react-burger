@@ -40,11 +40,4 @@ const deleteCookie = name => {
   setCookie(name, null, { expires: -1 })
 }
 
-const isTokenExpired = () => {
-  const currDate = new Date()
-  const expiration = localStorage.getItem('accessTokenExpiration')
-  const expDate = new Date(expiration)
-  return expDate.getTime() - currDate.getTime() < 0
-}
-
-export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, isTokenExpired }
+export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate }

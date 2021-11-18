@@ -5,14 +5,14 @@ const navLinkStyle = ({ isActive }) => `${styles.link} text text_type_main-mediu
 
 const ProfileNavLinks = () => {
   return (
-    <nav className={styles.nav}>
-      <NavLink className={navLinkStyle} to={`/profile`}>
+    <nav className={`${styles.nav} mt-30`}>
+      <NavLink className={navLinkStyle} end to={`/profile`}>
         Профиль
       </NavLink>
-      <NavLink className={navLinkStyle} to={`/profile/orders`}>
+      <NavLink className={navLinkStyle} end to={`/profile/orders`}>
         История заказов
       </NavLink>
-      <NavLink className={navLinkStyle} to={`/logout`}>
+      <NavLink className={navLinkStyle} end to={`/logout`}>
         Выход
       </NavLink>
     </nav>

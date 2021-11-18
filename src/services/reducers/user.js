@@ -1,4 +1,4 @@
-import { GET_USER_REQUEST, GET_USER_REQUEST_SUCCESS, GET_USER_REQUEST_FAILED } from '../actions/user'
+import { GET_USER_REQUEST, GET_USER_REQUEST_SUCCESS, GET_USER_REQUEST_FAILED, UPDATE_USER_REQUEST, UPDATE_USER_REQUEST_SUCCESS, UPDATE_USER_REQUEST_FAILED } from '../actions/user'
 
 const initialState = {
   data: {},
@@ -10,6 +10,7 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_REQUEST:
+    case UPDATE_USER_REQUEST:
       return {
         ...state,
         request: true,
@@ -17,6 +18,7 @@ const userReducer = (state = initialState, action) => {
         errorMessage: null
       }
     case GET_USER_REQUEST_SUCCESS:
+    case UPDATE_USER_REQUEST_SUCCESS:
       return {
         ...state,
         request: false,
@@ -25,6 +27,12 @@ const userReducer = (state = initialState, action) => {
     case GET_USER_REQUEST_FAILED:
       return {
         ...initialState,
+        failed: true,
+        errorMessage: action.payload.errorMessage
+      }
+    case UPDATE_USER_REQUEST_FAILED:
+      return {
+        ...state,
         failed: true,
         errorMessage: action.payload.errorMessage
       }

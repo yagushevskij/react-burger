@@ -35,7 +35,6 @@ const auth = async (data, url, dispatch) => {
       if (accessToken) {
         setCookie('accessToken', accessToken, {expires: 1200});
         setCookie('refreshToken', refreshToken);
-        localStorage.setItem('accessTokenExpiration', getExpiredDate(1200))
       }
       dispatch({
         type: AUTH_REQUEST_SUCCESS,

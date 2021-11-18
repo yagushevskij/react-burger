@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import burgerIngridients from './burger-ingredients.module.css'
 import IngredientCard from './ingredient-card/ingredient-card'
 import { SET_CURRENT_ITEM } from '../../services/actions/ingredients'
-import { getItems } from '../../services/actions/thunk/ingredients'
 import TabList from './tab-list/tab-list'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
@@ -37,7 +36,6 @@ const BurgerIngridients = () => {
   const [scrollContainer, setSrollContainer] = useState({ height: 0 })
 
   useEffect(() => {
-    dispatch(getItems())
     setActiveTab(getClosestTab())
     setSrollContainer({ height: getScrollContainerHeight() })
   }, [])

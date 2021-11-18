@@ -7,9 +7,11 @@ import authReducer from './auth'
 import userReducer from './user'
 import restorePassReducer from './restore-pass'
 import resetPassReducer from './reset-pass'
+import ordersReducer from './orders'
 
 export const rootReducer = combineReducers({
   order: orderReducer,
+  orders: ordersReducer,
   contructor: constructorReducer,
   ingredients: ingredientsReducer,
   auth: authReducer,

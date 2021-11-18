@@ -1,71 +1,101 @@
-import { GET_USER_REQUEST, GET_USER_REQUEST_SUCCESS, GET_USER_REQUEST_FAILED } from '../user'
+import { GET_USER_REQUEST, GET_USER_REQUEST_SUCCESS, GET_USER_REQUEST_FAILED, UPDATE_USER_REQUEST, UPDATE_USER_REQUEST_SUCCESS, UPDATE_USER_REQUEST_FAILED } from '../user'
 import { API_URL } from '../../../utils/config'
-import { getCookie, setCookie, isTokenExpired } from '../../../utils/helpers'
+import { getCookie, setCookie } from '../../../utils/helpers'
+
+let accessToken = getCookie('accessToken')
+
+const checkReponse = res => {
+  return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
+}
+
+export const retriableFetch = async (url, options = {}) => {
+  try {
+    const res = await fetch(url, options)
+    const result = await checkReponse(res)
+    return result
+  } catch (err) {
+    if (!accessToken || err.message === 'jwt expired') {
+      const refreshData = await refreshToken()
+      // console.log({refreshData})
+      const updatedAccessToken = refreshData.accessToken.split('Bearer ')[1]
+      console.log({updatedAccessToken})
+      setCookie('refreshToken', refreshData.refreshToken)
+      setCookie('accessToken', updatedAccessToken, {expires: 1200})
+      // options.headers ??= {}
+      options.headers.authorization = 'Bearer ' + updatedAccessToken
+      // console.log({options})
+      const res = await fetch(url, options)
+      return await checkReponse(res)
+    } else {
+      throw err
+    }
+  }
+}
 
 export const getUser = () => {
   return async function (dispatch) {
-    let token = getCookie('accessToken')
-    if (!token || isTokenExpired()) {
-      token = await updateAccessToken()
-    }
     dispatch({
       type: GET_USER_REQUEST
     })
-    console.log(token)
     try {
-      const res = await fetch(API_URL + 'auth/user', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token
-        }
-      })
-      if (res && res.ok) {
-        const resData = await res.json()
-        dispatch({
-          type: GET_USER_REQUEST_SUCCESS,
-          payload: { user: resData.user }
-        })
-      } else {
-        dispatch({
-          type: GET_USER_REQUEST_FAILED,
-          payload: {errorMessage: 'На сайте возникла ошибка. Пожалуйста, попробуйте позже'}
-        })
+    const res = await retriableFetch(API_URL + 'auth/user', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + accessToken
       }
+    })
+    dispatch({
+      type: GET_USER_REQUEST_SUCCESS,
+      payload: { user: res.user }
+    })
     } catch (e) {
       dispatch({
         type: GET_USER_REQUEST_FAILED,
-        payload: {errorMessage: 'На сайте возникла ошибка. Пожалуйста, попробуйте позже'}
+        payload: { errorMessage: 'На сайте возникла ошибка. Пожалуйста, попробуйте позже' }
       })
       console.log(e)
     }
   }
 }
 
-export const updateAccessToken = async () => {
-  const refreshToken = getCookie('refreshToken')
-  const data = { "token": {refreshToken} } 
-  console.log(data)
-  try {
-    const res = await fetch(API_URL + 'auth/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
+export const updateUser = data => {
+  return async function (dispatch) {
+    dispatch({
+      type: UPDATE_USER_REQUEST
     })
-    if (res && res.ok) {
-      const resData = await res.json()
-      const accessToken = resData.accessToken.split('Bearer ')[1];
-      const refreshToken = resData.refreshToken
-      if (accessToken) {
-        setCookie('accessToken', accessToken, {expires: 1200});
-        setCookie('refreshToken', refreshToken);
-      }
-    } else {
-      console.log('Ошибка при обновлении токена')
+    try {
+      const res = await retriableFetch(API_URL + 'auth/user', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: 'Bearer ' + accessToken
+        },
+        body: JSON.stringify(data)
+      })
+      dispatch({
+        type: UPDATE_USER_REQUEST_SUCCESS,
+        payload: { user: res.user }
+      })
+    } catch (e) {
+      dispatch({
+        type: UPDATE_USER_REQUEST_FAILED,
+        payload: { errorMessage: 'На сайте возникла ошибка. Пожалуйста, попробуйте позже' }
+      })
+      console.log(e)
     }
-  } catch (e) {
-    console.log(e)
   }
+}
+
+export const refreshToken = async () => {
+  const refreshToken = getCookie('refreshToken')
+  const data = { token: refreshToken }
+  const res = await fetch(API_URL + 'auth/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  return await checkReponse(res)
 }

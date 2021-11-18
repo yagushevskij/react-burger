@@ -40,3 +40,11 @@
 .item__link:hover {
   opacity: 0.7;
 }
+
+.link {
+  text-decoration: none;
+}
+
+.link_active {
+  color: #F2F2F3;
+}

@@ -3,3 +3,19 @@
   gap: 24px;
   margin: 0 auto;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.submit {
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.link {
+  color: #4C4CFF
+}

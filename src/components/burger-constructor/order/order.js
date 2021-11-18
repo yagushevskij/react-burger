@@ -1,7 +1,7 @@
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { GET_ORDER_FAILED } from '../../../services/actions/order'
-import { getOrder } from '../../../services/actions/thunk/order'
+import { order } from '../../../services/actions/thunk/order'
 import { conCardPropTypes } from '../../../utils/types'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -17,7 +17,7 @@ const Order = ({ items, bun }) => {
       })
       return
     }
-    dispatch(getOrder(items))
+    dispatch(order(items))
   }
 
   return (
