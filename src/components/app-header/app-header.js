@@ -12,7 +12,6 @@ const secondaryIcon = 'secondary'
 
 const AppHeader = () => {
   const location = useLocation()
-  console.log(location.pathname)
   // const [activeIcon, setActiveIcon] = useState()
   const setLinkStyle = ({isActive}) => `${appHeader.link} text text_type_main-default text_color_inactive ml-2 ${isActive && appHeader.link_active}`
   const setActiveIcon = (path) => location.pathname === path ? primaryIcon : secondaryIcon

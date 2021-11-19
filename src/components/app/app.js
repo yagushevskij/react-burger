@@ -11,6 +11,7 @@ import { getItems } from '../../services/actions/thunk/ingredients'
 import Logout from '../logout/logout'
 import ProtectedAuthRoute from '../protected-auth-route'
 import { getCookie } from '../../utils/helpers'
+import IngredientDetailsPage from '../../pages/ingredient-details/ingredient-details-page'
 
 const App = () => {
   return (
@@ -33,10 +34,11 @@ const AppWrap = () => {
   useEffect(() => {
     dispatch(getItems())
   })
-  const { request: isUserRequest } = useSelector(state => state.auth)
+  // const { request: isUserRequest } = useSelector(state => state.auth)
   return (
-    <Routes location={from ?? location}>
+    <Routes>
       <Route path='/' element={<Home />} />
+      <Route path='/ingredients/:id' element={<IngredientDetailsPage />} />
       <Route path='/profile' element={<ProtectedRoute />}>
         <Route path='/profile' element={<Profile />} />
         <Route path='/profile/orders' element={<Profile />} />
@@ -45,7 +47,7 @@ const AppWrap = () => {
         <Route path='/logout' element={<Logout />} />
       </Route>
       <Route path='/' element={<ProtectedAuthRoute />}>
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' desired={location.state?.desired} element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />

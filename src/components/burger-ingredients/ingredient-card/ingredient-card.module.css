@@ -37,3 +37,8 @@
 .card__title {
   text-align: center;
 }
+
+.link {
+  text-decoration: none;
+  /* color: wheat */
+}

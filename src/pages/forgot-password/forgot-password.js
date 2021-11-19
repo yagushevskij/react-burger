@@ -1,14 +1,15 @@
 import styles from './forgot-password.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import ForgotPasswordForm from '../../components/forgot-password-form/forgot-password-form'
 
 const ForgotPassword = () => {
+  const location = useLocation()
   const isRequestSuccess = useSelector(state => state.restorePass.success)
 
   if (isRequestSuccess) {
-    return <Navigate replace to={'/reset-password'} />
+    return <Navigate replace to={'/reset-password'} state={{ from: location }}/>
   }
 
   return (

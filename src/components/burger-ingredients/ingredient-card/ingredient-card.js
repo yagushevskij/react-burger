@@ -5,43 +5,55 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import { SET_CURRENT_ITEM } from '../../../services/actions/ingredients'
 import { useDispatch } from 'react-redux'
 import { useDrag } from 'react-dnd'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-const IngredientCard = React.memo(
-  ({ data }) => {
-    const dispatch = useDispatch()
-    const { qty, ...restData } = data
+const IngredientCard = React.memo(({ data }) => {
+  const location = useLocation()
+  const dispatch = useDispatch()
+  const { qty, ...restData } = data
 
-    const handleOpenModal = () => {
-      dispatch({
-        type: SET_CURRENT_ITEM,
-        payload: { item: data }
-      })
-    }
-
-    const [{ border }, dragRef] = useDrag({
-      type: 'ingredient-card',
-      item: restData,
-      collect: monitor => ({
-        border: monitor.isDragging() ? '1px solid #4C4CFF' : '1px solid transparent'
-      })
+  const handleOpenModal = () => {
+    dispatch({
+      type: SET_CURRENT_ITEM,
+      payload: { item: data }
     })
-
-    return (
-      <article className={ingredientCard.card} onClick={handleOpenModal} ref={dragRef} style={{ border }}>
-        <div className={`${ingredientCard.card__count}`}>{data.qty > 0 && <Counter count={data.qty} size='default' />}</div>
-        <img className={`${ingredientCard.card__image} ml-4 mr-4`} src={data.image} alt=''></img>
-        <div className={`${ingredientCard.card__price} mt-1`}>
-          <p className='text text_type_digits-default mr-2'>{data.price}</p>
-          <CurrencyIcon type='primary' />
-        </div>
-        <h3 className={`${ingredientCard.card__title} text text_type_main-default mt-1`}>{data.name}</h3>
-      </article>
-    )
   }
-)
+
+  const [{ border }, dragRef] = useDrag({
+    type: 'ingredient-card',
+    item: restData,
+    collect: monitor => ({
+      border: monitor.isDragging() ? '1px solid #4C4CFF' : '1px solid transparent'
+    })
+  })
+
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/ingredients/${data._id}`, { state: { from: location } })
+    // navigate(to, { state })
+    // history.replace({
+    //   pathname: `/ingredients/${data._id}`,
+    // });
+  }
+
+  return (
+    // <Link to={{ pathname: `/ingredients/${data._id}`}} state={{ from: location }} className={ingredientCard.link}>
+    <article className={ingredientCard.card} onClick={handleClick} ref={dragRef} style={{ border }}>
+      <div className={`${ingredientCard.card__count}`}>{data.qty > 0 && <Counter count={data.qty} size='default' />}</div>
+      <img className={`${ingredientCard.card__image} ml-4 mr-4`} src={data.image} alt=''></img>
+      <div className={`${ingredientCard.card__price} mt-1`}>
+        <p className='text text_type_digits-default mr-2'>{data.price}</p>
+        <CurrencyIcon type='primary' />
+      </div>
+      <h3 className={`${ingredientCard.card__title} text text_type_main-default mt-1`}>{data.name}</h3>
+    </article>
+    // </Link>
+  )
+})
 
 ingredientCard.propTypes = {
-  data: ingredientPropTypes.isRequired,
+  data: ingredientPropTypes.isRequired
 }
 
 export default IngredientCard

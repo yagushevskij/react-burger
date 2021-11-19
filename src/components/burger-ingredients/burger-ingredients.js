@@ -61,11 +61,11 @@ const BurgerIngridients = () => {
 
   return (
     <>
-      {currentIngredient && (
+      {/* {currentIngredient && (
         <Modal title='Детали ингридиента' handleCloseModal={handleCloseModal}>
           <IngredientDetails />
         </Modal>
-      )}
+      )} */}
 
       <section className={burgerIngridients.section}>
         <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>

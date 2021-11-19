@@ -5,6 +5,8 @@ import { useEffect } from 'react'
 import { getUser } from '../services/actions/thunk/user'
 
 const ProtectedAuthRoute = () => {
+  const location = useLocation()
+  const state = location.state
   // const dispatch = useDispatch()
   // useEffect(() => {
   //       dispatch(getUser())
@@ -13,13 +15,12 @@ const ProtectedAuthRoute = () => {
   // const isUserRequest = useSelector(state => state.auth.request)
   const user = useSelector(state => state.user.data)
   const isAuth = (Object.keys(user).length !== 0)
-  // const location = useLocation()
 
   // if (isUserRequest) {
   //   return null
   // }
 
-  return isAuth ? <Navigate replace to={'/'} /> : <Outlet />
+  return isAuth ? <Navigate replace to={state?.from.pathname || '/'} /> : <Outlet />
 }
 
 export default ProtectedAuthRoute
