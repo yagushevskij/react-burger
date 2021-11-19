@@ -2,13 +2,12 @@ import { GET_USER_REQUEST, GET_USER_REQUEST_SUCCESS, GET_USER_REQUEST_FAILED, UP
 import { API_URL } from '../../../utils/config'
 import { getCookie, setCookie } from '../../../utils/helpers'
 
-let accessToken = getCookie('accessToken')
-
 const checkReponse = res => {
   return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
 }
 
 export const retriableFetch = async (url, options = {}) => {
+  let accessToken = getCookie('accessToken')
   try {
     const res = await fetch(url, options)
     const result = await checkReponse(res)
@@ -33,6 +32,7 @@ export const retriableFetch = async (url, options = {}) => {
 }
 
 export const getUser = () => {
+  let accessToken = getCookie('accessToken')
   return async function (dispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -61,6 +61,7 @@ export const getUser = () => {
 
 export const updateUser = data => {
   return async function (dispatch) {
+    let accessToken = getCookie('accessToken')
     dispatch({
       type: UPDATE_USER_REQUEST
     })
@@ -88,8 +89,9 @@ export const updateUser = data => {
 }
 
 export const refreshToken = async () => {
-  const refreshToken = getCookie('refreshToken')
+  let refreshToken = getCookie('refreshToken')
   const data = { token: refreshToken }
+  console.log(data)
   const res = await fetch(API_URL + 'auth/token', {
     method: 'POST',
     headers: {

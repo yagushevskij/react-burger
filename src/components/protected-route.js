@@ -5,22 +5,24 @@ import { useEffect } from 'react'
 import { getUser } from '../services/actions/thunk/user'
 
 const ProtectedRoute = () => {
+  const refreshToken = getCookie('refreshToken')
+  // console.log({refreshToken})
   // const dispatch = useDispatch()
   // useEffect(() => {
-  //       dispatch(getUser())
-  // })
-  // const accessToken = getCookie('accessToken')
-  const isUserRequest = useSelector(state => state.auth.request)
-  const user = useSelector(state => state.user.data)
+  //   dispatch(getUser())
+  // }, [])
+
+  // const isUserRequest = useSelector(state => state.user.request)
+  // const user = useSelector(state => state.user.data)
   const location = useLocation()
+  
+  // console.log({user, isUserRequest})
 
-  console.log({isUserRequest})
+  // if (isUserRequest) {
+  //   return null
+  // }
 
-  if (isUserRequest) {
-    return null
-  }
-
-  return user ? <Outlet /> : <Navigate replace to={'/login'} state={{ from: location }} />
+  return refreshToken ? <Outlet /> : <Navigate replace to={'/login'} state={{ from: location }} />
 }
 
 export default ProtectedRoute

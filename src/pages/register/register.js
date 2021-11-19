@@ -5,9 +5,9 @@ import RegisterForm from '../../components/register-form/register-form'
 import { useSelector } from 'react-redux'
 
 const Register = () => {
-  const user = useSelector(state => state.user.data)
+  // const user = useSelector(state => state.user.data)
 
-  if (user) return <Navigate to={'/'} />
+  // if (user) return <Navigate to={'/'} />
 
   return (
     <section className={`${styles.main} text text_type_main-default`}>

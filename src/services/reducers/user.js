@@ -9,7 +9,7 @@ import {
 } from '../actions/user'
 
 const initialState = {
-  data: null,
+  data: {},
   request: false,
   failed: false,
   errorMessage: null

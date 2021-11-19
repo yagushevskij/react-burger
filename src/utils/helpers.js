@@ -1,3 +1,6 @@
+import moment from 'moment'
+import 'moment/locale/ru'
+
 const getKeyByGenerate = () => {
   let text = ''
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -40,4 +43,36 @@ const deleteCookie = name => {
   setCookie(name, null, { expires: -1 })
 }
 
-export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate }
+const getFormatedDay = date => {
+  const today = new Date()
+  const differenceDay = new Date(date)
+  const difference = moment(today).diff(differenceDay, 'days')
+  return difference > 1 ? moment(date).from() : moment(date).calendar()
+}
+moment.updateLocale('ru', {
+  calendar: {
+    sameDay: '[Сегодня] LT [i-GMT]Z',
+    lastDay: '[Вчера] LT [i-GMT]Z',
+    sameElse: 'LL LT [i-GMT]Z'
+  },
+  relativeTime: {
+    future: 'in %s',
+    past: '%s ago',
+    s: 'a few seconds',
+    ss: '%d seconds',
+    m: 'a minute',
+    mm: '%d minutes',
+    h: 'an hour',
+    hh: '%d hours',
+    d: 'a day ff',
+    dd: '%d days',
+    w: 'a week',
+    ww: '%d weeks',
+    M: 'a month',
+    MM: '%d months',
+    y: 'a year',
+    yy: '%d years'
+  }
+})
+
+export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, getFormatedDay }

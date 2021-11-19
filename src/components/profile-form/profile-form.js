@@ -20,7 +20,7 @@ const ProfileForm = () => {
   }, [])
   const user = useSelector(state => state.user.data)
   const { name = '', email = '' } = user
-  // const isUserRequest = useSelector(state => state.user.request)
+  const isUserRequest = useSelector(state => state.user.request)
 
   const { data: inputedData, handleInputChange, resetInputedData } = useInput()
   const { name: inputedName = '', email: inputedEmail = '', password: inputedPassword = '' } = inputedData
@@ -43,6 +43,10 @@ const ProfileForm = () => {
     const combinedData = Object.assign({}, user, inputedData)
     dispatch(updateUser(combinedData))
     setInitialFormState()
+  }
+
+  if (isUserRequest) {
+    return null
   }
 
   return (

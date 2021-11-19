@@ -9,6 +9,8 @@ import { getUser } from '../../services/actions/thunk/user'
 import { useSelector } from 'react-redux'
 import { getItems } from '../../services/actions/thunk/ingredients'
 import Logout from '../logout/logout'
+import ProtectedAuthRoute from '../protected-auth-route'
+import { getCookie } from '../../utils/helpers'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -18,29 +20,34 @@ const App = () => {
   useEffect(() => {
     dispatch(getItems())
   })
-  // const {request: isUserRequest } = useSelector((state) => state.auth)
+  const {request: isUserRequest } = useSelector((state) => state.auth)
 
-  // console.log(isUserRequest)
+  console.log(isUserRequest)
 
   // if (isUserRequest) {
   //   return null
   // }
+  console.log(getCookie('accessToken'))
 
   return (
     <ErrorBoundary>
       <Router>
         <AppHeader />
         <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route path='/reset-password' element={<ResetPassword />} />
           <Route path='/' element={<Home />} />
           <Route path='/profile' element={<ProtectedRoute />}>
             <Route path='/profile' element={<Profile />} />
             <Route path='/profile/orders' element={<Profile />} />
           </Route>
-          <Route path='/logout' element={<Logout />} />
+          <Route path='/logout' element={<ProtectedRoute />}>
+            <Route path='/logout' element={<Logout />} />
+          </Route>
+          <Route path='/' element={<ProtectedAuthRoute />}>
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/forgot-password' element={<ForgotPassword />} />
+            <Route path='/reset-password' element={<ResetPassword />} />
+          </Route>
         </Routes>
       </Router>
     </ErrorBoundary>

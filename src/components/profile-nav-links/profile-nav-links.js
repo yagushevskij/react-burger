@@ -5,6 +5,7 @@ const navLinkStyle = ({ isActive }) => `${styles.link} text text_type_main-mediu
 
 const ProfileNavLinks = () => {
   return (
+    <div className={styles.container}>
     <nav className={`${styles.nav} mt-30`}>
       <NavLink className={navLinkStyle} end to={`/profile`}>
         Профиль
@@ -16,6 +17,8 @@ const ProfileNavLinks = () => {
         Выход
       </NavLink>
     </nav>
+    <p className={`text text_type_main-small text_color_inactive mt-20`}>В этом разделе вы можете просмотреть свою историю заказов</p>
+    </div>
   )
 }
 

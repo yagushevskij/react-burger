@@ -1,5 +1,4 @@
 .nav {
-  min-width: 320px;
   display: flex;
   flex-direction: column;
 }
@@ -11,4 +10,8 @@
 
 .link_active {
   color: #F2F2F3;
+}
+
+.container {
+  width: 320px;
 }

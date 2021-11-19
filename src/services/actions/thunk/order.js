@@ -3,11 +3,9 @@ import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED } from '../order
 import { GET_ORDERS_REQUEST, GET_ORDERS_SUCCESS, GET_ORDERS_FAILED } from '../orders'
 import { getCookie } from '../../../utils/helpers'
 
-let token = getCookie('accessToken')
-
 export const order = items => {
   return async function (dispatch) {
-    console.log(token)
+    const token = getCookie('accessToken')
     dispatch({
       type: GET_ORDER_REQUEST
     })
@@ -45,6 +43,7 @@ export const order = items => {
 
 export const getOrders = () => {
   return async function (dispatch) {
+    const token = getCookie('accessToken')
     dispatch({
       type: GET_ORDERS_REQUEST
     })
