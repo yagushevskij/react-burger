@@ -35,6 +35,10 @@ const IngredientCard = React.memo(({ data }) => {
 
   const handleClick = () => {
     window.history.replaceState(null, null, `/ingredients/${data._id}`)
+    dispatch({
+      type: SET_CURRENT_ITEM,
+      payload: { item: data }
+    })
     setModalOpened(true)
 
     // navigate(`/ingredients/${data._id}`, { state: { from: location } })
@@ -52,7 +56,7 @@ const IngredientCard = React.memo(({ data }) => {
     <>
           {isModaOpened && (
         <Modal title='Детали ингридиента' handleCloseModal={handleCloseModal}>
-          <IngredientDetails id={data._id} />
+          <IngredientDetails data={data} />
         </Modal>
       )}
     {/* <Link to={{ pathname: `/ingredients/${data._id}`}} state={{ from: location }} className={ingredientCard.link}> */}

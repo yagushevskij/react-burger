@@ -2,12 +2,14 @@
 import ingredientDetails from './ingredient-details.module.css'
 import { useSelector } from 'react-redux'
 
-const IngredientDetails = ({id}) => {
-  const ingredients = useSelector(state => state.ingredients.items)
+const IngredientDetails = () => {
+  // console.log({data})
+    const data = useSelector(store => store.ingredients.current) || {}
+    // console.log({currentIngredient})
+  // const ingredients = useSelector(state => state.ingredients.items)
   // const isIngredientsExist = ingredients.length > 0
   // const clickedIngredient = useSelector(state => state.ingredients.current)
-  const isIngredientsRequest = useSelector(state => state.ingredients.itemsRequest)
-  const data = ingredients.find(el => el._id === id) || {}
+
   // const data = useSelector(store => store.ingredients.current)
   const { image, name, calories, proteins, fat, carbohydrates} = data
   return (

@@ -14,19 +14,6 @@ import { getCookie } from '../../utils/helpers'
 import IngredientDetailsPage from '../../pages/ingredient-details/ingredient-details-page'
 
 const App = () => {
-  return (
-    <ErrorBoundary>
-      <Router>
-        <AppHeader />
-        <AppWrap />
-      </Router>
-    </ErrorBoundary>
-  )
-}
-
-const AppWrap = () => {
-  const location = useLocation()
-  const from = location.state?.from
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getUser())
@@ -34,9 +21,11 @@ const AppWrap = () => {
   useEffect(() => {
     dispatch(getItems())
   })
-  // const { request: isUserRequest } = useSelector(state => state.auth)
   return (
-    <Routes>
+    <ErrorBoundary>
+      <Router>
+        <AppHeader />
+        <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/ingredients/:id' element={<IngredientDetailsPage />} />
       <Route path='/profile' element={<ProtectedRoute />}>
@@ -47,13 +36,47 @@ const AppWrap = () => {
         <Route path='/logout' element={<Logout />} />
       </Route>
       <Route path='/' element={<ProtectedAuthRoute />}>
-        <Route path='/login' desired={location.state?.desired} element={<Login />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />
       </Route>
     </Routes>
+      </Router>
+    </ErrorBoundary>
   )
 }
+
+// const AppRoutesWrap = () => {
+//   const location = useLocation()
+//   const from = location.state?.from
+//   const dispatch = useDispatch()
+//   useEffect(() => {
+//     dispatch(getUser())
+//   }, [])
+//   useEffect(() => {
+//     dispatch(getItems())
+//   })
+//   // const { request: isUserRequest } = useSelector(state => state.auth)
+//   return (
+//     <Routes>
+//       <Route path='/' element={<Home />} />
+//       <Route path='/ingredients/:id' element={<IngredientDetailsPage />} />
+//       <Route path='/profile' element={<ProtectedRoute />}>
+//         <Route path='/profile' element={<Profile />} />
+//         <Route path='/profile/orders' element={<Profile />} />
+//       </Route>
+//       <Route path='/logout' element={<ProtectedRoute />}>
+//         <Route path='/logout' element={<Logout />} />
+//       </Route>
+//       <Route path='/' element={<ProtectedAuthRoute />}>
+//         <Route path='/login' desired={location.state?.desired} element={<Login />} />
+//         <Route path='/register' element={<Register />} />
+//         <Route path='/forgot-password' element={<ForgotPassword />} />
+//         <Route path='/reset-password' element={<ResetPassword />} />
+//       </Route>
+//     </Routes>
+//   )
+// }
 
 export default App
