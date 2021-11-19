@@ -37,6 +37,7 @@ const auth = async (data, url, dispatch) => {
       if (accessToken) {
         setCookie('accessToken', accessToken, { expires: 1200 })
         setCookie('refreshToken', refreshToken)
+        setCookie('isAuth', 'true')
       }
       dispatch({
         type: AUTH_REQUEST_SUCCESS,
@@ -77,13 +78,13 @@ export const logout = () => {
       })
       if (res && res.ok) {
         deleteCookie('accessToken')
+        setCookie('isAuth', 'false')
         dispatch({
           type: LOGOUT_REQUEST_SUCCESS,
         })
-        console.log('1')
         dispatch({
           type: SET_USER,
-          payload: {data: null}
+          payload: {data: {}}
         })
       } else {
         dispatch({

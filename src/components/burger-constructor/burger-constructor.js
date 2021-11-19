@@ -65,9 +65,9 @@ const BurgerConstructor = () => {
     constrItems.forEach(el => removeItem(el))
   }
 
-  const handleCloseErrorModal = () => {
-    dispatch({ type: SET_INITIAL_ORDER_STATE })
-  }
+  // const handleCloseErrorModal = () => {
+  //   dispatch({ type: SET_INITIAL_ORDER_STATE })
+  // }
 
   return (
     <>
@@ -76,7 +76,7 @@ const BurgerConstructor = () => {
           <OrderDetails />
         </Modal>
       )}
-      {orderFailed && <Modal handleCloseModal={handleCloseErrorModal} />}
+      {/* {orderFailed && <Modal handleCloseModal={handleCloseErrorModal} />} */}
 
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (

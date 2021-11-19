@@ -1,12 +1,16 @@
 import styles from './login.module.css'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useLocation } from 'react-router-dom'
 import { useSelector} from 'react-redux'
 import LoginForm from '../../components/login-form/login-form'
+import { getCookie } from '../../utils/helpers'
 
 const Login = () => {
-  const user = useSelector(state => state.auth.user)
+  const isAuth = JSON.parse(getCookie('isAuth'))
+  // const user = useSelector(state => state.auth.user)
+  const location = useLocation()
+  const state = location.state
 
-  if (user) return <Navigate to={'/'} />
+  if (isAuth) return <Navigate to={ state?.from || '/' } />
 
   return (
     <section className={`${styles.main} text text_type_main-default`}>

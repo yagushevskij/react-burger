@@ -6,6 +6,8 @@ import { getUser } from '../services/actions/thunk/user'
 
 const ProtectedRoute = () => {
   const refreshToken = getCookie('refreshToken')
+  const isAuth = JSON.parse(getCookie('isAuth'))
+  console.log({isAuth})
   // console.log({refreshToken})
   // const dispatch = useDispatch()
   // useEffect(() => {
@@ -22,7 +24,7 @@ const ProtectedRoute = () => {
   //   return null
   // }
 
-  return refreshToken ? <Outlet /> : <Navigate replace to={'/login'} state={{ from: location }} />
+  return isAuth ? <Outlet /> : <Navigate replace to={'/login'} state={{ from: location }} />
 }
 
 export default ProtectedRoute
