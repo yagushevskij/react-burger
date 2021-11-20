@@ -3,6 +3,9 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useSelector } from 'react-redux'
 import { getFormatedDay } from '../../../utils/helpers'
 
+const maxElems = 5
+let zIndex = 50
+
 const OrderCard = ({ props }) => {
   const { createdAt, name, number, status, ingredients: ids } = props
   const ingredients = useSelector(state => state.ingredients.items)
@@ -18,9 +21,6 @@ const OrderCard = ({ props }) => {
     const ingredient = ingredients.find(el => el._id === id)
     return ingredient.image_mobile
   })
-
-  const maxElems = 5
-  let zIndex = 50
 
   return (
     <article className={styles.container}>

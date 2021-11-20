@@ -1,6 +1,6 @@
 import { API_URL } from '../../../utils/config'
 import { AUTH_REQUEST, AUTH_REQUEST_SUCCESS, AUTH_REQUEST_FAILED, LOGOUT_REQUEST, LOGOUT_REQUEST_SUCCESS, LOGOUT_REQUEST_FAILED } from '../auth'
-import { setCookie, getCookie, getExpiredDate } from '../../../utils/helpers'
+import { setCookie, getCookie } from '../../../utils/helpers'
 import { deleteCookie } from '../../../utils/helpers'
 import { SET_USER } from '../user'
 

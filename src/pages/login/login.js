@@ -1,12 +1,10 @@
 import styles from './login.module.css'
 import { Link, Navigate, useLocation } from 'react-router-dom'
-import { useSelector} from 'react-redux'
 import LoginForm from '../../components/login-form/login-form'
 import { getCookie } from '../../utils/helpers'
 
 const Login = () => {
   const isAuth = JSON.parse(getCookie('isAuth'))
-  // const user = useSelector(state => state.auth.user)
   const location = useLocation()
   const state = location.state
 

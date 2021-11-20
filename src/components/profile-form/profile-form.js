@@ -109,7 +109,7 @@ const ProfileForm = () => {
           <p className={`${styles.link} text text_type_main-default mr-7`} onClick={setInitialFormState}>
             Отмена
           </p>
-          <Button type='primary' size='medium' disabled={''}>
+          <Button type='primary' size='medium' disabled={isUserRequest}>
             Сохранить
           </Button>
         </div>

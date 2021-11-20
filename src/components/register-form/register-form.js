@@ -22,7 +22,7 @@ const RegisterForm = () => {
   return (
     <AuthForm onSubmit={onSubmit} title='Регистрация' buttonText={'Зарегистрироваться'} isButtonDisabled={isRequest}>
       <>
-        <Input type={'name'} placeholder={'Имя'} onChange={event => handleInputChange(event)} name={'name'} error={false} size={'default'} value={name} errorText={'Ошибка'} />
+        <Input type={'text'} placeholder={'Имя'} onChange={event => handleInputChange(event)} name={'name'} error={false} size={'default'} value={name} errorText={'Ошибка'} />
         <Input
           type={'email'}
           placeholder={'E-mail'}

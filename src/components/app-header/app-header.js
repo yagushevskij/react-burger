@@ -2,7 +2,6 @@ import React from 'react'
 import appHeader from './app-header.module.css'
 import { Logo, ProfileIcon, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink } from 'react-router-dom'
-import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { DATA } from '../../utils/config'
 
@@ -12,7 +11,6 @@ const secondaryIcon = 'secondary'
 
 const AppHeader = () => {
   const location = useLocation()
-  // const [activeIcon, setActiveIcon] = useState()
   const setLinkStyle = ({isActive}) => `${appHeader.link} text text_type_main-default text_color_inactive ml-2 ${isActive && appHeader.link_active}`
   const setActiveIcon = (path) => location.pathname === path ? primaryIcon : secondaryIcon
   return (

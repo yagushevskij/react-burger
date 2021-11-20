@@ -5,22 +5,14 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import { SET_CURRENT_ITEM } from '../../../services/actions/ingredients'
 import { useDispatch } from 'react-redux'
 import { useDrag } from 'react-dnd'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Modal from '../../modal/modal'
 import IngredientDetails from '../../ingredient-details/ingredient-details'
 import { useState } from 'react'
 
 const IngredientCard = React.memo(({ data }) => {
-  const location = useLocation()
   const dispatch = useDispatch()
   const { qty, ...restData } = data
 
-  const handleOpenModal = () => {
-    dispatch({
-      type: SET_CURRENT_ITEM,
-      payload: { item: data }
-    })
-  }
   const [isModaOpened, setModalOpened] = useState(false)
 
   const [{ border }, dragRef] = useDrag({
@@ -31,8 +23,6 @@ const IngredientCard = React.memo(({ data }) => {
     })
   })
 
-  // const navigate = useNavigate()
-
   const handleClick = () => {
     window.history.replaceState(null, null, `/ingredients/${data._id}`)
     dispatch({
@@ -40,12 +30,6 @@ const IngredientCard = React.memo(({ data }) => {
       payload: { item: data }
     })
     setModalOpened(true)
-
-    // navigate(`/ingredients/${data._id}`, { state: { from: location } })
-    // navigate(to, { state })
-    // history.replace({
-    //   pathname: `/ingredients/${data._id}`,
-    // });
   }
 
   const handleCloseModal = () => {
@@ -59,7 +43,6 @@ const IngredientCard = React.memo(({ data }) => {
           <IngredientDetails data={data} />
         </Modal>
       )}
-    {/* <Link to={{ pathname: `/ingredients/${data._id}`}} state={{ from: location }} className={ingredientCard.link}> */}
     <article className={ingredientCard.card} onClick={handleClick} ref={dragRef} style={{ border }}>
       <div className={`${ingredientCard.card__count}`}>{data.qty > 0 && <Counter count={data.qty} size='default' />}</div>
       <img className={`${ingredientCard.card__image} ml-4 mr-4`} src={data.image} alt=''></img>
@@ -69,7 +52,6 @@ const IngredientCard = React.memo(({ data }) => {
       </div>
       <h3 className={`${ingredientCard.card__title} text text_type_main-default mt-1`}>{data.name}</h3>
     </article>
-    {/* </Link> */}
     </>
   )
 })

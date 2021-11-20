@@ -5,21 +5,16 @@ import { order } from '../../../services/actions/thunk/order'
 import { conCardPropTypes } from '../../../utils/types'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { getCookie } from '../../../utils/helpers'
 
 const Order = ({ items, bun }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const location = useLocation()
-  // const [madeOrder, setMadeOrder] = useState(false)
   const isAuth = JSON.parse(getCookie('isAuth'))
   const orderRequest = useSelector(state => state.order.request)
-  // const user = useSelector(state => state.user.data)
-  // const isAuth = Object.keys(user).length !== 0
   const makeOrder = () => {
-    // setMadeOrder(true)
     !isAuth && navigate(`/login`, { state: {from: location} })
     if (!bun) {
       dispatch({

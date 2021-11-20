@@ -1,11 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import burgerIngridients from './burger-ingredients.module.css'
 import IngredientCard from './ingredient-card/ingredient-card'
-import { SET_CURRENT_ITEM } from '../../services/actions/ingredients'
 import TabList from './tab-list/tab-list'
-import Modal from '../modal/modal'
-import IngredientDetails from '../ingredient-details/ingredient-details'
 
 const getBoundingClientRectTop = elem => elem.current.getBoundingClientRect().top
 
@@ -28,9 +25,7 @@ const BurgerIngridients = () => {
     ]
   }
 
-  const dispatch = useDispatch()
   const ingredients = useSelector(store => createGrouppedIngredients(store.ingredients.items))
-  const currentIngredient = useSelector(store => store.ingredients.current)
 
   const [activeTab, setActiveTab] = useState()
   const [scrollContainer, setSrollContainer] = useState({ height: 0 })
@@ -46,13 +41,6 @@ const BurgerIngridients = () => {
     return windowHeight - scrollContainerOffsetTop
   }
 
-  const handleCloseModal = () => {
-    dispatch({
-      type: SET_CURRENT_ITEM,
-      payload: { item: null }
-    })
-  }
-
   const getClosestTab = () => {
     const tabsOffsetTop = tabsRef.current.offsetTop
     const closestElem = ingredients.sort((a, b) => Math.abs(tabsOffsetTop - getBoundingClientRectTop(a.ref)) - Math.abs(tabsOffsetTop - getBoundingClientRectTop(b.ref)))[0]
@@ -61,12 +49,6 @@ const BurgerIngridients = () => {
 
   return (
     <>
-      {/* {currentIngredient && (
-        <Modal title='Детали ингридиента' handleCloseModal={handleCloseModal}>
-          <IngredientDetails />
-        </Modal>
-      )} */}
-
       <section className={burgerIngridients.section}>
         <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
         <TabList items={ingredients} activeTab={activeTab} ref={tabsRef} />

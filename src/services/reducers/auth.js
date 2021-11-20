@@ -1,7 +1,6 @@
 import { AUTH_REQUEST, AUTH_REQUEST_SUCCESS, AUTH_REQUEST_FAILED, LOGOUT_REQUEST, LOGOUT_REQUEST_SUCCESS, LOGOUT_REQUEST_FAILED } from '../actions/auth'
 
 const initialState = {
-  // user: null,
   request: false,
   failed: false,
   errorMessage: null
@@ -22,7 +21,6 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         request: false
-        // user: action.payload.user
       }
     case AUTH_REQUEST_FAILED:
     case LOGOUT_REQUEST_FAILED:

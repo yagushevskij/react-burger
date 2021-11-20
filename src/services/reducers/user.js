@@ -45,7 +45,6 @@ const userReducer = (state = initialState, action) => {
         errorMessage: action.payload.errorMessage
       }
     case SET_USER:
-      console.log(action)
       return {
         ...initialState,
         data: action.payload.data

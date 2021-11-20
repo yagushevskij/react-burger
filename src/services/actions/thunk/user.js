@@ -15,14 +15,10 @@ export const retriableFetch = async (url, options = {}) => {
   } catch (err) {
     if (!accessToken || err.message === 'jwt expired') {
       const refreshData = await refreshToken()
-      // console.log({refreshData})
       const updatedAccessToken = refreshData.accessToken.split('Bearer ')[1]
-      console.log({updatedAccessToken})
       setCookie('refreshToken', refreshData.refreshToken)
       setCookie('accessToken', updatedAccessToken, {expires: 1200})
-      // options.headers ??= {}
       options.headers.authorization = 'Bearer ' + updatedAccessToken
-      // console.log({options})
       const res = await fetch(url, options)
       return await checkReponse(res)
     } else {
@@ -91,7 +87,6 @@ export const updateUser = data => {
 export const refreshToken = async () => {
   let refreshToken = getCookie('refreshToken')
   const data = { token: refreshToken }
-  console.log(data)
   const res = await fetch(API_URL + 'auth/token', {
     method: 'POST',
     headers: {
