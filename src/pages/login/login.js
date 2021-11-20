@@ -4,7 +4,7 @@ import LoginForm from '../../components/login-form/login-form'
 import { getCookie } from '../../utils/helpers'
 
 const Login = () => {
-  const isAuth = JSON.parse(getCookie('isAuth'))
+  const isAuth = !!getCookie('isAuth')
   const location = useLocation()
   const state = location.state
 
