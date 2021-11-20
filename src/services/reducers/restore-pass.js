@@ -4,7 +4,7 @@ const initialState = {
   request: false,
   failed: false,
   success: false,
-  errorMessage: null,
+  errorMessage: null
 }
 
 const restorePassReducer = (state = initialState, action) => {
@@ -12,7 +12,7 @@ const restorePassReducer = (state = initialState, action) => {
     case RESTORE_PASS_REQUEST:
       return {
         ...initialState,
-        request: true,
+        request: true
       }
     case RESTORE_PASS_REQUEST_SUCCESS:
       return {

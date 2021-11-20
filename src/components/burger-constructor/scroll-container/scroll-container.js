@@ -9,13 +9,16 @@ import { useCallback } from 'react'
 const ScrollContainer = ({ items, removeItem }) => {
   const dispatch = useDispatch()
 
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
-    const dragCard = items[dragIndex]
-    const copyItems = [...items]
-    copyItems.splice(dragIndex, 1)
-    copyItems.splice(hoverIndex, 0, dragCard)
-    dispatch(constrItemActions.updateItems(copyItems))
-  }, [items, dispatch])
+  const moveCard = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragCard = items[dragIndex]
+      const copyItems = [...items]
+      copyItems.splice(dragIndex, 1)
+      copyItems.splice(hoverIndex, 0, dragCard)
+      dispatch(constrItemActions.updateItems(copyItems))
+    },
+    [items, dispatch]
+  )
   return (
     <ul className={`${scrollContainer.list} ${scrollContainer.scroll}`}>
       {items.map((item, index) => {

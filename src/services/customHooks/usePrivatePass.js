@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef, useState } from 'react'
 
 const usePrivatePass = () => {
   const inputRef = useRef(null)

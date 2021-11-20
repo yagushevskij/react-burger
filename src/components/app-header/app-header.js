@@ -11,8 +11,8 @@ const secondaryIcon = 'secondary'
 
 const AppHeader = () => {
   const location = useLocation()
-  const setLinkStyle = ({isActive}) => `${appHeader.link} text text_type_main-default text_color_inactive ml-2 ${isActive && appHeader.link_active}`
-  const setActiveIcon = (path) => location.pathname === path ? primaryIcon : secondaryIcon
+  const setLinkStyle = ({ isActive }) => `${appHeader.link} text text_type_main-default text_color_inactive ml-2 ${isActive && appHeader.link_active}`
+  const setActiveIcon = path => (location.pathname === path ? primaryIcon : secondaryIcon)
   return (
     <header className={appHeader.header}>
       <div className={appHeader.header__wrapper}>
@@ -26,7 +26,7 @@ const AppHeader = () => {
           <li className={`${appHeader.item__link} p-5 ml-2`}>
             <ListIcon type={setActiveIcon(links.ordersFeed.path)} />
             <NavLink end to={`/profile/orders`} className={({ isActive }) => setLinkStyle(isActive, 'orders')}>
-            {links.ordersFeed.title}
+              {links.ordersFeed.title}
             </NavLink>
           </li>
         </ul>
@@ -37,7 +37,7 @@ const AppHeader = () => {
           <li className={`${appHeader.item__link} p-5`}>
             <ProfileIcon type={setActiveIcon(links.profile.path)} />
             <NavLink end to={`/profile`} className={setLinkStyle}>
-            {links.profile.title}
+              {links.profile.title}
             </NavLink>
           </li>
         </ul>

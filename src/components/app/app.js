@@ -24,22 +24,22 @@ const App = () => {
       <Router>
         <AppHeader />
         <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/ingredients/:id' element={<IngredientDetailsPage />} />
-      <Route path='/profile' element={<ProtectedRoute />}>
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/profile/orders' element={<Profile />} />
-      </Route>
-      <Route path='/logout' element={<ProtectedRoute />}>
-        <Route path='/logout' element={<Logout />} />
-      </Route>
-      <Route path='/' element={<ProtectedAuthRoute />}>
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
-      </Route>
-    </Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/ingredients/:id' element={<IngredientDetailsPage />} />
+          <Route path='/profile' element={<ProtectedRoute />}>
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/profile/orders' element={<Profile />} />
+          </Route>
+          <Route path='/logout' element={<ProtectedRoute />}>
+            <Route path='/logout' element={<Logout />} />
+          </Route>
+          <Route path='/' element={<ProtectedAuthRoute />}>
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/forgot-password' element={<ForgotPassword />} />
+            <Route path='/reset-password' element={<ResetPassword />} />
+          </Route>
+        </Routes>
       </Router>
     </ErrorBoundary>
   )

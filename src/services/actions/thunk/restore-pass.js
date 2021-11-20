@@ -16,18 +16,18 @@ export const restorePass = data => {
       })
       if (res && res.ok) {
         dispatch({
-          type: RESTORE_PASS_REQUEST_SUCCESS,
+          type: RESTORE_PASS_REQUEST_SUCCESS
         })
       } else {
         dispatch({
           type: RESTORE_PASS_REQUEST_FAILED,
-          payload: {errorMessage: 'Возникла ошибка при восстановлении пароля. Пожалуйста, попробуйте позже'}
+          payload: { errorMessage: 'Возникла ошибка при восстановлении пароля. Пожалуйста, попробуйте позже' }
         })
       }
     } catch (e) {
       dispatch({
         type: RESTORE_PASS_REQUEST_FAILED,
-        payload: {errorMessage: 'Возникла ошибка при восстановлении пароля. Пожалуйста, попробуйте позже'}
+        payload: { errorMessage: 'Возникла ошибка при восстановлении пароля. Пожалуйста, попробуйте позже' }
       })
       console.log(e)
     }

@@ -2,9 +2,9 @@ import ingredientDetails from './ingredient-details.module.css'
 import { useSelector } from 'react-redux'
 
 const IngredientDetails = () => {
-    const data = useSelector(store => store.ingredients.current) || {}
-  const { image, name, calories, proteins, fat, carbohydrates} = data
-  
+  const data = useSelector(store => store.ingredients.current) || {}
+  const { image, name, calories, proteins, fat, carbohydrates } = data
+
   return (
     <div className={`${ingredientDetails.wrapper}`}>
       <img className={ingredientDetails.image} src={image} alt={name} />

@@ -17,7 +17,7 @@ export const retriableFetch = async (url, options = {}) => {
       const refreshData = await refreshToken()
       const updatedAccessToken = refreshData.accessToken.split('Bearer ')[1]
       setCookie('refreshToken', refreshData.refreshToken)
-      setCookie('accessToken', updatedAccessToken, {expires: 1200})
+      setCookie('accessToken', updatedAccessToken, { expires: 1200 })
       options.headers.authorization = 'Bearer ' + updatedAccessToken
       const res = await fetch(url, options)
       return await checkReponse(res)
@@ -34,17 +34,17 @@ export const getUser = () => {
       type: GET_USER_REQUEST
     })
     try {
-    const res = await retriableFetch(API_URL + 'auth/user', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: 'Bearer ' + accessToken
-      }
-    })
-    dispatch({
-      type: GET_USER_REQUEST_SUCCESS,
-      payload: { user: res.user }
-    })
+      const res = await retriableFetch(API_URL + 'auth/user', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: 'Bearer ' + accessToken
+        }
+      })
+      dispatch({
+        type: GET_USER_REQUEST_SUCCESS,
+        payload: { user: res.user }
+      })
     } catch (e) {
       dispatch({
         type: GET_USER_REQUEST_FAILED,

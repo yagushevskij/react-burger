@@ -15,7 +15,7 @@ const Order = ({ items, bun }) => {
   const isAuth = JSON.parse(getCookie('isAuth'))
   const orderRequest = useSelector(state => state.order.request)
   const makeOrder = () => {
-    !isAuth && navigate(`/login`, { state: {from: location} })
+    !isAuth && navigate(`/login`, { state: { from: location } })
     if (!bun) {
       dispatch({
         type: GET_ORDER_FAILED,

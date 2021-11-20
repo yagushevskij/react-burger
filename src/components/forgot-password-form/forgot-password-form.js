@@ -1,5 +1,5 @@
-import AuthForm from "../auth-form/auth-form"
-import Input from "../input/input"
+import AuthForm from '../auth-form/auth-form'
+import Input from '../input/input'
 import useInput from '../../services/customHooks/useInput'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

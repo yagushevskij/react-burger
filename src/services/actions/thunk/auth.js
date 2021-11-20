@@ -40,7 +40,7 @@ const auth = async (data, url, dispatch) => {
         setCookie('isAuth', 'true')
       }
       dispatch({
-        type: AUTH_REQUEST_SUCCESS,
+        type: AUTH_REQUEST_SUCCESS
       })
       dispatch({
         type: SET_USER,
@@ -80,11 +80,11 @@ export const logout = () => {
         deleteCookie('accessToken')
         setCookie('isAuth', 'false')
         dispatch({
-          type: LOGOUT_REQUEST_SUCCESS,
+          type: LOGOUT_REQUEST_SUCCESS
         })
         dispatch({
           type: SET_USER,
-          payload: {data: {}}
+          payload: { data: {} }
         })
       } else {
         dispatch({

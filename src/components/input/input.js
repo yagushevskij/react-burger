@@ -16,7 +16,6 @@ const Input = ({ subType, toggleDisable, ...params }) => {
 
   const options = subType === 'edit' ? { ...params, ...editInputOptions } : subType === 'password' ? { ...params, ...passInputOptions } : params
 
-
   return <InputLibraryElem {...options} />
 }
 

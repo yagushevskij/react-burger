@@ -9,7 +9,6 @@ const Logout = () => {
     dispatch(logout())
   }, [])
 
-
   return <Navigate to={`/login`} />
 }
 

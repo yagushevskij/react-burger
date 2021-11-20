@@ -6,7 +6,7 @@ import Orders from '../../components/orders/orders'
 
 const Profile = () => {
   const location = useLocation()
-  
+
   return (
     <section className={`${styles.main}`}>
       <ProfileNavLinks />

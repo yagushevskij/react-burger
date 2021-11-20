@@ -8,7 +8,7 @@ const Login = () => {
   const location = useLocation()
   const state = location.state
 
-  if (isAuth) return <Navigate to={ state?.from.pathname || '/' } />
+  if (isAuth) return <Navigate to={state?.from.pathname || '/'} />
 
   return (
     <section className={`${styles.main} text text_type_main-default`}>

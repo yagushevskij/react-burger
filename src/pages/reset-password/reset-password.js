@@ -18,7 +18,7 @@ const ResetPassword = () => {
 
   return (
     <section className={`${styles.main} text text_type_main-default`}>
-        <ResetPasswordForm />
+      <ResetPasswordForm />
       <div className={`${styles.line} mt-20`}>
         <p className={`text text_type_main-default text_color_inactive mr-2`}>Вспомнили пароль?</p>
         <Link className={styles.line} to='/login'>
