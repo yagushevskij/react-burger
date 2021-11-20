@@ -1,7 +1,7 @@
 import React from 'react'
 import appHeader from './app-header.module.css'
 import { Logo, ProfileIcon, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { DATA } from '../../utils/config'
 
@@ -30,9 +30,9 @@ const AppHeader = () => {
             </NavLink>
           </li>
         </ul>
-        <div className={`${appHeader.logo} ${appHeader.item}`}>
+        <Link className={`${appHeader.logo} ${appHeader.item}`} to={`/`}>
           <Logo />
-        </div>
+        </Link>
         <ul className={`${appHeader.item} ${appHeader.item_pos_right}`}>
           <li className={`${appHeader.item__link} pt-5 pl-5 pb-5`}>
             <ProfileIcon type={setActiveIcon(links.profile.path)} />
