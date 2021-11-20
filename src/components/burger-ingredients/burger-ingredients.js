@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import burgerIngridients from './burger-ingredients.module.css'
 import IngredientCard from './ingredient-card/ingredient-card'
@@ -30,19 +30,16 @@ const BurgerIngridients = () => {
   const [activeTab, setActiveTab] = useState()
   const [scrollContainer, setSrollContainer] = useState({ height: 0 })
 
-  const getClosestTab = useCallback(
-   () => {
+  const getClosestTab = () => {
     const tabsOffsetTop = tabsRef.current.offsetTop
     const closestElem = ingredients.sort((a, b) => Math.abs(tabsOffsetTop - getBoundingClientRectTop(a.ref)) - Math.abs(tabsOffsetTop - getBoundingClientRectTop(b.ref)))[0]
     return closestElem.type
-  }, [ingredients])
+  }
 
   useEffect(() => {
     setSrollContainer({ height: getScrollContainerHeight() })
-  }, [])
-  useEffect(() => {
     setActiveTab(getClosestTab())
-  }, [getClosestTab])
+  }, [])
 
   const getScrollContainerHeight = () => {
     const windowHeight = window.innerHeight
