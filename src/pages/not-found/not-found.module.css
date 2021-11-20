@@ -1,0 +1,5 @@
+.main {
+  composes: container from '../../components/app/app.module.css';
+  margin-top: 200px;
+  text-align: center;
+}

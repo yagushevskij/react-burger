@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ProtectedRoute from '../protected-route'
 import ErrorBoundary from '../error-boundary/error-boundary.js'
-import { Home, Login, Register, ForgotPassword, ResetPassword, Profile } from '../../pages'
+import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, IngredientDetailsPage } from '../../pages'
 import AppHeader from '../app-header/app-header'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
@@ -9,7 +9,6 @@ import { getUser } from '../../services/actions/thunk/user'
 import { getItems } from '../../services/actions/thunk/ingredients'
 import Logout from '../logout/logout'
 import ProtectedAuthRoute from '../protected-auth-route'
-import IngredientDetailsPage from '../../pages/ingredient-details/ingredient-details-page'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -39,6 +38,7 @@ const App = () => {
             <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/reset-password' element={<ResetPassword />} />
           </Route>
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </Router>
     </ErrorBoundary>
