@@ -12,10 +12,13 @@ const Order = ({ items, bun }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const location = useLocation()
-  const isAuth = !!getCookie('isAuth')
   const orderRequest = useSelector(state => state.order.request)
   const makeOrder = () => {
-    !isAuth && navigate(`/login`, { state: { from: location } })
+    const isAuth = !!getCookie('isAuth')
+    if (!isAuth) {
+      navigate(`/login`, { state: { from: location } })
+      return
+    }
     if (!bun) {
       dispatch({
         type: GET_ORDER_FAILED,
