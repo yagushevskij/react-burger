@@ -31,4 +31,6 @@ const IngredientDetails = () => {
   )
 }
 
+IngredientDetails.displayName = 'IngredientDetails';
+
 export default IngredientDetails

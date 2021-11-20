@@ -7,12 +7,15 @@ import PropTypes from 'prop-types'
 
 const modalRoot = document.getElementById('modal-root')
 
-const Modal = ({ title, children, handleCloseModal }) => {
+const Modal = ({ title, children, handleCloseModal, fakePath, originalPath }) => {
   const errorMessage = useSelector(state => state.order.errorMessage)
+
+  children.type.displayName === 'IngredientDetails' && fakePath && window.history.replaceState(null, null, fakePath)
 
   const close = useCallback(() => {
     handleCloseModal()
-  }, [handleCloseModal])
+    originalPath && window.history.replaceState(null, null, originalPath)
+  }, [handleCloseModal, originalPath])
   const closeByEsc = useCallback(
     e => {
       if (e.keyCode === 27) {
@@ -55,7 +58,9 @@ const Modal = ({ title, children, handleCloseModal }) => {
 Modal.propTypes = {
   children: PropTypes.element,
   title: PropTypes.string,
-  handleCloseModal: PropTypes.func.isRequired
+  handleCloseModal: PropTypes.func.isRequired,
+  fakePath: PropTypes.string,
+  originalPath: PropTypes.string
 }
 
 export default Modal

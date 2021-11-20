@@ -23,7 +23,7 @@ const BurgerConstructor = () => {
       border: monitor.isOver() ? '3px solid #4C4CFF' : '3px solid transparent'
     })
   })
-  const orderFailed = useSelector(state => state.order.failed)
+  // const orderFailed = useSelector(state => state.order.failed)
   const constrItems = useSelector(state => state.contructor.items)
   const orderNumber = useSelector(state => state.order.number)
 
