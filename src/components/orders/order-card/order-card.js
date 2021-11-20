@@ -49,6 +49,7 @@ const OrderCard = ({ props }) => {
                 </li>
               )
             }
+            return null
           })}
         </ul>
         <div className={styles.cost}>

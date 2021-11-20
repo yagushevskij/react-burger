@@ -17,7 +17,7 @@ const AppHeader = () => {
     <header className={appHeader.header}>
       <div className={appHeader.header__wrapper}>
         <ul className={`${appHeader.item} ${appHeader.item_pos_left}`}>
-          <li className={`${appHeader.item__link} p-5`}>
+          <li className={`${appHeader.item__link} pt-5 pr-5 pb-5`}>
             <BurgerIcon type={setActiveIcon(links.constructor.path)} />
             <NavLink end to={`/`} className={({ isActive }) => setLinkStyle(isActive, 'constructor')}>
               {links.constructor.title}
@@ -34,7 +34,7 @@ const AppHeader = () => {
           <Logo />
         </div>
         <ul className={`${appHeader.item} ${appHeader.item_pos_right}`}>
-          <li className={`${appHeader.item__link} p-5`}>
+          <li className={`${appHeader.item__link} pt-5 pl-5 pb-5`}>
             <ProfileIcon type={setActiveIcon(links.profile.path)} />
             <NavLink end to={`/profile`} className={setLinkStyle}>
               {links.profile.title}
