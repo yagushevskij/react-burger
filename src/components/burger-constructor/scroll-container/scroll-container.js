@@ -25,6 +25,7 @@ const ScrollContainer = ({ items, removeItem }) => {
         if (item.type !== 'bun') {
           return <ConstructorCard key={item.key} id={item.key} data={item} handleRemove={removeItem} index={index} moveCard={moveCard} />
         }
+        return null
       })}
     </ul>
   )

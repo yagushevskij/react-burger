@@ -17,7 +17,7 @@ const ProfileForm = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getUser())
-  }, [])
+  }, [dispatch])
   const user = useSelector(state => state.user.data)
   const { name = '', email = '' } = user
   const isUserRequest = useSelector(state => state.user.request)

@@ -8,7 +8,7 @@ const Orders = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getOrders())
-  }, [])
+  }, [dispatch])
   const orders = useSelector(state => state.orders.data)
   const { request: isOrdersRequest } = useSelector(state => state.orders)
   const isOrdersExist = orders.length > 0
