@@ -7,7 +7,7 @@ const checkReponse = res => {
 }
 
 export const retriableFetch = async (url, options = {}) => {
-  let accessToken = getCookie('accessToken')
+  const accessToken = getCookie('accessToken')
   try {
     const res = await fetch(url, options)
     const result = await checkReponse(res)
@@ -28,7 +28,7 @@ export const retriableFetch = async (url, options = {}) => {
 }
 
 export const getUser = () => {
-  let accessToken = getCookie('accessToken')
+  const accessToken = getCookie('accessToken')
   return async function (dispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -57,7 +57,7 @@ export const getUser = () => {
 
 export const updateUser = data => {
   return async function (dispatch) {
-    let accessToken = getCookie('accessToken')
+    const accessToken = getCookie('accessToken')
     dispatch({
       type: UPDATE_USER_REQUEST
     })
@@ -85,7 +85,7 @@ export const updateUser = data => {
 }
 
 export const refreshToken = async () => {
-  let refreshToken = getCookie('refreshToken')
+  const refreshToken = getCookie('refreshToken')
   const data = { token: refreshToken }
   const res = await fetch(API_URL + 'auth/token', {
     method: 'POST',
