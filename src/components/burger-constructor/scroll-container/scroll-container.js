@@ -3,7 +3,7 @@ import ConstructorCard from '../constructor-card/constructor-card'
 import { constrItemActions } from '../../../services/actions/constructor'
 import scrollContainer from './scroll-container.module.css'
 import PropTypes from 'prop-types'
-import { ingredientPropTypes } from '../../../utils/types'
+import { mainCardPropTypes } from '../../../utils/types'
 import { useCallback } from 'react'
 
 const ScrollContainer = ({ items, removeItem }) => {
@@ -32,7 +32,7 @@ const ScrollContainer = ({ items, removeItem }) => {
 }
 
 scrollContainer.propTypes = {
-  items: ingredientPropTypes,
+  items: mainCardPropTypes,
   removeItem: PropTypes.func.isRequired
 }
 

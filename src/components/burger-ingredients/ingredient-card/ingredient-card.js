@@ -1,5 +1,5 @@
 import React from 'react'
-import { ingredientPropTypes } from '../../../utils/types'
+import { mainCardPropTypes } from '../../../utils/types'
 import ingredientCard from './ingredient-card.module.css'
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { SET_CURRENT_ITEM } from '../../../services/actions/ingredients'
@@ -56,7 +56,7 @@ const IngredientCard = React.memo(({ data }) => {
 })
 
 ingredientCard.propTypes = {
-  data: ingredientPropTypes.isRequired
+  data: mainCardPropTypes.isRequired
 }
 
 export default IngredientCard
