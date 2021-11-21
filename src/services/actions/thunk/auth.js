@@ -78,7 +78,7 @@ export const logout = () => {
       })
       if (res && res.ok) {
         deleteCookie('accessToken')
-        setCookie('isAuth', '')
+        setCookie('isAuth', 'false')
         dispatch({
           type: LOGOUT_REQUEST_SUCCESS
         })
