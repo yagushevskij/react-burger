@@ -14,10 +14,9 @@ const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getUser())
-  }, [dispatch])
-  useEffect(() => {
     dispatch(getItems())
-  })
+  }, [dispatch])
+
   return (
     <ErrorBoundary>
       <Router>
