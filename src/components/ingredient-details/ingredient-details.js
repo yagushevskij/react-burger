@@ -1,9 +1,21 @@
 import ingredientDetails from './ingredient-details.module.css'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { SET_CURRENT_ITEM } from '../../services/actions/ingredients'
 
 const IngredientDetails = () => {
+  const dispatch = useDispatch()
   const data = useSelector(store => store.ingredients.current) || {}
   const { image, name, calories, proteins, fat, carbohydrates } = data
+
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: SET_CURRENT_ITEM,
+        payload: { item: {} }
+      })
+    }
+  }, [dispatch])
 
   return (
     <div className={`${ingredientDetails.wrapper}`}>
@@ -30,7 +42,5 @@ const IngredientDetails = () => {
     </div>
   )
 }
-
-IngredientDetails.displayName = 'IngredientDetails';
 
 export default IngredientDetails

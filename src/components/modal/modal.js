@@ -4,40 +4,46 @@ import { useSelector } from 'react-redux'
 import modal from './modal.module.css'
 import ModalOverlay from '../modal-overlay/modal-overlay'
 import PropTypes from 'prop-types'
+import { useLocation, useNavigate } from 'react-router'
 
 const modalRoot = document.getElementById('modal-root')
 
-const Modal = ({ title, children, handleCloseModal, fakePath, originalPath }) => {
+const Modal = ({ title, children }) => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  console.log(location)
   const errorMessage = useSelector(state => state.order.errorMessage)
 
-  children.type.displayName === 'IngredientDetails' && fakePath && window.history.replaceState(null, null, fakePath)
+  const back = useCallback(
+    event => {
+      event.stopPropagation()
+      navigate(-1)
+    },
+    [navigate]
+  )
 
-  const close = useCallback(() => {
-    handleCloseModal()
-    originalPath && window.history.replaceState(null, null, originalPath)
-  }, [handleCloseModal, originalPath])
-  const closeByEsc = useCallback(
+  const backByEsc = useCallback(
     e => {
       if (e.keyCode === 27) {
-        close()
+        back()
       }
     },
-    [close]
+    [back]
   )
 
   useEffect(() => {
-    document.addEventListener('keydown', closeByEsc)
+    document.addEventListener('keydown', backByEsc)
     return () => {
-      document.removeEventListener('keydown', closeByEsc)
+      document.removeEventListener('keydown', backByEsc)
     }
-  }, [closeByEsc])
+  }, [backByEsc])
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClose={close} />
+      <ModalOverlay onClose={(event) => back(event)} />
       <div className={`${modal.modal}  pt-10 pb-15 pl-10 pr-10`}>
         <div className={`${modal.header}`}>
           {(title || errorMessage) && <h3 className={`${modal.header__title} text text_type_main-large`}>{title || errorMessage}</h3>}
-          <div className={modal.header__icon} onClick={close}>
+          <div className={modal.header__icon} onClick={(event) => back(event)}>
             <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
                 fillRule='evenodd'

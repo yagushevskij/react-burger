@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import ProtectedRoute from '../protected-route'
 import ErrorBoundary from '../error-boundary/error-boundary.js'
 import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, IngredientDetailsPage } from '../../pages'
@@ -9,9 +9,45 @@ import { getUser } from '../../services/actions/thunk/user'
 import { getItems } from '../../services/actions/thunk/ingredients'
 import Logout from '../logout/logout'
 import ProtectedAuthRoute from '../protected-auth-route'
+import Modal from '../modal/modal'
+import IngredientDetails from '../ingredient-details/ingredient-details'
+import OrderDetails from '../order-details/order-details'
+
+const WrappedRoutes = () => {
+  const location = useLocation()
+  const background = location.state?.background
+
+  return (
+    <>
+      <Routes location={background ?? location}>
+        <Route path='/' element={<Home />} />
+        <Route path='/ingredients/:id' element={<IngredientDetailsPage />} />
+        <Route path='/profile' element={<ProtectedRoute />}>
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/orders' element={<Profile />} />
+        </Route>
+        <Route path='/logout' element={<ProtectedRoute />}>
+          <Route path='/logout' element={<Logout />} />
+        </Route>
+        <Route path='/' element={<ProtectedAuthRoute />}>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
+        </Route>
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+      <Routes>
+      {background && <Route path='/ingredients/:id' element={<Modal title='Детали ингридиента'><IngredientDetails /></Modal>} />}
+      {background && <Route path='/order' element={<Modal><OrderDetails /></Modal>} />}
+      </Routes>
+    </>
+  )
+}
 
 const App = () => {
   const dispatch = useDispatch()
+
   useEffect(() => {
     dispatch(getUser())
     dispatch(getItems())
@@ -21,24 +57,7 @@ const App = () => {
     <ErrorBoundary>
       <Router>
         <AppHeader />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/ingredients/:id' element={<IngredientDetailsPage />} />
-          <Route path='/profile' element={<ProtectedRoute />}>
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/profile/orders' element={<Profile />} />
-          </Route>
-          <Route path='/logout' element={<ProtectedRoute />}>
-            <Route path='/logout' element={<Logout />} />
-          </Route>
-          <Route path='/' element={<ProtectedAuthRoute />}>
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/forgot-password' element={<ForgotPassword />} />
-            <Route path='/reset-password' element={<ResetPassword />} />
-          </Route>
-          <Route path='*' element={<NotFound />} />
-        </Routes>
+        <WrappedRoutes />
       </Router>
     </ErrorBoundary>
   )
