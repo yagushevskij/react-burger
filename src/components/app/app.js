@@ -11,7 +11,7 @@ import Logout from '../logout/logout'
 import ProtectedAuthRoute from '../protected-auth-route'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
-import OrderDetails from '../order-details/order-details'
+import OrderDetailsModal from '../order-details-modal/order-details-modal'
 
 const WrappedRoutes = () => {
   const location = useLocation()
@@ -39,7 +39,7 @@ const WrappedRoutes = () => {
       </Routes>
       <Routes>
       {background && <Route path='/ingredients/:id' element={<Modal title='Детали ингридиента'><IngredientDetails /></Modal>} />}
-      {background && <Route path='/order/:id' element={<Modal><OrderDetails /></Modal>} />}
+      {background && <Route path='/order' element={<OrderDetailsModal />} />}
       </Routes>
     </>
   )

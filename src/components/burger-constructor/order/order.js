@@ -20,22 +20,23 @@ const Order = ({ items, bun }) => {
     const isAuth = !!getCookie('isAuth')
     if (!isAuth) {
       navigate(`/login`, { state: { from: location } })
-      return
     }
-    if (!bun) {
+    else if (!bun) {
       // dispatch({
       //   type: GET_ORDER_FAILED,
       //   payload: { message: 'Нужно добавить хотя бы 1 булку' }
       // })
-      return
+    } else {
+      dispatch(order(items))
+      navigate(`/order`, { state: { background: location } })
     }
-    dispatch(order(items))
-    navigate(`/order`, { state: { background: location } })
   }
 
   if (orderNumber) {
-    dispatch({ type: UPDATE_CONSTR_ITEMS, payload: { items: [] } })
-    dispatch(getItems())
+    console.log('1')
+    // dispatch({ type: UPDATE_CONSTR_ITEMS, payload: { items: [] } })
+    // dispatch(getItems())
+    // return navigate(`/order`, { state: { background: location } })
   }
 
   return (
