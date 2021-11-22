@@ -25,10 +25,10 @@ const ingredientsReducer = (state = initialState, action) => {
       return { ...state, items: action.payload.items }
     }
     case INCREASE_ITEM_COUNT: {
-      return { ...state, items: [...state.items].map(el => (el._id === action.payload.item._id ? { ...el, qty: ++el.qty } : el)) }
+      return { ...state, items: state.items.map(el => (el._id === action.payload.item._id ? { ...el, qty: el.qty + action.payload.qty } : el)) }
     }
     case DECREASE_ITEM_COUNT: {
-      return { ...state, items: [...state.items].map(el => (el._id === action.payload.item._id ? { ...el, qty: --el.qty } : el)) }
+      return { ...state, items: state.items.map(el => (el._id === action.payload.item._id ? { ...el, qty: el.qty - action.payload.qty } : el)) }
     }
     default: {
       return state

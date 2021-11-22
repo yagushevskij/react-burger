@@ -41,16 +41,18 @@ const BurgerConstructor = () => {
 
   const addItem = useCallback(
     item => {
+      const qty = item.type === 'bun' ? 2 : 1
       dispatch(constrItemActions.addItem(item))
-      dispatch(itemActions.increaseItem(item))
+      dispatch(itemActions.increaseItem(item, qty))
     },
     [dispatch]
   )
 
   const removeItem = useCallback(
     item => {
+      const qty = item.type === 'bun' ? 2 : 1
       dispatch(constrItemActions.removeItem(item))
-      dispatch(itemActions.decreaseItem(item))
+      dispatch(itemActions.decreaseItem(item, qty))
     },
     [dispatch]
   )

@@ -12,16 +12,16 @@ export const itemActions = {
       items
     }
   }),
-  increaseItem: item => ({
+  increaseItem: (item, qty) => ({
     type: INCREASE_ITEM_COUNT,
     payload: {
-      item
+      item, qty
     }
   }),
-  decreaseItem: item => ({
+  decreaseItem: (item, qty) => ({
     type: DECREASE_ITEM_COUNT,
     payload: {
-      item
+      item, qty
     }
   })
 }

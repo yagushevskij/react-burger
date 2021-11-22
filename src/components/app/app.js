@@ -39,7 +39,7 @@ const WrappedRoutes = () => {
       </Routes>
       <Routes>
       {background && <Route path='/ingredients/:id' element={<Modal title='Детали ингридиента'><IngredientDetails /></Modal>} />}
-      {background && <Route path='/order' element={<Modal><OrderDetails /></Modal>} />}
+      {background && <Route path='/order/:id' element={<Modal><OrderDetails /></Modal>} />}
       </Routes>
     </>
   )
