@@ -22,11 +22,11 @@ const IngredientCard = React.memo(({ data }) => {
   })
 
   const handleClick = () => {
-    navigate(`/ingredients/${data._id}`, { state: { background: location } })
     dispatch({
       type: SET_CURRENT_ITEM,
       payload: { item: data }
     })
+    navigate(`/ingredients/${data._id}`, { state: { background: location } })
   }
 
   return (
