@@ -1,21 +1,12 @@
 import ingredientDetails from './ingredient-details.module.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { SET_CURRENT_ITEM } from '../../services/actions/ingredients'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router'
 
 const IngredientDetails = () => {
-  const dispatch = useDispatch()
-  const data = useSelector(store => store.ingredients.current) || {}
+  const ingredients = useSelector(state => state.ingredients.items)
+  const { id } = useParams()
+  const data = ingredients.find(el => el._id === id) || {}
   const { image, name, calories, proteins, fat, carbohydrates } = data
-
-  useEffect(() => {
-    return () => {
-      dispatch({
-        type: SET_CURRENT_ITEM,
-        payload: { item: {} }
-      })
-    }
-  }, [dispatch])
 
   return (
     <div className={`${ingredientDetails.wrapper}`}>

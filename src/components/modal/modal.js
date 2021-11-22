@@ -4,14 +4,12 @@ import { useCallback, useEffect } from 'react'
 import modal from './modal.module.css'
 import ModalOverlay from '../modal-overlay/modal-overlay'
 import PropTypes from 'prop-types'
-import { useLocation, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 
 const modalRoot = document.getElementById('modal-root')
 
 const Modal = ({ title, children }) => {
   const navigate = useNavigate()
-  const location = useLocation()
-  console.log(location)
   // const errorMessage = useSelector(state => state.order.errorMessage)
 
   const back = useCallback(
@@ -64,9 +62,6 @@ const Modal = ({ title, children }) => {
 Modal.propTypes = {
   children: PropTypes.element,
   title: PropTypes.string,
-  // handleCloseModal: PropTypes.func.isRequired,
-  // fakePath: PropTypes.string,
-  // originalPath: PropTypes.string
 }
 
 export default Modal

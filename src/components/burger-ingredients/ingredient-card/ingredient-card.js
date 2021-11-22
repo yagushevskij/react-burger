@@ -2,13 +2,10 @@ import React from 'react'
 import { mainCardPropTypes } from '../../../utils/types'
 import ingredientCard from './ingredient-card.module.css'
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { SET_CURRENT_ITEM } from '../../../services/actions/ingredients'
-import { useDispatch } from 'react-redux'
 import { useDrag } from 'react-dnd'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const IngredientCard = React.memo(({ data }) => {
-  const dispatch = useDispatch()
   const location = useLocation()
   const navigate = useNavigate()
   const { qty, ...restData } = data
@@ -22,10 +19,6 @@ const IngredientCard = React.memo(({ data }) => {
   })
 
   const handleClick = () => {
-    dispatch({
-      type: SET_CURRENT_ITEM,
-      payload: { item: data }
-    })
     navigate(`/ingredients/${data._id}`, { state: { background: location } })
   }
 

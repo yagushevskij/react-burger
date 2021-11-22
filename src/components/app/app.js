@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import ProtectedRoute from '../protected-route'
 import ErrorBoundary from '../error-boundary/error-boundary.js'
-import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, IngredientDetailsPage } from '../../pages'
+import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound } from '../../pages'
 import AppHeader from '../app-header/app-header'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
@@ -21,7 +21,7 @@ const WrappedRoutes = () => {
     <>
       <Routes location={background ?? location}>
         <Route path='/' element={<Home />} />
-        <Route path='/ingredients/:id' element={<IngredientDetailsPage />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='/profile' element={<ProtectedRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/profile/orders' element={<Profile />} />

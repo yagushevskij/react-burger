@@ -2,12 +2,9 @@ import { useCallback, useEffect, useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import burgerConstructor from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-// import { SET_INITIAL_ORDER_STATE } from '../../services/actions/order'
 import { constrItemActions } from '../../services/actions/constructor'
 import { itemActions } from '../../services/actions/ingredients'
 import { useDrop } from 'react-dnd'
-// import OrderDetails from '../order-details/order-details'
-// import Modal from '../modal/modal'
 import ScrollContainer from './scroll-container/scroll-container'
 import Order from './order/order'
 
@@ -23,9 +20,7 @@ const BurgerConstructor = () => {
       border: monitor.isOver() ? '3px solid #4C4CFF' : '3px solid transparent'
     })
   })
-  // const orderFailed = useSelector(state => state.order.failed)
   const constrItems = useSelector(state => state.contructor.items)
-  // const orderNumber = useSelector(state => state.order.number)
 
   useEffect(() => {
     setTotalCost(() =>
@@ -60,24 +55,8 @@ const BurgerConstructor = () => {
     [dispatch]
   )
 
-  // const handleCloseOrderModal = () => {
-  //   dispatch({ type: SET_INITIAL_ORDER_STATE })
-  //   constrItems.forEach(el => removeItem(el))
-  // }
-
-  // const handleCloseErrorModal = () => {
-  //   dispatch({ type: SET_INITIAL_ORDER_STATE })
-  // }
-
   return (
     <>
-      {/* {orderNumber && (
-        <Modal handleCloseModal={handleCloseOrderModal}>
-          <OrderDetails />
-        </Modal>
-      )} */}
-      {/* {orderFailed && <Modal handleCloseModal={handleCloseErrorModal} />} */}
-
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (
           <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>
