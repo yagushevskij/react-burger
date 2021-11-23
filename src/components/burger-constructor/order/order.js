@@ -18,10 +18,7 @@ const Order = ({ items, bun }) => {
       navigate(`/login`, { state: { from: location } })
     }
     else if (!bun) {
-      // dispatch({
-      //   type: GET_ORDER_FAILED,
-      //   payload: { message: 'Нужно добавить хотя бы 1 булку' }
-      // })
+      navigate(`/error`, { state: { background: location, message: 'Нужно добавить хотя бы 1 булку' } })
     } else {
       dispatch(order(items))
       navigate(`/order`, { state: { background: location } })
