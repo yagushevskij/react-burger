@@ -1,31 +1,7 @@
 import { GET_USER_REQUEST, GET_USER_REQUEST_SUCCESS, GET_USER_REQUEST_FAILED, UPDATE_USER_REQUEST, UPDATE_USER_REQUEST_SUCCESS, UPDATE_USER_REQUEST_FAILED } from '../user'
 import { API_URL } from '../../../utils/config'
-import { getCookie, setCookie } from '../../../utils/helpers'
-
-const checkReponse = res => {
-  return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
-}
-
-export const retriableFetch = async (url, options = {}) => {
-  const accessToken = getCookie('accessToken')
-  try {
-    const res = await fetch(url, options)
-    const result = await checkReponse(res)
-    return result
-  } catch (err) {
-    if (!accessToken || err.message === 'jwt expired') {
-      const refreshData = await refreshToken()
-      const updatedAccessToken = refreshData.accessToken.split('Bearer ')[1]
-      setCookie('refreshToken', refreshData.refreshToken)
-      setCookie('accessToken', updatedAccessToken, { expires: 1200 })
-      options.headers.authorization = 'Bearer ' + updatedAccessToken
-      const res = await fetch(url, options)
-      return await checkReponse(res)
-    } else {
-      throw err
-    }
-  }
-}
+import { getCookie } from '../../../utils/helpers'
+import { retriableFetch } from '../../../utils/api'
 
 export const getUser = () => {
   const accessToken = getCookie('accessToken')
@@ -82,17 +58,4 @@ export const updateUser = data => {
       console.log(e)
     }
   }
-}
-
-export const refreshToken = async () => {
-  const refreshToken = getCookie('refreshToken')
-  const data = { token: refreshToken }
-  const res = await fetch(API_URL + 'auth/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-  return await checkReponse(res)
 }

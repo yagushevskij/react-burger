@@ -1,6 +1,10 @@
 import moment from 'moment'
 import 'moment/locale/ru'
 
+const checkReponse = res => {
+  return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
+}
+
 const getKeyByGenerate = () => {
   let text = ''
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -75,4 +79,4 @@ moment.updateLocale('ru', {
   }
 })
 
-export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, getFormatedDay }
+export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, getFormatedDay, checkReponse }

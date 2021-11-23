@@ -13,9 +13,7 @@ const Orders = () => {
   const { request: isOrdersRequest } = useSelector(state => state.orders)
   const isOrdersExist = orders.length > 0
 
-  if (isOrdersRequest) {
-    return null
-  }
+  if (isOrdersRequest) return null
 
   return (
     <>
