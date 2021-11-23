@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom'
 import { useCallback, useEffect } from 'react'
 // import { useSelector } from 'react-redux'
 import modal from './modal.module.css'
-import ModalOverlay from '../modal-overlay/modal-overlay'
+import Overlay from '../overlay/overlay'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router'
 
@@ -37,7 +37,7 @@ const Modal = ({ title, children }) => {
   }, [backByEsc])
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClose={(event) => back(event)} />
+      <Overlay onClose={(event) => back(event)} />
       <div className={`${modal.modal}  pt-10 pb-15 pl-10 pr-10`}>
         <div className={`${modal.header}`}>
           {title && <h3 className={`${modal.header__title} text text_type_main-large`}>{title}</h3>}

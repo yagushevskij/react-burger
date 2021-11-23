@@ -1,11 +1,11 @@
 import styles from './loader.module.css'
-import ModalOverlay from '../modal-overlay/modal-overlay'
+import Overlay from '../overlay/overlay'
 import PropTypes from 'prop-types'
 
 const Loader = ({ title }) => {
   return (
     <>
-      <ModalOverlay />
+      <Overlay />
       <div className={styles.container}>
         {title && <span className={`text text_type_main-medium`}>{title}</span>}
         <div className={styles.lds_ellipsis}>
