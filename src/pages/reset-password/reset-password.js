@@ -1,16 +1,24 @@
 import styles from './reset-password.module.css'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { Navigate, useLocation } from 'react-router-dom'
+import { Link, Navigate, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 import ResetPasswordForm from '../../components/reset-password-form/reset-password-form'
+import { SET_INIT_STATE_RESET_PASS } from '../../services/actions/reset-pass'
 
 const ResetPassword = () => {
+  const dispatch = useDispatch()
   const location = useLocation()
   const state = location.state
   const isRequestSuccess = useSelector(state => state.resetPass.success)
 
+  useEffect(() => {
+    return () => {
+      dispatch({ type: SET_INIT_STATE_RESET_PASS })
+    }
+  }, [dispatch])
+
   if (isRequestSuccess) {
-    return <Navigate replace to={'/'} />
+    return <Navigate replace to={'/login'} />
   }
   if (state?.from.pathname !== '/forgot-password') {
     return <Navigate replace to={'/forgot-password'} />
