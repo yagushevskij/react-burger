@@ -3,6 +3,7 @@ import { AUTH_REQUEST, AUTH_REQUEST_SUCCESS, AUTH_REQUEST_FAILED, LOGOUT_REQUEST
 import { setCookie, getCookie } from '../../../utils/helpers'
 import { deleteCookie } from '../../../utils/helpers'
 import { SET_USER } from '../user'
+import { checkReponse } from '../../../utils/helpers'
 
 export const register = data => {
   return dispatch => {
@@ -30,27 +31,18 @@ const auth = async (data, url, dispatch) => {
       },
       body: JSON.stringify(data)
     })
-    if (res && res.ok) {
-      const resData = await res.json()
-      const accessToken = resData.accessToken.split('Bearer ')[1]
-      const refreshToken = resData.refreshToken
-      if (accessToken) {
-        setCookie('accessToken', accessToken)
-        setCookie('refreshToken', refreshToken)
-      }
-      dispatch({
-        type: AUTH_REQUEST_SUCCESS
-      })
-      dispatch({
-        type: SET_USER,
-        payload: { data: resData.user }
-      })
-    } else {
-      dispatch({
-        type: AUTH_REQUEST_FAILED,
-        payload: { errorMessage: 'Возникла ошибка при выполнении запроса. Пожалуйста, попробуйте позже' }
-      })
-    }
+    const resData = await checkReponse(res)
+    const accessToken = resData.accessToken.split('Bearer ')[1]
+    const refreshToken = resData.refreshToken
+    setCookie('accessToken', accessToken)
+    setCookie('refreshToken', refreshToken)
+    dispatch({
+      type: AUTH_REQUEST_SUCCESS
+    })
+    dispatch({
+      type: SET_USER,
+      payload: { data: resData.user }
+    })
   } catch (e) {
     dispatch({
       type: AUTH_REQUEST_FAILED,
@@ -75,16 +67,11 @@ export const logout = () => {
         },
         body: JSON.stringify(data)
       })
-      if (res && res.ok) {
+      const resData = await checkReponse(res)
+      resData &&
         dispatch({
           type: LOGOUT_REQUEST_SUCCESS
         })
-      } else {
-        dispatch({
-          type: LOGOUT_REQUEST_FAILED,
-          payload: { errorMessage: 'Возникла ошибка при выполнении запроса. Пожалуйста, попробуйте позже' }
-        })
-      }
     } catch (e) {
       dispatch({
         type: LOGOUT_REQUEST_FAILED,

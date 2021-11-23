@@ -1,5 +1,6 @@
 import { API_URL } from '../../../utils/config'
 import { RESTORE_PASS_REQUEST, RESTORE_PASS_REQUEST_SUCCESS, RESTORE_PASS_REQUEST_FAILED } from '../restore-pass.js'
+import { checkReponse } from '../../../utils/helpers'
 
 export const restorePass = data => {
   return async function (dispatch) {
@@ -14,16 +15,11 @@ export const restorePass = data => {
         },
         body: JSON.stringify(data)
       })
-      if (res && res.ok) {
+      const resData = await checkReponse(res)
+      resData &&
         dispatch({
           type: RESTORE_PASS_REQUEST_SUCCESS
         })
-      } else {
-        dispatch({
-          type: RESTORE_PASS_REQUEST_FAILED,
-          payload: { errorMessage: 'Возникла ошибка при восстановлении пароля. Пожалуйста, попробуйте позже' }
-        })
-      }
     } catch (e) {
       dispatch({
         type: RESTORE_PASS_REQUEST_FAILED,

@@ -9,7 +9,7 @@ const ResetPasswordForm = () => {
   const dispatch = useDispatch()
   const isRequest = useSelector(state => state.resetPass.request)
   const { data, handleInputChange } = useInput()
-  const { code = '', password = '' } = data
+  const { token = '', password = '' } = data
 
   const onSubmit = useCallback(
     event => {
@@ -36,10 +36,10 @@ const ResetPasswordForm = () => {
           type={'text'}
           placeholder={'Введите код из письма'}
           onChange={event => handleInputChange(event)}
-          name={'code'}
+          name={'token'}
           error={false}
           size={'default'}
-          value={code}
+          value={token}
           errorText={'Ошибка'}
         />
       </>
