@@ -51,7 +51,7 @@ const WrappedRoutes = () => {
         )}
         {background && <Route path='/order' element={<OrderDetailsModal />} />}
         {background && <Route path='/error' element={<Modal><Error /></Modal>} />}
-        {/* <Route path='*' element={''} /> */}
+        <Route path='*' element={''} />
       </Routes>
     </>
   )

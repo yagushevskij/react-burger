@@ -77,14 +77,8 @@ export const logout = () => {
         body: JSON.stringify(data)
       })
       if (res && res.ok) {
-        deleteCookie('accessToken')
-        setCookie('isAuth', '')
         dispatch({
           type: LOGOUT_REQUEST_SUCCESS
-        })
-        dispatch({
-          type: SET_USER,
-          payload: { data: {} }
         })
       } else {
         dispatch({
@@ -98,6 +92,13 @@ export const logout = () => {
         payload: { errorMessage: 'Возникла ошибка при выполнении запроса. Пожалуйста, попробуйте позже' }
       })
       console.log(e)
+    } finally {
+      deleteCookie('accessToken')
+      setCookie('isAuth', '')
+      dispatch({
+        type: SET_USER,
+        payload: { data: {} }
+      })
     }
   }
 }
