@@ -1,12 +1,14 @@
 import { useState, useRef, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import burgerIngridients from './burger-ingredients.module.css'
 import IngredientCard from './ingredient-card/ingredient-card'
 import TabList from './tab-list/tab-list'
+import { getItems } from '../../services/actions/thunk/ingredients'
 
 const getBoundingClientRectTop = elem => elem.current.getBoundingClientRect().top
 
 const BurgerIngridients = () => {
+  const dispatch = useDispatch()
   const scrollContainerRef = useRef()
   const tabsRef = useRef()
   const sauceRef = useRef()
@@ -26,6 +28,7 @@ const BurgerIngridients = () => {
   }
 
   const ingredients = useSelector(store => createGrouppedIngredients(store.ingredients.items))
+  const orderNumber = useSelector(state => state.order.number)
 
   const [activeTab, setActiveTab] = useState()
   const [scrollContainer, setSrollContainer] = useState({ height: 0 })
@@ -40,6 +43,10 @@ const BurgerIngridients = () => {
     setSrollContainer({ height: getScrollContainerHeight() })
     setActiveTab(getClosestTab())
   }, [])
+
+  useEffect(() => {
+    orderNumber && dispatch(getItems())
+  }, [orderNumber, dispatch])
 
   const getScrollContainerHeight = () => {
     const windowHeight = window.innerHeight

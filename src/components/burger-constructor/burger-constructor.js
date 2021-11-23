@@ -7,6 +7,7 @@ import { itemActions } from '../../services/actions/ingredients'
 import { useDrop } from 'react-dnd'
 import ScrollContainer from './scroll-container/scroll-container'
 import Order from './order/order'
+import { UPDATE_CONSTR_ITEMS } from '../../services/actions/constructor'
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch()
@@ -21,6 +22,7 @@ const BurgerConstructor = () => {
     })
   })
   const constrItems = useSelector(state => state.contructor.items)
+  const orderNumber = useSelector(state => state.order.number)
 
   useEffect(() => {
     setTotalCost(() =>
@@ -29,6 +31,10 @@ const BurgerConstructor = () => {
       }, 0)
     )
   }, [constrItems])
+
+  useEffect(() => {
+    orderNumber && dispatch({ type: UPDATE_CONSTR_ITEMS, payload: { items: [] } })
+  }, [orderNumber, dispatch])
 
   const bun = useMemo(() => constrItems.find(el => el.type === 'bun'), [constrItems])
 
