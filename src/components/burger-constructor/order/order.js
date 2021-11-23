@@ -13,7 +13,7 @@ const Order = ({ items, bun }) => {
   const location = useLocation()
   const orderRequest = useSelector(state => state.order.request)
   const makeOrder = () => {
-    const isAuth = !!getCookie('isAuth')
+    const isAuth = !!getCookie('accessToken')
     if (!isAuth) {
       navigate(`/login`, { state: { from: location } })
     }

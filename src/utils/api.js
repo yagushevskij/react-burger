@@ -14,7 +14,7 @@ export const retriableFetch = async (url, options = {}) => {
       const refreshData = await refreshToken()
       const updatedAccessToken = refreshData.accessToken.split('Bearer ')[1]
       setCookie('refreshToken', refreshData.refreshToken)
-      setCookie('accessToken', updatedAccessToken, { expires: 1200 })
+      setCookie('accessToken', updatedAccessToken)
       options.headers.authorization = 'Bearer ' + updatedAccessToken
       const res = await fetch(url, options)
       return await checkReponse(res)

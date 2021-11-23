@@ -44,7 +44,7 @@ const getCookie = name => {
 }
 
 const deleteCookie = name => {
-  setCookie(name, null, { expires: -1 })
+  setCookie(name, '', { expires: -1 })
 }
 
 const getFormatedDay = date => {
