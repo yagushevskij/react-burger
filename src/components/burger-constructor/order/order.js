@@ -5,15 +5,15 @@ import { conCardPropTypes } from '../../../utils/types'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { getCookie } from '../../../utils/helpers'
 
 const Order = ({ items, bun }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const location = useLocation()
   const orderRequest = useSelector(state => state.order.request)
+  const user = useSelector(state => state.user.data)
   const makeOrder = () => {
-    const isAuth = !!getCookie('accessToken')
+    const isAuth = Object.keys(user).length !== 0
     if (!isAuth) {
       navigate(`/login`, { state: { from: location } })
     }

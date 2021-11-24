@@ -3,14 +3,16 @@ import ProtectedRoute from '../protected-route'
 import ErrorBoundary from '../error-boundary/error-boundary.js'
 import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound } from '../../pages'
 import AppHeader from '../app-header/app-header'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useCallback } from 'react'
 import { getUser } from '../../services/actions/thunk/user'
 import { getItems } from '../../services/actions/thunk/ingredients'
+import { getOrders } from '../../services/actions/thunk/order'
 import Logout from '../logout/logout'
 import ProtectedAuthRoute from '../protected-auth-route'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
+import useDataToggle from '../../services/customHooks/useDataToggle'
 
 const WrappedRoutes = () => {
   const location = useLocation()
@@ -64,11 +66,21 @@ const WrappedRoutes = () => {
 
 const App = () => {
   const dispatch = useDispatch()
+  const orderNumber = useSelector(state => state.order.number)
+  const [isOrderNumberToggled] = useDataToggle(orderNumber, true)
 
   useEffect(() => {
     dispatch(getUser())
     dispatch(getItems())
+    dispatch(getOrders())
   }, [dispatch])
+
+  useEffect(() => {
+    if (isOrderNumberToggled) {
+      dispatch(getOrders())
+      dispatch(getItems())
+    }
+  }, [dispatch, isOrderNumberToggled])
 
   return (
     <ErrorBoundary>

@@ -4,8 +4,7 @@ import useInput from '../../services/customHooks/useInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { updateUser } from '../../services/actions/thunk/user'
-import { useEffect, useState } from 'react'
-import { getUser } from '../../services/actions/thunk/user'
+import { useState } from 'react'
 
 const initialInputsState = {
   name: { isDisabled: true },
@@ -15,9 +14,6 @@ const initialInputsState = {
 
 const ProfileForm = () => {
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getUser())
-  }, [dispatch])
   const user = useSelector(state => state.user.data)
   const { name = '', email = '' } = user
   const isUserRequest = useSelector(state => state.user.request)

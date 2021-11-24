@@ -3,8 +3,7 @@ import doneIcon from '../../images/done.png'
 import { useSelector } from 'react-redux'
 
 const OrderDetails = () => {
-  const number = useSelector(state => state.order.number)
-  const orderRequest = useSelector(state => state.order.request)
+  const { number, request: orderRequest } = useSelector(state => state.order)
 
   return (
     <div className={`${orderDetails.wrapper} pb-15`}>
