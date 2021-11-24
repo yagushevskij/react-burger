@@ -8,6 +8,10 @@ import { useDrop } from 'react-dnd'
 import ScrollContainer from './scroll-container/scroll-container'
 import Order from './order/order'
 import { UPDATE_CONSTR_ITEMS } from '../../services/actions/constructor'
+import { SET_INITIAL_ORDER_STATE } from '../../services/actions/order'
+import Modal from '../modal/modal'
+import OrderDetails from '../order-details/order-details'
+import Loader from '../loader/loader'
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch()
@@ -23,6 +27,7 @@ const BurgerConstructor = () => {
   })
   const constrItems = useSelector(state => state.contructor.items)
   const orderNumber = useSelector(state => state.order.number)
+  const isOrderRequest = useSelector(state => state.order.request)
 
   useEffect(() => {
     setTotalCost(() =>
@@ -31,10 +36,6 @@ const BurgerConstructor = () => {
       }, 0)
     )
   }, [constrItems])
-
-  useEffect(() => {
-    orderNumber && dispatch({ type: UPDATE_CONSTR_ITEMS, payload: { items: [] } })
-  }, [orderNumber, dispatch])
 
   const bun = useMemo(() => constrItems.find(el => el.type === 'bun'), [constrItems])
 
@@ -63,8 +64,15 @@ const BurgerConstructor = () => {
     [dispatch]
   )
 
+  const handleCloseOrderModal = () => {
+    dispatch({ type: UPDATE_CONSTR_ITEMS, payload: { items: [] } })
+    dispatch({ type: SET_INITIAL_ORDER_STATE })
+  }
+
   return (
     <>
+      {isOrderRequest && <Loader title={`Идёт оформление заказа, ожидайте`} />}
+      {orderNumber && <Modal handleCloseModal={handleCloseOrderModal}><OrderDetails /></Modal>}
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (
           <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router'
 
 const modalRoot = document.getElementById('modal-root')
 
-const Modal = ({ title, children }) => {
+const Modal = ({ title, children, handleCloseModal }) => {
   const navigate = useNavigate()
   // const errorMessage = useSelector(state => state.order.errorMessage)
 
@@ -20,28 +20,32 @@ const Modal = ({ title, children }) => {
     [navigate]
   )
 
-  const backByEsc = useCallback(
+  const handleClose = useCallback(
+    (event) => handleCloseModal ? handleCloseModal() : back(event), [back, handleCloseModal]
+  )
+
+  const closeByEsc = useCallback(
     event => {
       if (event.keyCode === 27) {
-        back(event)
+        handleClose(event)
       }
     },
-    [back]
+    [handleClose]
   )
 
   useEffect(() => {
-    document.addEventListener('keydown', backByEsc)
+    document.addEventListener('keydown', closeByEsc)
     return () => {
-      document.removeEventListener('keydown', backByEsc)
+      document.removeEventListener('keydown', closeByEsc)
     }
-  }, [backByEsc])
+  }, [closeByEsc])
   return ReactDOM.createPortal(
     <>
-      <Overlay onClose={(event) => back(event)} />
+      <Overlay onClose={(event) => handleClose(event)} />
       <div className={`${modal.modal}  pt-10 pb-15 pl-10 pr-10`}>
         <div className={`${modal.header}`}>
           {title && <h3 className={`${modal.header__title} text text_type_main-large`}>{title}</h3>}
-          <div className={modal.header__icon} onClick={(event) => back(event)}>
+          <div className={modal.header__icon} onClick={(event) => handleClose(event)}>
             <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
                 fillRule='evenodd'

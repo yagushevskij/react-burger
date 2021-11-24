@@ -1,20 +1,11 @@
 import PropTypes from 'prop-types'
-import { useEffect } from 'react'
 import orderDetails from './order-details.module.css'
 import doneIcon from '../../images/done.png'
-import { useSelector, useDispatch } from 'react-redux'
-import { SET_INITIAL_ORDER_STATE } from '../../services/actions/order'
+import { useSelector } from 'react-redux'
 
 const OrderDetails = () => {
-  const dispatch = useDispatch()
   const number = useSelector(state => state.order.number)
   const orderRequest = useSelector(state => state.order.request)
-
-  useEffect(() => {
-    return () => {
-      dispatch({ type: SET_INITIAL_ORDER_STATE })
-    }
-  }, [dispatch])
 
   return (
     <div className={`${orderDetails.wrapper} pb-15`}>

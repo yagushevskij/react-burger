@@ -11,8 +11,6 @@ import Logout from '../logout/logout'
 import ProtectedAuthRoute from '../protected-auth-route'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
-import OrderDetailsModal from '../order-details-modal/order-details-modal'
-import Error from '../error/error'
 
 const WrappedRoutes = () => {
   const location = useLocation()
@@ -49,8 +47,6 @@ const WrappedRoutes = () => {
             }
           />
         )}
-        {background && <Route path='/order' element={<OrderDetailsModal />} />}
-        {background && <Route path='/error' element={<Modal><Error /></Modal>} />}
         <Route path='*' element={''} />
       </Routes>
     </>
