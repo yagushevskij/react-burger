@@ -4,7 +4,6 @@ export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED'
 export const UPDATE_ITEMS = 'UPDATE_ITEMS'
 export const INCREASE_ITEM_COUNT = 'INCREASE_ITEM_COUNT'
 export const DECREASE_ITEM_COUNT = 'DECREASE_ITEM_COUNT'
-export const SET_CURRENT_ITEM = 'SET_CURRENT_ITEM'
 
 export const itemActions = {
   updateItems: items => ({
@@ -13,16 +12,16 @@ export const itemActions = {
       items
     }
   }),
-  increaseItem: item => ({
+  increaseItem: (item, qty) => ({
     type: INCREASE_ITEM_COUNT,
     payload: {
-      item
+      item, qty
     }
   }),
-  decreaseItem: item => ({
+  decreaseItem: (item, qty) => ({
     type: DECREASE_ITEM_COUNT,
     payload: {
-      item
+      item, qty
     }
   })
 }

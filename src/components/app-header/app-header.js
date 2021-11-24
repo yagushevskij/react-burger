@@ -1,28 +1,44 @@
 import React from 'react'
 import appHeader from './app-header.module.css'
 import { Logo, ProfileIcon, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { NavLink, Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { DATA } from '../../utils/config'
+
+const links = DATA.header.links
+const primaryIcon = 'primary'
+const secondaryIcon = 'secondary'
 
 const AppHeader = () => {
+  const location = useLocation()
+  const setLinkStyle = ({ isActive }) => `${appHeader.link} text text_type_main-default text_color_inactive ml-2 ${isActive && appHeader.link_active}`
+  const setActiveIcon = path => (location.pathname === path ? primaryIcon : secondaryIcon)
   return (
     <header className={appHeader.header}>
       <div className={appHeader.header__wrapper}>
         <ul className={`${appHeader.item} ${appHeader.item_pos_left}`}>
-          <li className={`${appHeader.item__link} p-5`}>
-            <BurgerIcon type='primary' />
-            <span className={`${appHeader.link} text text_type_main-default ml-2`}>Конструктор</span>
+          <li className={`${appHeader.item__link} pt-5 pr-5 pb-5`}>
+            <BurgerIcon type={setActiveIcon(links.constructor.path)} />
+            <NavLink end to={`/`} className={({ isActive }) => setLinkStyle(isActive, 'constructor')}>
+              {links.constructor.title}
+            </NavLink>
           </li>
           <li className={`${appHeader.item__link} p-5 ml-2`}>
-            <ListIcon type='secondary' />
-            <span className={`${appHeader.link} text text_type_main-default text_color_inactive ml-2`}>Лента заказов</span>
+            <ListIcon type={setActiveIcon(links.ordersFeed.path)} />
+            <NavLink end to={`/profile/orders`} className={({ isActive }) => setLinkStyle(isActive, 'orders')}>
+              {links.ordersFeed.title}
+            </NavLink>
           </li>
         </ul>
-        <div className={`${appHeader.logo} ${appHeader.item}`}>
+        <Link className={`${appHeader.logo} ${appHeader.item}`} to={`/`}>
           <Logo />
-        </div>
+        </Link>
         <ul className={`${appHeader.item} ${appHeader.item_pos_right}`}>
-          <li className={`${appHeader.item__link} p-5`}>
-            <ProfileIcon type='secondary' />
-            <span className={`${appHeader.link} text text_type_main-default text_color_inactive ml-2`}>Личный кабинет</span>
+          <li className={`${appHeader.item__link} pt-5 pl-5 pb-5`}>
+            <ProfileIcon type={setActiveIcon(links.profile.path)} />
+            <NavLink end to={`/profile`} className={setLinkStyle}>
+              {links.profile.title}
+            </NavLink>
           </li>
         </ul>
       </div>

@@ -1,0 +1,11 @@
+.main {
+  margin-top: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.line {
+  display: flex;
+  text-decoration: none;
+}

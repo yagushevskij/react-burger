@@ -1,0 +1,4 @@
+.main {
+  composes: container from '../../components/app/app.module.css';
+  display: flex;
+}

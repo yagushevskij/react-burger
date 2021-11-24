@@ -1,0 +1,17 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  text-decoration: none;
+  line-height: 64px;
+}
+
+.link_active {
+  color: #F2F2F3;
+}
+
+.container {
+  width: 320px;
+}

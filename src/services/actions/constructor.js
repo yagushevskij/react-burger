@@ -20,8 +20,8 @@ export const constrItemActions = {
       item
     }
   }),
-  updateItems: (items) => ({
+  updateItems: items => ({
     type: UPDATE_CONSTR_ITEMS,
-    payload: {items}
+    payload: { items }
   })
 }

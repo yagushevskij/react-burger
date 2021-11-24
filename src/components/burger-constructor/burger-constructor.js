@@ -2,14 +2,16 @@ import { useCallback, useEffect, useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import burgerConstructor from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { SET_INITIAL_ORDER_STATE } from '../../services/actions/order'
 import { constrItemActions } from '../../services/actions/constructor'
 import { itemActions } from '../../services/actions/ingredients'
 import { useDrop } from 'react-dnd'
-import OrderDetails from '../order-details/order-details'
-import Modal from '../modal/modal'
 import ScrollContainer from './scroll-container/scroll-container'
 import Order from './order/order'
+import { UPDATE_CONSTR_ITEMS } from '../../services/actions/constructor'
+import { SET_INITIAL_ORDER_STATE } from '../../services/actions/order'
+import Modal from '../modal/modal'
+import OrderDetails from '../order-details/order-details'
+import Loader from '../loader/loader'
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch()
@@ -23,9 +25,9 @@ const BurgerConstructor = () => {
       border: monitor.isOver() ? '3px solid #4C4CFF' : '3px solid transparent'
     })
   })
-  const orderFailed = useSelector(state => state.order.failed)
   const constrItems = useSelector(state => state.contructor.items)
   const orderNumber = useSelector(state => state.order.number)
+  const isOrderRequest = useSelector(state => state.order.request)
 
   useEffect(() => {
     setTotalCost(() =>
@@ -46,38 +48,31 @@ const BurgerConstructor = () => {
 
   const addItem = useCallback(
     item => {
+      const qty = item.type === 'bun' ? 2 : 1
       dispatch(constrItemActions.addItem(item))
-      dispatch(itemActions.increaseItem(item))
+      dispatch(itemActions.increaseItem(item, qty))
     },
     [dispatch]
   )
 
   const removeItem = useCallback(
     item => {
+      const qty = item.type === 'bun' ? 2 : 1
       dispatch(constrItemActions.removeItem(item))
-      dispatch(itemActions.decreaseItem(item))
+      dispatch(itemActions.decreaseItem(item, qty))
     },
     [dispatch]
   )
 
   const handleCloseOrderModal = () => {
-    dispatch({ type: SET_INITIAL_ORDER_STATE })
-    constrItems.forEach(el => removeItem(el))
-  }
-
-  const handleCloseErrorModal = () => {
+    dispatch({ type: UPDATE_CONSTR_ITEMS, payload: { items: [] } })
     dispatch({ type: SET_INITIAL_ORDER_STATE })
   }
 
   return (
     <>
-      {orderNumber && (
-        <Modal handleCloseModal={handleCloseOrderModal}>
-          <OrderDetails />
-        </Modal>
-      )}
-      {orderFailed && <Modal handleCloseModal={handleCloseErrorModal} />}
-
+      {isOrderRequest && <Loader title={`Идёт оформление заказа, ожидайте`} />}
+      {orderNumber && <Modal handleClose={handleCloseOrderModal}><OrderDetails /></Modal>}
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (
           <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>

@@ -1,25 +1,20 @@
 import ReactDOM from 'react-dom'
 import { useCallback, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import modal from './modal.module.css'
-import ModalOverlay from '../modal-overlay/modal-overlay'
+import Overlay from '../overlay/overlay'
 import PropTypes from 'prop-types'
 
 const modalRoot = document.getElementById('modal-root')
 
-const Modal = ({ title, children, handleCloseModal }) => {
-  const errorMessage = useSelector(state => state.order.errorMessage)
+const Modal = ({ title, children, handleClose }) => {
 
-  const close = useCallback(() => {
-    handleCloseModal()
-  }, [handleCloseModal])
   const closeByEsc = useCallback(
-    e => {
-      if (e.keyCode === 27) {
-        close()
+    event => {
+      if (event.keyCode === 27) {
+        handleClose(event)
       }
     },
-    [close]
+    [handleClose]
   )
 
   useEffect(() => {
@@ -30,11 +25,11 @@ const Modal = ({ title, children, handleCloseModal }) => {
   }, [closeByEsc])
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClose={close} />
+      <Overlay onClose={(event) => handleClose(event)} />
       <div className={`${modal.modal}  pt-10 pb-15 pl-10 pr-10`}>
         <div className={`${modal.header}`}>
-          {(title || errorMessage) && <h3 className={`${modal.header__title} text text_type_main-large`}>{title || errorMessage}</h3>}
-          <div className={modal.header__icon} onClick={close}>
+          {title && <h3 className={`${modal.header__title} text text_type_main-large`}>{title}</h3>}
+          <div className={modal.header__icon} onClick={(event) => handleClose(event)}>
             <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
                 fillRule='evenodd'
@@ -55,7 +50,8 @@ const Modal = ({ title, children, handleCloseModal }) => {
 Modal.propTypes = {
   children: PropTypes.element,
   title: PropTypes.string,
-  handleCloseModal: PropTypes.func.isRequired
+  handleClose: PropTypes.func
+
 }
 
 export default Modal
