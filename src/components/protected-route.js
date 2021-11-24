@@ -1,9 +1,12 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { getCookie } from '../utils/helpers'
+import { useSelector } from 'react-redux'
 
 const ProtectedRoute = () => {
-  const isAuth = !!getCookie('accessToken')
+  const {data: user, request: isRequest} = useSelector(state => state.user)
+  const isAuth = Object.keys(user).length !== 0
   const location = useLocation()
+
+  if (isRequest) return null
 
   return isAuth ? <Outlet /> : <Navigate replace to={'/login'} state={{ from: location }} />
 }
