@@ -3,8 +3,8 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useSelector } from 'react-redux'
 import { getFormatedDay } from '../../../utils/helpers'
 
-// const maxElems = 5
-// let zIndex = 50
+const maxElems = 5
+let zIndex = 50
 
 const OrderCard = ({ props }) => {
   const { createdAt, name, number, status, ingredients: ids } = props
@@ -18,10 +18,10 @@ const OrderCard = ({ props }) => {
     }, 0)
   }
 
-  // const orderIcons = ids.map(id => {
-  //   const ingredient = ingredients.find(el => el._id === id)
-  //   return ingredient?.image_mobile
-  // })
+  const orderIcons = ids.map(id => {
+    const ingredient = ingredients.find(el => el._id === id)
+    return ingredient?.image_mobile
+  })
 
   if (!isIngredientsExist) return null
 
@@ -35,7 +35,7 @@ const OrderCard = ({ props }) => {
       <p className={`text text_type_main-default mt-2`}>{status}</p>
       <div className={`${styles.between} mt-7`}>
         <ul className={`${styles.icons}`}>
-          {/* {orderIcons.map((el, i) => {
+          {orderIcons.map((el, i) => {
             zIndex = zIndex - 1
             if (i <= maxElems - 1) {
               return (
@@ -53,7 +53,7 @@ const OrderCard = ({ props }) => {
               )
             }
             return null
-          })} */}
+          })}
         </ul>
         <div className={styles.cost}>
           <span className={`mr-2`}>{getTotalPrice()}</span>
