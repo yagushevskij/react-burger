@@ -21,9 +21,9 @@ const Modal = ({ title, children }) => {
   )
 
   const backByEsc = useCallback(
-    e => {
-      if (e.keyCode === 27) {
-        back()
+    event => {
+      if (event.keyCode === 27) {
+        back(event)
       }
     },
     [back]
