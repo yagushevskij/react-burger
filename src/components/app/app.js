@@ -1,10 +1,10 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import ProtectedRoute from '../protected-route'
 import ErrorBoundary from '../error-boundary/error-boundary.js'
 import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound } from '../../pages'
 import AppHeader from '../app-header/app-header'
 import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import { getUser } from '../../services/actions/thunk/user'
 import { getItems } from '../../services/actions/thunk/ingredients'
 import Logout from '../logout/logout'
@@ -14,7 +14,16 @@ import IngredientDetails from '../ingredient-details/ingredient-details'
 
 const WrappedRoutes = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const background = location.state?.background
+
+  const back = useCallback(
+    event => {
+      event.stopPropagation()
+      navigate(-1)
+    },
+    [navigate]
+  )
 
   return (
     <>
@@ -41,7 +50,7 @@ const WrappedRoutes = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title='Детали ингридиента'>
+              <Modal title='Детали ингридиента' handleClose={back}>
                 <IngredientDetails />
               </Modal>
             }

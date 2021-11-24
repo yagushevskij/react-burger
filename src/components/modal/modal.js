@@ -1,28 +1,12 @@
 import ReactDOM from 'react-dom'
 import { useCallback, useEffect } from 'react'
-// import { useSelector } from 'react-redux'
 import modal from './modal.module.css'
 import Overlay from '../overlay/overlay'
 import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router'
 
 const modalRoot = document.getElementById('modal-root')
 
-const Modal = ({ title, children, handleCloseModal }) => {
-  const navigate = useNavigate()
-  // const errorMessage = useSelector(state => state.order.errorMessage)
-
-  const back = useCallback(
-    event => {
-      event.stopPropagation()
-      navigate(-1)
-    },
-    [navigate]
-  )
-
-  const handleClose = useCallback(
-    (event) => handleCloseModal ? handleCloseModal() : back(event), [back, handleCloseModal]
-  )
+const Modal = ({ title, children, handleClose }) => {
 
   const closeByEsc = useCallback(
     event => {
@@ -66,6 +50,8 @@ const Modal = ({ title, children, handleCloseModal }) => {
 Modal.propTypes = {
   children: PropTypes.element,
   title: PropTypes.string,
+  handleClose: PropTypes.func
+
 }
 
 export default Modal

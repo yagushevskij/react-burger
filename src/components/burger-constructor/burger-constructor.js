@@ -72,7 +72,7 @@ const BurgerConstructor = () => {
   return (
     <>
       {isOrderRequest && <Loader title={`Идёт оформление заказа, ожидайте`} />}
-      {orderNumber && <Modal handleCloseModal={handleCloseOrderModal}><OrderDetails /></Modal>}
+      {orderNumber && <Modal handleClose={handleCloseOrderModal}><OrderDetails /></Modal>}
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (
           <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>
