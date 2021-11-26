@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom'
-import { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import modal from './modal.module.css'
 import Overlay from '../overlay/overlay'
 import PropTypes from 'prop-types'
@@ -54,4 +54,4 @@ Modal.propTypes = {
 
 }
 
-export default Modal
+export default React.memo(Modal)

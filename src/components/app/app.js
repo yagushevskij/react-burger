@@ -12,7 +12,6 @@ import Logout from '../logout/logout'
 import ProtectedAuthRoute from '../protected-auth-route'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
-import useDataToggle from '../../services/customHooks/useDataToggle'
 
 const WrappedRoutes = () => {
   const location = useLocation()
@@ -67,7 +66,6 @@ const WrappedRoutes = () => {
 const App = () => {
   const dispatch = useDispatch()
   const orderNumber = useSelector(state => state.order.number)
-  const [isOrderNumberToggled] = useDataToggle(orderNumber, true)
 
   useEffect(() => {
     dispatch(getUser())
@@ -76,11 +74,11 @@ const App = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if (isOrderNumberToggled) {
+    if (orderNumber) {
       dispatch(getOrders())
       dispatch(getItems())
     }
-  }, [dispatch, isOrderNumberToggled])
+  }, [dispatch, orderNumber])
 
   return (
     <ErrorBoundary>

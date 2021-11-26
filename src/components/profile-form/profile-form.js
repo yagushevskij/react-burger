@@ -4,7 +4,7 @@ import useInput from '../../services/customHooks/useInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { updateUser } from '../../services/actions/thunk/user'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 const initialInputsState = {
   name: { isDisabled: true },
@@ -24,22 +24,25 @@ const ProfileForm = () => {
   const [inputsDisableState, setInputsDisableState] = useState(initialInputsState)
   const [isFormEdited, setIsFormEdited] = useState(false)
 
-  const setInitialFormState = () => {
+  const setInitialFormState = useCallback(() => {
     setInputsDisableState(initialInputsState)
     resetInputedData()
     setIsFormEdited(false)
-  }
+  }, [resetInputedData])
 
   const toggleDisable = name => {
     setInputsDisableState({ ...inputsDisableState, [name]: { isDisabled: !inputsDisableState[name].isDisabled } })
   }
 
-  const onSubmit = event => {
-    event.preventDefault()
-    const combinedData = Object.assign({}, user, inputedData)
-    dispatch(updateUser(combinedData))
-    setInitialFormState()
-  }
+  const onSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      const combinedData = Object.assign({}, user, inputedData)
+      dispatch(updateUser(combinedData))
+      setInitialFormState()
+    },
+    [dispatch, user, inputedData, setInitialFormState]
+  )
 
   if (isUserRequest) {
     return null
