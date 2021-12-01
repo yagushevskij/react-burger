@@ -26,8 +26,7 @@ const BurgerConstructor = () => {
     })
   })
   const constrItems = useSelector(state => state.contructor.items)
-  const orderNumber = useSelector(state => state.order.number)
-  const isOrderRequest = useSelector(state => state.order.request)
+  const {number: orderNumber, request: isOrderRequest, errorMessage} = useSelector(state => state.order)
 
   useEffect(() => {
     setTotalCost(() =>
@@ -68,11 +67,15 @@ const BurgerConstructor = () => {
     dispatch({ type: UPDATE_CONSTR_ITEMS, payload: { items: [] } })
     dispatch({ type: SET_INITIAL_ORDER_STATE })
   }
+  const handleCloseErrorModal = () => {
+    dispatch({ type: SET_INITIAL_ORDER_STATE })
+  }
 
   return (
     <>
       {isOrderRequest && <Loader title={`Идёт оформление заказа, ожидайте`} />}
       {orderNumber && <Modal handleClose={handleCloseOrderModal}><OrderDetails /></Modal>}
+      {errorMessage && <Modal title={errorMessage} handleClose={handleCloseErrorModal}></Modal>}
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (
           <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>

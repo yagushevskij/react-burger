@@ -1,6 +1,7 @@
 import styles from './loader.module.css'
 import Overlay from '../overlay/overlay'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 const Loader = ({ title }) => {
   return (
@@ -23,4 +24,4 @@ Loader.propTypes = {
   title: PropTypes.string
 }
 
-export default Loader
+export default React.memo(Loader)
