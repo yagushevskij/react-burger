@@ -37,11 +37,10 @@ const ProfileForm = () => {
   const onSubmit = useCallback(
     event => {
       event.preventDefault()
-      const combinedData = Object.assign({}, user, inputedData)
-      dispatch(updateUser(combinedData))
+      dispatch(updateUser(inputedData))
       setInitialFormState()
     },
-    [dispatch, user, inputedData, setInitialFormState]
+    [dispatch, inputedData, setInitialFormState]
   )
 
   if (isUserRequest) {
