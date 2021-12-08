@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import ProtectedRoute from '../protected-route'
-import ErrorBoundary from '../error-boundary/error-boundary.js'
+import ErrorBoundary from '../error-boundary/error-boundary'
 import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound } from '../../pages'
 import AppHeader from '../app-header/app-header'
 import { useDispatch } from 'react-redux'
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, FC } from 'react'
 import { getUser } from '../../services/actions/thunk/user'
 import { getItems } from '../../services/actions/thunk/ingredients'
 import { getOrders } from '../../services/actions/thunk/order'
@@ -13,8 +13,9 @@ import ProtectedAuthRoute from '../protected-auth-route'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import useAppSelector from '../../services/customHooks/useAppSelector'
+import useAppDispatch from '../../services/customHooks/useAppDispatch'
 
-const WrappedRoutes = () => {
+const WrappedRoutes: FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const background = location.state?.background
@@ -64,8 +65,8 @@ const WrappedRoutes = () => {
   )
 }
 
-const App = () => {
-  const dispatch = useDispatch()
+const App: FC = () => {
+  const dispatch = useAppDispatch()
   const orderNumber = useAppSelector(state => state.order.number)
 
   useEffect(() => {

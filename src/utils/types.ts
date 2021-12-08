@@ -1,28 +1,27 @@
-import PropTypes from 'prop-types'
-
-const ingredient = {
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_mobile: PropTypes.string.isRequired,
-  image_large: PropTypes.string.isRequired,
-  __v: PropTypes.number,
+interface IIngredientType {
+  _id: string;
+  name: string;
+  type: string;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  __v?: number;
 }
 
-const mainCardPropTypes = PropTypes.shape({
-  ...ingredient,
-  qty: PropTypes.number.isRequired
-})
+interface IMainCardType extends IIngredientType {
+  qty: number;
+}
 
-const conCardPropTypes = PropTypes.shape({
-  ...ingredient,
-  key: PropTypes.string.isRequired
-})
+interface IConCardType extends IIngredientType {
+  key: string;
+}
 
-export { mainCardPropTypes, conCardPropTypes }
+type TStringFunc = () => string
+type TOnSubmitCallback = (event: React.SyntheticEvent) => void
+
+export type { IConCardType, IMainCardType, IIngredientType, TOnSubmitCallback, TStringFunc }
