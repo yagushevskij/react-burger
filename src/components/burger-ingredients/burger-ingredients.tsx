@@ -5,11 +5,11 @@ import TabList from './tab-list/tab-list'
 import type { IMainCardType } from '../../utils/types'
 import useAppSelector from '../../services/customHooks/useAppSelector'
 
-export type TIngredients = 'bun' | 'sauce' | 'main' | undefined;
-type TGetClosestTabCallback = () => TIngredients | null;
+export type TIngredients = 'bun' | 'sauce' | 'main' | undefined
+type TGetClosestTabCallback = () => TIngredients | null
 export type TGrouppedIngredients = { title: string, elems: IMainCardType[], ref: React.RefObject<HTMLDivElement>, type: TIngredients }[]
 
-const getBoundingClientRectTop = (elem: React.RefObject<HTMLDivElement>): any => elem.current?.getBoundingClientRect().top;
+const getBoundingClientRectTop = (elem: React.RefObject<HTMLDivElement>): any => elem.current?.getBoundingClientRect().top
 
 const BurgerIngridients: FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null)

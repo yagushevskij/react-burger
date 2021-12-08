@@ -20,8 +20,8 @@ const ProfileForm = () => {
   const { name = '', email = '' } = user
   const isUserRequest = useAppSelector(state => state.user.request)
 
-  const { data: inputedData, handleInputChange, resetInputedData } = useInput({name : '', email: '', password: ''})
-  const { name: inputedName , email: inputedEmail , password: inputedPassword } = inputedData
+  const { data: inputedData, handleInputChange, resetInputedData } = useInput({ name: '', email: '', password: '' })
+  const { name: inputedName, email: inputedEmail, password: inputedPassword } = inputedData
 
   const [inputsDisableState, setInputsDisableState] = useState(initialInputsState)
   const [isFormEdited, setIsFormEdited] = useState<boolean>(false)
@@ -32,15 +32,14 @@ const ProfileForm = () => {
     setIsFormEdited(false)
   }, [resetInputedData])
 
-  const onSubmit =
-    useCallback <
-    TOnSubmitCallback >
-    (event => {
+  const onSubmit = useCallback<TOnSubmitCallback>(
+    event => {
       event.preventDefault()
       dispatch(updateUser(inputedData))
       setInitialFormState()
     },
-    [dispatch, inputedData, setInitialFormState])
+    [dispatch, inputedData, setInitialFormState]
+  )
 
   if (isUserRequest) {
     return null

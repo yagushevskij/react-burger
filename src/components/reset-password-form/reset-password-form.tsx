@@ -13,14 +13,13 @@ const ResetPasswordForm: FC = () => {
   const { data, handleInputChange } = useInput({ token: '', password: '' })
   const { token, password } = data
 
-  const onSubmit =
-    useCallback <
-    TOnSubmitCallback >
-    (event => {
+  const onSubmit = useCallback<TOnSubmitCallback>(
+    event => {
       event.preventDefault()
       dispatch(resetPass(data))
     },
-    [data, dispatch])
+    [data, dispatch]
+  )
   return (
     <AuthForm title='Восстановление пароля' buttonText='Восстановить' onSubmit={onSubmit} isButtonDisabled={isRequest}>
       <>

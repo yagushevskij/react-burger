@@ -13,15 +13,14 @@ interface IModalProps {
 export type TCloseCallback<T> = (event: T) => void
 
 const Modal: FC<IModalProps> = ({ title, children, handleClose }) => {
-  const closeByEsc =
-    useCallback <
-    TCloseCallback<KeyboardEvent> >
-    (event => {
+  const closeByEsc = useCallback<TCloseCallback<KeyboardEvent>>(
+    event => {
       if (event.code === 'Escape') {
         handleClose(event)
       }
     },
-    [handleClose])
+    [handleClose]
+  )
 
   useEffect(() => {
     document.addEventListener('keydown', closeByEsc)

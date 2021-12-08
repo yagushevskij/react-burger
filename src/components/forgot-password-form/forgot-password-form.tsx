@@ -13,14 +13,13 @@ const ForgotPasswordForm: FC = () => {
   const { data, handleInputChange } = useInput({ email: '' })
   const { email } = data
 
-  const onSubmit =
-    useCallback <
-    TOnSubmitCallback >
-    (event => {
+  const onSubmit = useCallback<TOnSubmitCallback>(
+    event => {
       event.preventDefault()
       dispatch(restorePass(data))
     },
-    [data, dispatch])
+    [data, dispatch]
+  )
   return (
     <AuthForm title='Восстановление пароля' buttonText='Восстановить' onSubmit={onSubmit} isButtonDisabled={isRequest}>
       <Input

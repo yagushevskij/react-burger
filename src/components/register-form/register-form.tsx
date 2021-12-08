@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useCallback } from 'react'
 import type { TOnSubmitCallback } from '../../utils/types'
 import useAppSelector from '../../services/customHooks/useAppSelector'
-import type {IRegisterData} from '../../services/actions/thunk/auth'
+import type { IRegisterData } from '../../services/actions/thunk/auth'
 
 const RegisterForm = () => {
   const dispatch = useDispatch()

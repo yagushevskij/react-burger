@@ -5,8 +5,8 @@ import type { TIngredients } from '../burger-ingredients'
 import type { TGrouppedIngredients } from '../burger-ingredients'
 
 type TTabList = {
-  items: TGrouppedIngredients;
-  activeTab: TIngredients | null;
+  items: TGrouppedIngredients,
+  activeTab: TIngredients | null
 }
 
 const TabList = React.forwardRef<HTMLDivElement, TTabList>((props, ref) => {

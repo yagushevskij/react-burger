@@ -15,14 +15,13 @@ const LoginForm: FC = () => {
   const { email, password } = data
   const isRequest = useAppSelector(state => state.auth.request)
 
-  const onSubmit =
-    useCallback <
-    TOnSubmitCallback >
-    (event => {
+  const onSubmit = useCallback<TOnSubmitCallback>(
+    event => {
       event.preventDefault()
       dispatch(login(data))
     },
-    [data, dispatch])
+    [data, dispatch]
+  )
   return (
     <AuthForm title='Вход' buttonText='Войти' onSubmit={onSubmit} isButtonDisabled={isRequest}>
       <>

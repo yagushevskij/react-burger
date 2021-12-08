@@ -10,11 +10,11 @@ interface IUserData {
 }
 
 interface IUserResp {
-  success: boolean,
-  user : {
-    email: string;
-    name: string;
-  }
+  success: boolean;
+  user: {
+    email: string,
+    name: string
+  };
 }
 
 export const getUser = () => {

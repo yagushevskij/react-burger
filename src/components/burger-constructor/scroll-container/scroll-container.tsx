@@ -15,17 +15,16 @@ export type TMoveCardCallback = (dragIndex: number, hoverIndex: number) => void
 const ScrollContainer: FC<TScrollContainerProps> = ({ items, removeItem }) => {
   const dispatch = useDispatch()
 
-  const moveCard =
-    useCallback <
-    TMoveCardCallback >
-    ((dragIndex, hoverIndex) => {
+  const moveCard = useCallback<TMoveCardCallback>(
+    (dragIndex, hoverIndex) => {
       const dragCard = items[dragIndex]
       const copyItems = [...items]
       copyItems.splice(dragIndex, 1)
       copyItems.splice(hoverIndex, 0, dragCard)
       dispatch(constrItemActions.updateItems(copyItems))
     },
-    [items, dispatch])
+    [items, dispatch]
+  )
   return (
     <ul className={`${scrollContainer.list} ${scrollContainer.scroll}`}>
       {items.map((item, index) => {

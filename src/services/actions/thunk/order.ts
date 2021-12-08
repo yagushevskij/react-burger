@@ -14,7 +14,7 @@ interface IGetOrdersResp {
 interface IOrder {
   _id: string;
   ingredients: string[];
-  status: string,
+  status: string;
   name: string;
   createdAt: string;
   updatedAt: string;
@@ -25,7 +25,6 @@ interface IOrderResp {
   message?: string;
   order: IOrder;
 }
-
 
 export const order = (items: IIngredientType[]) => {
   return async function (dispatch: any) {

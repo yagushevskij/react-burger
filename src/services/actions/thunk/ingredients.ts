@@ -5,7 +5,7 @@ import type { IIngredientType } from '../../../utils/types'
 
 interface IGetItemsResp {
   success: boolean;
-  data: IIngredientType[]
+  data: IIngredientType[];
 }
 
 export const getItems = () => {

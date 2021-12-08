@@ -40,7 +40,7 @@ const BurgerConstructor: FC = () => {
     )
   }, [constrItems])
 
-  const bun = useMemo < IConCardType > (() => constrItems.find((el: IConCardType) => el.type === 'bun'), [constrItems])
+  const bun = useMemo<IConCardType>(() => constrItems.find((el: IConCardType) => el.type === 'bun'), [constrItems])
 
   const handleDrop = (item: IConCardType) => {
     if (item.type === 'bun' && bun) {
@@ -49,25 +49,23 @@ const BurgerConstructor: FC = () => {
     addItem(item)
   }
 
-  const addItem =
-    useCallback <
-    TItemCallback >
-    (item => {
+  const addItem = useCallback<TItemCallback>(
+    item => {
       const qty = item.type === 'bun' ? 2 : 1
       dispatch(constrItemActions.addItem(item))
       dispatch(itemActions.increaseItem(item, qty))
     },
-    [dispatch])
+    [dispatch]
+  )
 
-  const removeItem =
-    useCallback <
-    TItemCallback >
-    (item => {
+  const removeItem = useCallback<TItemCallback>(
+    item => {
       const qty = item.type === 'bun' ? 2 : 1
       dispatch(constrItemActions.removeItem(item))
       dispatch(itemActions.decreaseItem(item, qty))
     },
-    [dispatch])
+    [dispatch]
+  )
 
   const handleCloseOrderModal = () => {
     dispatch({ type: UPDATE_CONSTR_ITEMS, payload: { items: [] } })
