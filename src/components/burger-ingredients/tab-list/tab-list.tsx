@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import tabList from './tab-list.module.css'
 import type { TIngredients } from '../burger-ingredients'

@@ -1,7 +1,6 @@
 import styles from './login.module.css'
 import { Link, Navigate, useLocation } from 'react-router-dom'
 import LoginForm from '../../components/login-form/login-form'
-import { useSelector } from 'react-redux'
 import useAppSelector from '../../services/customHooks/useAppSelector'
 import { FC } from 'react'
 

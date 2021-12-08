@@ -1,5 +1,4 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import { FC } from 'react'
 import useAppSelector from '../services/customHooks/useAppSelector'
 
