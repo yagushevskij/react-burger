@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { GET_ORDER_FAILED } from '../../../services/actions/order'
 import { IConCardType } from '../../../utils/types'
 import useAppSelector from '../../../services/customHooks/useAppSelector'
-import useAppDispatch from '../../../services/customHooks/useAppDispatch'
+import { useDispatch } from 'react-redux'
 
 type TOrderProps = {
   items: IConCardType[],
@@ -14,7 +14,7 @@ type TOrderProps = {
 
 const Order: FC<TOrderProps> = ({ items, bun }) => {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const location = useLocation()
   const orderRequest = useAppSelector(state => state.order.request)
   const user = useAppSelector(state => state.user.data)

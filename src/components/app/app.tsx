@@ -13,7 +13,6 @@ import ProtectedAuthRoute from '../protected-auth-route'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import useAppSelector from '../../services/customHooks/useAppSelector'
-import useAppDispatch from '../../services/customHooks/useAppDispatch'
 
 const WrappedRoutes: FC = () => {
   const location = useLocation()
@@ -66,7 +65,7 @@ const WrappedRoutes: FC = () => {
 }
 
 const App: FC = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const orderNumber = useAppSelector(state => state.order.number)
 
   useEffect(() => {

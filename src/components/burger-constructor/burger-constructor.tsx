@@ -12,13 +12,13 @@ import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import Loader from '../loader/loader'
 import useAppSelector from '../../services/customHooks/useAppSelector'
-import useAppDispatch from '../../services/customHooks/useAppDispatch'
 import type { IConCardType } from '../../utils/types'
+import { useDispatch } from 'react-redux'
 
 export type TItemCallback = (item: IConCardType) => void
 
 const BurgerConstructor: FC = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const [totalCost, setTotalCost] = useState<number>(0)
   const [{ border }, sectionTarget] = useDrop({
     accept: 'ingredient-card',
