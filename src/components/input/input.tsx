@@ -16,14 +16,14 @@ export type TInputProps = {
 }
 
 const Input: FC<TInputProps> = ({onIconClick, ...props }) => {
-  const inputRef = useRef<HTMLInputElement>(null)
+  const ref = useRef<HTMLInputElement>(null)
 
   const onIconClickHandle = () => {
-    setTimeout(() => inputRef.current?.focus(), 0)
+    setTimeout(() => ref.current?.focus(), 0)
     onIconClick && onIconClick()
   }
 
-  const params = {onIconClick: onIconClickHandle, ...props}
+  const params = {ref, onIconClick: onIconClickHandle, ...props}
 
   return (
     <InputLibraryElem
