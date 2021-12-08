@@ -7,7 +7,7 @@ export type TInputProps = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   name: string;
   error?: boolean;
-  size: any;
+  size: 'small' | 'default' | undefined;
   value: string;
   errorText?: string;
   icon?: any;

@@ -57,7 +57,7 @@ const ConstructorCard: FC<TConstructorCardProps> = ({ data, handleRemove, index,
     item: () => {
       return { id, index }
     },
-    collect: (monitor: any) => ({
+    collect: (monitor) => ({
       isDragging: monitor.isDragging()
     })
   })

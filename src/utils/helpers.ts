@@ -1,6 +1,12 @@
 import moment from 'moment'
 import 'moment/locale/ru'
 
+type TCookieOptions = {
+  expires?: number;
+  path?: string;
+  [key: string]: any;
+} | null
+
 const checkReponse = <T>(res: Response): Promise<T> => {
   return res.ok ? res.json() : res.json().then(err => Promise.reject(err))
 }
@@ -15,10 +21,10 @@ const getKeyByGenerate = () => {
 const getExpiredDate = (sec: number) => {
   const date = new Date()
   date.setTime(date.getTime() + sec * 1000)
-  return date
+  return +date.toUTCString();
 }
 
-const setCookie = (name: string, value: string, options: any) => {
+const setCookie = (name: string, value: string, options: TCookieOptions) => {
   options = {
     path: '/',
     ...options
