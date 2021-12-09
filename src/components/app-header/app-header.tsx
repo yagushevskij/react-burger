@@ -26,7 +26,7 @@ enum IconsType {
 
 const AppHeader: FC = () => {
   const location = useLocation()
-  const getLinkStyle = (isActive: object): string => `${appHeader.link} text text_type_main-default text_color_inactive ml-2 ${isActive && appHeader.link_active}`
+  const getLinkStyle = ({isActive}: {isActive: {}}): string => `${appHeader.link} text text_type_main-default text_color_inactive ml-2 ${isActive && appHeader.link_active}`
   const getActiveIcon = (path: string): IconsType.primary | IconsType.secondary  => (location.pathname === path ? IconsType.primary : IconsType.secondary)
   return (
     <header className={appHeader.header}>
