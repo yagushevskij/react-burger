@@ -1,7 +1,7 @@
 import orderDetails from './order-details.module.css'
 import doneIcon from '../../images/done.png'
 import { FC } from 'react'
-import useAppSelector from '../../services/customHooks/useAppSelector'
+import useAppSelector from '../../services/custom-hooks/use-app-selector'
 
 const OrderDetails: FC = () => {
   const { number, request: orderRequest } = useAppSelector(state => state.order)

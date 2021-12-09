@@ -1,7 +1,7 @@
 import styles from './login.module.css'
 import { Link, Navigate, useLocation } from 'react-router-dom'
 import LoginForm from '../../components/login-form/login-form'
-import useAppSelector from '../../services/customHooks/useAppSelector'
+import useAppSelector from '../../services/custom-hooks/use-app-selector'
 import { FC } from 'react'
 
 const Login: FC = () => {

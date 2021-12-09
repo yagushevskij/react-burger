@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useEffect, FC } from 'react'
 import ForgotPasswordForm from '../../components/forgot-password-form/forgot-password-form'
 import { SET_INIT_STATE_RESTORE_PASS } from '../../services/actions/restore-pass'
-import useAppSelector from '../../services/customHooks/useAppSelector'
+import useAppSelector from '../../services/custom-hooks/use-app-selector'
 
 const ForgotPassword: FC = () => {
   const dispatch = useDispatch()

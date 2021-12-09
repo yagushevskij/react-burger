@@ -1,7 +1,7 @@
 import styles from './orders.module.css'
 // import OrderCard from './order-card/order-card.tsx.new'
 import { FC } from 'react'
-import useAppSelector from '../../services/customHooks/useAppSelector'
+import useAppSelector from '../../services/custom-hooks/use-app-selector'
 
 const Orders: FC = () => {
   const { request: isOrdersRequest, data: orders } = useAppSelector(state => state.orders)

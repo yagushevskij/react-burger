@@ -11,7 +11,7 @@ import { SET_INITIAL_ORDER_STATE } from '../../services/actions/order'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import Loader from '../loader/loader'
-import useAppSelector from '../../services/customHooks/useAppSelector'
+import useAppSelector from '../../services/custom-hooks/use-app-selector'
 import type { IConCardType } from '../../utils/types'
 import { useDispatch } from 'react-redux'
 

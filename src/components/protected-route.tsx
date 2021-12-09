@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { FC } from 'react'
-import useAppSelector from '../services/customHooks/useAppSelector'
+import useAppSelector from '../services/custom-hooks/use-app-selector'
 
 const ProtectedRoute: FC = () => {
   const { data: user, request: isRequest } = useAppSelector(state => state.user)

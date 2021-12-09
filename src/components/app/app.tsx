@@ -12,7 +12,7 @@ import Logout from '../logout/logout'
 import ProtectedAuthRoute from '../protected-auth-route'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
-import useAppSelector from '../../services/customHooks/useAppSelector'
+import useAppSelector from '../../services/custom-hooks/use-app-selector'
 
 const WrappedRoutes: FC = () => {
   const location = useLocation()

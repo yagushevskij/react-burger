@@ -3,7 +3,7 @@ import burgerIngridients from './burger-ingredients.module.css'
 import IngredientCard from './ingredient-card/ingredient-card'
 import TabList from './tab-list/tab-list'
 import type { IMainCardType } from '../../utils/types'
-import useAppSelector from '../../services/customHooks/useAppSelector'
+import useAppSelector from '../../services/custom-hooks/use-app-selector'
 
 export type TIngredients = 'bun' | 'sauce' | 'main' | undefined
 type TGetClosestTabCallback = () => TIngredients | null

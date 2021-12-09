@@ -1,11 +1,11 @@
-import useInput from '../../services/customHooks/useInput'
+import useInput from '../../services/custom-hooks/use-input'
 import Input from '../input/input'
 import PassInput from '../input/pass-input/pass-input'
 import AuthForm from '../auth-form/auth-form'
 import { useDispatch } from 'react-redux'
 import { useCallback, FC } from 'react'
 import { login } from '../../services/actions/thunk/auth'
-import useAppSelector from '../../services/customHooks/useAppSelector'
+import useAppSelector from '../../services/custom-hooks/use-app-selector'
 import type { TOnSubmitCallback } from '../../utils/types'
 import type { ILoginData } from '../../services/actions/thunk/auth'
 

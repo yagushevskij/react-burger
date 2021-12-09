@@ -1,7 +1,7 @@
 import ingredientDetails from './ingredient-details.module.css'
 import { useParams } from 'react-router'
 import { FC } from 'react'
-import useAppSelector from '../../services/customHooks/useAppSelector'
+import useAppSelector from '../../services/custom-hooks/use-app-selector'
 import type { IMainCardType } from '../../utils/types'
 
 const IngredientDetails: FC = () => {

@@ -4,7 +4,7 @@ import React, { useCallback, FC } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { GET_ORDER_FAILED } from '../../../services/actions/order'
 import { IConCardType } from '../../../utils/types'
-import useAppSelector from '../../../services/customHooks/useAppSelector'
+import useAppSelector from '../../../services/custom-hooks/use-app-selector'
 import { useDispatch } from 'react-redux'
 
 type TOrderProps = {
