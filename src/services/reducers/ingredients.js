@@ -3,7 +3,7 @@ import { GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, GET_ITEMS_FAILED, UPDATE_ITEMS, I
 const initialState = {
   items: [],
   itemsRequest: false,
-  itemsRequestFailed: false,
+  itemsRequestFailed: false
 }
 
 const ingredientsReducer = (state = initialState, action) => {

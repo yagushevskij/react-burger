@@ -1,4 +1,4 @@
-import { RESTORE_PASS_REQUEST, RESTORE_PASS_REQUEST_SUCCESS, RESTORE_PASS_REQUEST_FAILED, SET_INIT_STATE_RESTORE_PASS } from '../actions/restore-pass.js'
+import { RESTORE_PASS_REQUEST, RESTORE_PASS_REQUEST_SUCCESS, RESTORE_PASS_REQUEST_FAILED, SET_INIT_STATE_RESTORE_PASS } from '../actions/restore-pass'
 
 const initialState = {
   request: false,
@@ -26,10 +26,10 @@ const restorePassReducer = (state = initialState, action) => {
         failed: true,
         errorMessage: action.payload.errorMessage
       }
-      case SET_INIT_STATE_RESTORE_PASS:
-        return {
-          ...initialState
-        }
+    case SET_INIT_STATE_RESTORE_PASS:
+      return {
+        ...initialState
+      }
     default:
       return state
   }

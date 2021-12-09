@@ -1,4 +1,4 @@
-import { RESET_PASS_REQUEST, RESET_PASS_REQUEST_SUCCESS, RESET_PASS_REQUEST_FAILED, SET_INIT_STATE_RESET_PASS } from '../actions/reset-pass.js'
+import { RESET_PASS_REQUEST, RESET_PASS_REQUEST_SUCCESS, RESET_PASS_REQUEST_FAILED, SET_INIT_STATE_RESET_PASS } from '../actions/reset-pass'
 
 const initialState = {
   request: false,
@@ -26,11 +26,11 @@ const resetPassReducer = (state = initialState, action) => {
         failed: true,
         errorMessage: action.payload.errorMessage
       }
-      case SET_INIT_STATE_RESET_PASS: {
-        return {
-          ...initialState
-        }
+    case SET_INIT_STATE_RESET_PASS: {
+      return {
+        ...initialState
       }
+    }
     default:
       return state
   }

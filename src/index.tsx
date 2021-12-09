@@ -11,6 +11,9 @@ const composeEnhancers = composeWithDevTools({
   // Specify here name, actionsBlacklist, actionsCreators and other options
 })
 
+export type TRootState = ReturnType<typeof rootReducer>
+export type TAppDispatch = typeof store.dispatch
+
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
 ReactDOM.render(
