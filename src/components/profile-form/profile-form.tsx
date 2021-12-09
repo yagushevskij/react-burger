@@ -8,26 +8,26 @@ import { useCallback, useState } from 'react'
 import type { TOnSubmitCallback } from '../../utils/types'
 import useAppSelector from '../../services/customHooks/useAppSelector'
 
-const initialInputsState = {
-  name: { isDisabled: true },
-  email: { isDisabled: true },
-  password: { isDisabled: true }
+export interface IDisableHandleData {[key: string]: boolean}
+
+const initialDisableState = {
+  name: true,
+  email: true,
+  password: true
 }
 
 const ProfileForm = () => {
   const dispatch = useDispatch()
   const user = useAppSelector(state => state.user.data)
-  const { name = '', email = '' } = user
   const isUserRequest = useAppSelector(state => state.user.request)
 
-  const { data: inputedData, handleInputChange, resetInputedData } = useInput({ name: '', email: '', password: '' })
-  const { name: inputedName, email: inputedEmail, password: inputedPassword } = inputedData
+  const { data: inputedData, handleInputChange, resetInputedData } = useInput(user)
 
-  const [inputsDisableState, setInputsDisableState] = useState(initialInputsState)
+  const [inputsDisableState, setInputsDisableState] = useState(initialDisableState)
   const [isFormEdited, setIsFormEdited] = useState<boolean>(false)
 
   const setInitialFormState = useCallback(() => {
-    setInputsDisableState(initialInputsState)
+    setInputsDisableState(initialDisableState)
     resetInputedData()
     setIsFormEdited(false)
   }, [resetInputedData])
@@ -40,6 +40,10 @@ const ProfileForm = () => {
     },
     [dispatch, inputedData, setInitialFormState]
   )
+
+  const disableHandler = (data: IDisableHandleData) => {
+    setInputsDisableState({...inputsDisableState, ...data})
+  }
 
   if (isUserRequest) {
     return null
@@ -58,9 +62,10 @@ const ProfileForm = () => {
           name={'name'}
           error={false}
           size={'default'}
-          value={inputedName || name}
+          value={inputedData.name}
           errorText={'Ошибка'}
-          disabled={inputsDisableState.name.isDisabled}
+          disabled={inputsDisableState.name}
+          disableHandle={disableHandler}
         />
         <EditInput
           type={'email'}
@@ -72,9 +77,10 @@ const ProfileForm = () => {
           name={'email'}
           error={false}
           size={'default'}
-          value={inputedEmail || email}
+          value={inputedData.email}
           errorText={'Ошибка'}
-          disabled={inputsDisableState.email.isDisabled}
+          disabled={inputsDisableState.email}
+          disableHandle={disableHandler}
         />
         <EditInput
           type={'password'}
@@ -86,9 +92,10 @@ const ProfileForm = () => {
           name={'password'}
           error={false}
           size={'default'}
-          value={inputedPassword}
+          value={(inputedData as any).password || ''}
           errorText={'Ошибка'}
-          disabled={inputsDisableState.password.isDisabled}
+          disabled={inputsDisableState.password}
+          disableHandle={disableHandler}
         />
       </div>
       {isFormEdited && (
