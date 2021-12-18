@@ -1,10 +1,10 @@
-import { useDispatch } from 'react-redux'
 import ConstructorCard from '../constructor-card/constructor-card'
 import { constrItemActions } from '../../../services/actions/constructor'
 import scrollContainer from './scroll-container.module.css'
 import { useCallback, FC } from 'react'
 import { IConCardType } from '../../../utils/types'
 import { TItemCallback } from '../burger-constructor'
+import { useAppDispatch } from '../../../services/custom-hooks/redux-hooks'
 
 type TScrollContainerProps = {
   items: IConCardType[],
@@ -13,7 +13,7 @@ type TScrollContainerProps = {
 export type TMoveCardCallback = (dragIndex: number, hoverIndex: number) => void
 
 const ScrollContainer: FC<TScrollContainerProps> = ({ items, removeItem }) => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const moveCard = useCallback<TMoveCardCallback>(
     (dragIndex, hoverIndex) => {

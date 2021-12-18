@@ -1,10 +1,11 @@
 import { Navigate } from 'react-router'
 import { useEffect, FC } from 'react'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../../services/custom-hooks/redux-hooks'
+
 import { logout } from '../../services/actions/thunk/auth'
 
 const Logout: FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(logout())
   }, [dispatch])

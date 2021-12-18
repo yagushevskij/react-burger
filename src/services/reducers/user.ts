@@ -7,15 +7,27 @@ import {
   UPDATE_USER_REQUEST_FAILED,
   SET_USER
 } from '../actions/user'
+import type { TUserActions } from '../actions/user'
+import type { IUserData } from '../actions/user'
 
-const initialState = {
-  data: {},
+interface IUserState {
+  data: IUserData;
+  request: boolean;
+  failed: boolean;
+  errorMessage: null | string | undefined;
+}
+
+const initialState: IUserState = {
+  data: {
+    name: '',
+    email: ''
+  },
   request: false,
   failed: false,
   errorMessage: null
 }
 
-const userReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action: TUserActions): IUserState => {
   switch (action.type) {
     case GET_USER_REQUEST:
     case UPDATE_USER_REQUEST:
@@ -36,13 +48,13 @@ const userReducer = (state = initialState, action) => {
       return {
         ...initialState,
         failed: true,
-        errorMessage: action.payload.errorMessage
+        errorMessage: action.payload?.message
       }
     case UPDATE_USER_REQUEST_FAILED:
       return {
         ...state,
         failed: true,
-        errorMessage: action.payload.errorMessage
+        errorMessage: action.payload?.message
       }
     case SET_USER:
       return {

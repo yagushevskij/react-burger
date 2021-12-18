@@ -1,14 +1,16 @@
 import styles from './profile-form.module.css'
 import EditInput from '../input/edit-input/edit-input'
 import useInput from '../../services/custom-hooks/use-input'
-import { useDispatch } from 'react-redux'
+
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { updateUser } from '../../services/actions/thunk/user'
 import { useCallback, useState } from 'react'
 import type { TOnSubmitCallback } from '../../utils/types'
-import useAppSelector from '../../services/custom-hooks/use-app-selector'
+import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
 
-export interface IDisableHandleData {[key: string]: boolean}
+export interface IDisableHandleData {
+  [key: string]: boolean;
+}
 
 const initialDisableState = {
   name: true,
@@ -17,7 +19,7 @@ const initialDisableState = {
 }
 
 const ProfileForm = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const user = useAppSelector(state => state.user.data)
   const isUserRequest = useAppSelector(state => state.user.request)
 
@@ -42,7 +44,7 @@ const ProfileForm = () => {
   )
 
   const disableHandler = (data: IDisableHandleData) => {
-    setInputsDisableState({...inputsDisableState, ...data})
+    setInputsDisableState({ ...inputsDisableState, ...data })
   }
 
   if (isUserRequest) {
@@ -92,7 +94,7 @@ const ProfileForm = () => {
           name={'password'}
           error={false}
           size={'default'}
-          value={(inputedData as any).password || ''}
+          value={inputedData.password || ''}
           errorText={'Ошибка'}
           disabled={inputsDisableState.password}
           disableHandle={disableHandler}

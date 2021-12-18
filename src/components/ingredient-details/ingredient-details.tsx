@@ -1,14 +1,14 @@
 import ingredientDetails from './ingredient-details.module.css'
 import { useParams } from 'react-router'
 import { FC } from 'react'
-import useAppSelector from '../../services/custom-hooks/use-app-selector'
+import { useAppSelector } from '../../services/custom-hooks/redux-hooks'
 import type { IMainCardType } from '../../utils/types'
 
 const IngredientDetails: FC = () => {
   const ingredients = useAppSelector(state => state.ingredients.items)
   const { id } = useParams()
-  const data = ingredients.find((el: IMainCardType) => el._id === id) || {}
-  const { image, name, calories, proteins, fat, carbohydrates } = data
+  const data = ingredients.find((el: IMainCardType) => el._id === id)
+  const { image, name, calories, proteins, fat, carbohydrates } = data || {}
 
   return (
     <div className={`${ingredientDetails.wrapper}`}>

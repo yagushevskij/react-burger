@@ -1,9 +1,8 @@
 import { API_URL } from '../../../utils/config'
 import { AUTH_REQUEST, AUTH_REQUEST_SUCCESS, AUTH_REQUEST_FAILED, LOGOUT_REQUEST, LOGOUT_REQUEST_SUCCESS, LOGOUT_REQUEST_FAILED } from '../auth'
-import { setCookie, getCookie } from '../../../utils/helpers'
-import { deleteCookie } from '../../../utils/helpers'
+import { setCookie, getCookie, deleteCookie, checkReponse } from '../../../utils/helpers'
 import { SET_USER } from '../user'
-import { checkReponse } from '../../../utils/helpers'
+import type { TAppDispatch } from '../../../utils/types'
 
 export interface ILoginData {
   email: string
@@ -28,20 +27,20 @@ interface ILogoutResp {
 
 
 export const register = (data: IRegisterData) => {
-  return (dispatch: any) => {
+  return (dispatch: TAppDispatch) => {
     const url = API_URL + 'auth/register'
     auth(data, url, dispatch)
   }
 }
 
 export const login = (data: ILoginData) => {
-  return (dispatch: any) => {
+  return (dispatch: TAppDispatch) => {
     const url = API_URL + 'auth/login'
     auth(data, url, dispatch)
   }
 }
 
-const auth = async (data: IRegisterData | ILoginData, url: string, dispatch: any) => {
+const auth = async (data: IRegisterData | ILoginData, url: string, dispatch: TAppDispatch) => {
   dispatch({
     type: AUTH_REQUEST
   })
@@ -75,7 +74,7 @@ const auth = async (data: IRegisterData | ILoginData, url: string, dispatch: any
 }
 
 export const logout = () => {
-  return async (dispatch: any) => {
+  return async (dispatch: TAppDispatch) => {
     const url = API_URL + 'auth/logout'
     const data = { token: getCookie('refreshToken') }
     dispatch({
@@ -97,14 +96,14 @@ export const logout = () => {
     } catch (e) {
       dispatch({
         type: LOGOUT_REQUEST_FAILED,
-        payload: { errorMessage: 'Возникла ошибка при выполнении запроса. Пожалуйста, попробуйте позже' }
+        payload: { message: 'Возникла ошибка при выполнении запроса. Пожалуйста, попробуйте позже' }
       })
       console.log(e)
     } finally {
       deleteCookie('accessToken')
       dispatch({
         type: SET_USER,
-        payload: { data: {} }
+        payload: { data: {name: '', email: ''} }
       })
     }
   }

@@ -1,20 +1,24 @@
 import { AUTH_REQUEST, AUTH_REQUEST_SUCCESS, AUTH_REQUEST_FAILED, LOGOUT_REQUEST, LOGOUT_REQUEST_SUCCESS, LOGOUT_REQUEST_FAILED } from '../actions/auth'
+import type { TAuthActions } from '../actions/auth'
 
-const initialState = {
-  request: false,
-  failed: false,
-  errorMessage: null
+interface IAuthReducerState {
+  request: boolean;
+  failed: boolean;
 }
 
-const authReducer = (state = initialState, action) => {
+const initialState: IAuthReducerState = {
+  request: false,
+  failed: false
+}
+
+const authReducer = (state = initialState, action: TAuthActions): IAuthReducerState => {
   switch (action.type) {
     case AUTH_REQUEST:
     case LOGOUT_REQUEST:
       return {
         ...state,
         request: true,
-        failed: false,
-        errorMessage: null
+        failed: false
       }
     case AUTH_REQUEST_SUCCESS:
     case LOGOUT_REQUEST_SUCCESS:
@@ -26,8 +30,7 @@ const authReducer = (state = initialState, action) => {
     case LOGOUT_REQUEST_FAILED:
       return {
         ...initialState,
-        failed: true,
-        errorMessage: action.payload.errorMessage
+        failed: true
       }
     default:
       return state

@@ -1,13 +1,12 @@
 import styles from './reset-password.module.css'
 import { Link, Navigate, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { useEffect, FC } from 'react'
 import ResetPasswordForm from '../../components/reset-password-form/reset-password-form'
 import { SET_INIT_STATE_RESET_PASS } from '../../services/actions/reset-pass'
-import useAppSelector from '../../services/custom-hooks/use-app-selector'
+import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
 
 const ResetPassword: FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const location = useLocation()
   const state = location.state
   const isRequestSuccess = useAppSelector(state => state.resetPass.success)

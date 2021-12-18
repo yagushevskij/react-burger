@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { FC } from 'react'
-import useAppSelector from '../services/custom-hooks/use-app-selector'
+import { useAppSelector } from '../services/custom-hooks/redux-hooks'
 
 const ProtectedAuthRoute: FC = () => {
   const { state } = useLocation()

@@ -1,13 +1,13 @@
 import styles from './forgot-password.module.css'
 import { Link, useLocation, Navigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+
 import { useEffect, FC } from 'react'
 import ForgotPasswordForm from '../../components/forgot-password-form/forgot-password-form'
 import { SET_INIT_STATE_RESTORE_PASS } from '../../services/actions/restore-pass'
-import useAppSelector from '../../services/custom-hooks/use-app-selector'
+import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
 
 const ForgotPassword: FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const location = useLocation()
   const isRequestSuccess = useAppSelector(state => state.restorePass.success)
 

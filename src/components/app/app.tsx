@@ -3,7 +3,6 @@ import ProtectedRoute from '../protected-route'
 import ErrorBoundary from '../error-boundary/error-boundary'
 import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound } from '../../pages'
 import AppHeader from '../app-header/app-header'
-import { useDispatch } from 'react-redux'
 import { useEffect, useCallback, FC } from 'react'
 import { getUser } from '../../services/actions/thunk/user'
 import { getItems } from '../../services/actions/thunk/ingredients'
@@ -12,7 +11,7 @@ import Logout from '../logout/logout'
 import ProtectedAuthRoute from '../protected-auth-route'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
-import useAppSelector from '../../services/custom-hooks/use-app-selector'
+import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
 
 const WrappedRoutes: FC = () => {
   const location = useLocation()
@@ -65,7 +64,7 @@ const WrappedRoutes: FC = () => {
 }
 
 const App: FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const orderNumber = useAppSelector(state => state.order.number)
 
   useEffect(() => {

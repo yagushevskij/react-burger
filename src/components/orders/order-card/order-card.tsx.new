@@ -2,14 +2,14 @@
 // import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 // import { getFormatedDay } from '../../../utils/helpers'
 // import { useMemo, FC } from 'react'
-// import useAppSelector from '../../../services/customHooks/useAppSelector'
+// import { useAppSelector, useAppDispatch } from '../../../services/customHooks/{ useAppSelector }'
 
 // const maxElems = 5
 // let zIndex = 50
 
 // const OrderCard: FC = ({ props }) => {
 //   const { createdAt, name, number, status, ingredients: ids } = props
-//   const ingredients = useAppSelector(state => state.ingredients.items)
+//   const ingredients = { useAppSelector }(state => state.ingredients.items)
 //   const isIngredientsExist = ingredients.length !== 0
 
 //   const orderIngredients = useMemo(

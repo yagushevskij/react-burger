@@ -2,14 +2,14 @@ import Input from '../input/input'
 import AuthForm from '../auth-form/auth-form'
 import useInput from '../../services/custom-hooks/use-input'
 import { register } from '../../services/actions/thunk/auth'
-import { useDispatch } from 'react-redux'
+
 import { useCallback } from 'react'
 import type { TOnSubmitCallback } from '../../utils/types'
-import useAppSelector from '../../services/custom-hooks/use-app-selector'
+import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
 import type { IRegisterData } from '../../services/actions/thunk/auth'
 
 const RegisterForm = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const isRequest = useAppSelector(state => state.auth.request)
   const { data, handleInputChange } = useInput<IRegisterData>({ email: '', password: '', name: '' })
   const { email, password, name } = data

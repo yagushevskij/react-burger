@@ -2,7 +2,7 @@ import styles from './profile-nav-links.module.css'
 import { NavLink } from 'react-router-dom'
 import { FC } from 'react'
 
-const navLinkStyle = ({isActive}: {isActive: {}}): string => `${styles.link} text text_type_main-medium text_color_inactive ${isActive && styles.link_active}`
+const navLinkStyle = ({ isActive }: { isActive: {} }): string => `${styles.link} text text_type_main-medium text_color_inactive ${isActive && styles.link_active}`
 
 const ProfileNavLinks: FC = () => {
   return (

@@ -2,15 +2,15 @@ import useInput from '../../services/custom-hooks/use-input'
 import Input from '../input/input'
 import PassInput from '../input/pass-input/pass-input'
 import AuthForm from '../auth-form/auth-form'
-import { useDispatch } from 'react-redux'
+
 import { useCallback, FC } from 'react'
 import { login } from '../../services/actions/thunk/auth'
-import useAppSelector from '../../services/custom-hooks/use-app-selector'
+import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
 import type { TOnSubmitCallback } from '../../utils/types'
 import type { ILoginData } from '../../services/actions/thunk/auth'
 
 const LoginForm: FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { data, handleInputChange } = useInput<ILoginData>({ email: '', password: '' })
   const { email, password } = data
   const isRequest = useAppSelector(state => state.auth.request)

@@ -2,24 +2,17 @@ import { GET_USER_REQUEST, GET_USER_REQUEST_SUCCESS, GET_USER_REQUEST_FAILED, UP
 import { API_URL } from '../../../utils/config'
 import { getCookie } from '../../../utils/helpers'
 import { retriableFetch } from '../../../utils/api'
-
-interface IUserData {
-  email?: string;
-  password?: string;
-  name?: string;
-}
+import { IUserData } from '../user'
+import type { TAppDispatch } from '../../../utils/types'
 
 interface IUserResp {
   success: boolean;
-  user: {
-    email: string,
-    name: string
-  };
+  user: IUserData;
 }
 
 export const getUser = () => {
   const accessToken = getCookie('accessToken')
-  return async function (dispatch: any) {
+  return async function (dispatch: TAppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
     })
@@ -38,7 +31,7 @@ export const getUser = () => {
     } catch (e) {
       dispatch({
         type: GET_USER_REQUEST_FAILED,
-        payload: { errorMessage: 'На сайте возникла ошибка. Пожалуйста, попробуйте позже' }
+        payload: { message: 'На сайте возникла ошибка. Пожалуйста, попробуйте позже' }
       })
       console.log(e)
     }
@@ -46,7 +39,7 @@ export const getUser = () => {
 }
 
 export const updateUser = (data: IUserData) => {
-  return async function (dispatch: any) {
+  return async function (dispatch: TAppDispatch) {
     console.log(data)
     const accessToken = getCookie('accessToken')
     dispatch({
@@ -68,7 +61,7 @@ export const updateUser = (data: IUserData) => {
     } catch (e) {
       dispatch({
         type: UPDATE_USER_REQUEST_FAILED,
-        payload: { errorMessage: 'На сайте возникла ошибка. Пожалуйста, попробуйте позже' }
+        payload: { message: 'На сайте возникла ошибка. Пожалуйста, попробуйте позже' }
       })
       console.log(e)
     }

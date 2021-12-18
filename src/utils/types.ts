@@ -1,3 +1,14 @@
+import type {TRootState} from '../index'
+import type { TAppActions } from '../services/actions';
+import {Dispatch, Action, ActionCreator} from 'redux'
+import { ThunkAction } from 'redux-thunk'
+
+export type TAppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, TRootState, TAppActions>
+>;
+
+export type TAppDispatch = Dispatch<TAppActions>; 
+
 interface IIngredientType {
   readonly _id: string;
   readonly name: string;

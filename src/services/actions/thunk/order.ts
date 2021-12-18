@@ -3,22 +3,14 @@ import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED } from '../order
 import { GET_ORDERS_REQUEST, GET_ORDERS_SUCCESS, GET_ORDERS_FAILED } from '../orders'
 import { getCookie } from '../../../utils/helpers'
 import { retriableFetch } from '../../../utils/api'
-import type { IIngredientType } from '../../../utils/types'
+import type { TAppDispatch, IIngredientType } from '../../../utils/types'
+import type { IOrder } from '../orders'
 
 interface IGetOrdersResp {
   orders: IOrder[];
   success: boolean;
   total: number;
   totalToday: number;
-}
-interface IOrder {
-  _id: string;
-  ingredients: string[];
-  status: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  number: number;
 }
 interface IOrderResp {
   success: boolean;
@@ -27,7 +19,7 @@ interface IOrderResp {
 }
 
 export const order = (items: IIngredientType[]) => {
-  return async function (dispatch: any) {
+  return async function (dispatch: TAppDispatch) {
     const token = getCookie('accessToken')
     dispatch({
       type: GET_ORDER_REQUEST
@@ -44,7 +36,9 @@ export const order = (items: IIngredientType[]) => {
       })
       dispatch({
         type: GET_ORDER_SUCCESS,
-        orderNumber: res.order.number
+        payload: {
+          orderNumber: res.order.number
+        }
       })
     } catch (e) {
       dispatch({
@@ -57,7 +51,7 @@ export const order = (items: IIngredientType[]) => {
 }
 
 export const getOrders = () => {
-  return async function (dispatch: any) {
+  return async function (dispatch: TAppDispatch) {
     const token = getCookie('accessToken')
     dispatch({
       type: GET_ORDERS_REQUEST
@@ -72,7 +66,7 @@ export const getOrders = () => {
       })
       dispatch({
         type: GET_ORDERS_SUCCESS,
-        data: res.orders
+        payload: { data: res.orders }
       })
     } catch (e) {
       dispatch({

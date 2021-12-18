@@ -1,10 +1,16 @@
 import { ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS } from '../actions/constructor'
+import { IConCardType } from '../../utils/types'
+import { TConstructorActions } from '../actions/constructor'
 
-const initialState = {
+interface IConstructorReducerState {
+  items: IConCardType[];
+}
+
+const initialState: IConstructorReducerState = {
   items: []
 }
 
-const constructorReducer = (state = initialState, action) => {
+const constructorReducer = (state = initialState, action: TConstructorActions): IConstructorReducerState => {
   switch (action.type) {
     case ADD_CONSTR_ITEM: {
       return {

@@ -11,14 +11,13 @@ import { SET_INITIAL_ORDER_STATE } from '../../services/actions/order'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import Loader from '../loader/loader'
-import useAppSelector from '../../services/custom-hooks/use-app-selector'
+import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
 import type { IConCardType } from '../../utils/types'
-import { useDispatch } from 'react-redux'
 
 export type TItemCallback = (item: IConCardType) => void
 
 const BurgerConstructor: FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [totalCost, setTotalCost] = useState<number>(0)
   const [{ border }, sectionTarget] = useDrop({
     accept: 'ingredient-card',
@@ -40,7 +39,7 @@ const BurgerConstructor: FC = () => {
     )
   }, [constrItems])
 
-  const bun = useMemo<IConCardType>(() => constrItems.find((el: IConCardType) => el.type === 'bun'), [constrItems])
+  const bun = useMemo(() => constrItems.find((el: IConCardType) => el.type === 'bun'), [constrItems])
 
   const handleDrop = (item: IConCardType) => {
     if (item.type === 'bun' && bun) {
