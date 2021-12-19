@@ -1,11 +1,11 @@
 import AuthForm from '../auth-form/auth-form'
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import useInput from '../../services/custom-hooks/use-input'
+import useInput from '../../../services/custom-hooks/use-input'
 import React, { useCallback, FC } from 'react'
 
-import { restorePass } from '../../services/actions/thunk/restore-pass'
-import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
-import type { TOnSubmitCallback } from '../../utils/types'
+import { restorePass } from '../../../services/actions/thunk/restore-pass'
+import { useAppSelector, useAppDispatch } from '../../../services/custom-hooks/redux-hooks'
+import type { TOnSubmitCallback } from '../../../utils/types'
 
 const ForgotPasswordForm: FC = () => {
   const dispatch = useAppDispatch()

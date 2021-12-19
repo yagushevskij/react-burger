@@ -1,12 +1,12 @@
-import Input from '../input/input'
+import Input from '../../input/input'
 import AuthForm from '../auth-form/auth-form'
-import useInput from '../../services/custom-hooks/use-input'
-import { register } from '../../services/actions/thunk/auth'
+import useInput from '../../../services/custom-hooks/use-input'
+import { register } from '../../../services/actions/thunk/auth'
 
 import { useCallback } from 'react'
-import type { TOnSubmitCallback } from '../../utils/types'
-import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
-import type { IRegisterData } from '../../services/actions/thunk/auth'
+import type { TOnSubmitCallback } from '../../../utils/types'
+import { useAppSelector, useAppDispatch } from '../../../services/custom-hooks/redux-hooks'
+import type { IRegisterData } from '../../../services/actions/thunk/auth'
 
 const RegisterForm = () => {
   const dispatch = useAppDispatch()

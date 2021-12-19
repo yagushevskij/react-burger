@@ -1,12 +1,12 @@
 import styles from './profile-form.module.css'
-import EditInput from '../input/edit-input/edit-input'
-import useInput from '../../services/custom-hooks/use-input'
+import EditInput from '../../input/edit-input/edit-input'
+import useInput from '../../../services/custom-hooks/use-input'
 
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { updateUser } from '../../services/actions/thunk/user'
+import { updateUser } from '../../../services/actions/thunk/user'
 import { useCallback, useState } from 'react'
-import type { TOnSubmitCallback } from '../../utils/types'
-import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
+import type { TOnSubmitCallback } from '../../../utils/types'
+import { useAppSelector, useAppDispatch } from '../../../services/custom-hooks/redux-hooks'
 
 export interface IDisableHandleData {
   [key: string]: boolean;

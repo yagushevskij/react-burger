@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import Input from '../input'
 import type { TInputProps } from '../input'
-import { IDisableHandleData } from '../../profile-form/profile-form'
+import { IDisableHandleData } from '../../forms/profile-form/profile-form'
 
 type TEditInputProps = Omit<TInputProps, 'onIconClick'> & { disableHandle: (data: IDisableHandleData) => void }
 

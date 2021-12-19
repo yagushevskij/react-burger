@@ -1,11 +1,11 @@
-import useInput from '../../services/custom-hooks/use-input'
-import Input from '../input/input'
+import useInput from '../../../services/custom-hooks/use-input'
+import Input from '../../input/input'
 import AuthForm from '../auth-form/auth-form'
 
-import { resetPass } from '../../services/actions/thunk/reset-pass'
+import { resetPass } from '../../../services/actions/thunk/reset-pass'
 import { useCallback, FC } from 'react'
-import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
-import type { TOnSubmitCallback } from '../../utils/types'
+import { useAppSelector, useAppDispatch } from '../../../services/custom-hooks/redux-hooks'
+import type { TOnSubmitCallback } from '../../../utils/types'
 
 const ResetPasswordForm: FC = () => {
   const dispatch = useAppDispatch()

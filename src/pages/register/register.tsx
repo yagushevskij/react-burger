@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import styles from './register.module.css'
-import RegisterForm from '../../components/register-form/register-form'
+import RegisterForm from '../../components/forms/register-form/register-form'
 import { FC } from 'react'
 
 const Register: FC = () => {

@@ -1,5 +1,5 @@
 import styles from './profile.module.css'
-import ProfileForm from '../../components/profile-form/profile-form'
+import ProfileForm from '../../components/forms/profile-form/profile-form'
 import ProfileNavLinks from '../../components/profile-nav-links/profile-nav-links'
 import { useLocation } from 'react-router-dom'
 import Orders from '../../components/orders/orders'
