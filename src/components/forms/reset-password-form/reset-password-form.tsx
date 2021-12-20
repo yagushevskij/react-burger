@@ -1,6 +1,6 @@
 import useInput from '../../../services/custom-hooks/use-input'
 import Input from '../../input/input'
-import AuthForm from '../auth-form/auth-form'
+import AuthForm from '../auth-form'
 
 import { resetPass } from '../../../services/actions/thunk/reset-pass'
 import { useCallback, FC } from 'react'

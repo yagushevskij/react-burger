@@ -9,8 +9,8 @@ export const UPDATE_USER_REQUEST_FAILED: 'UPDATE_USER_REQUEST_FAILED' = 'UPDATE_
 export const SET_USER: 'SET_USER' = 'SET_USER'
 
   export interface IUserData {
-    email: string;
-    name: string;
+    email?: string;
+    name?: string;
     password?: string;
   }
 

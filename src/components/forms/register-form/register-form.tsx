@@ -1,5 +1,5 @@
 import Input from '../../input/input'
-import AuthForm from '../auth-form/auth-form'
+import AuthForm from '../auth-form'
 import useInput from '../../../services/custom-hooks/use-input'
 import { register } from '../../../services/actions/thunk/auth'
 

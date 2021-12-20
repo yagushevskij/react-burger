@@ -64,7 +64,7 @@ const ProfileForm = () => {
           name={'name'}
           error={false}
           size={'default'}
-          value={inputedData.name}
+          value={inputedData.name || ''}
           errorText={'Ошибка'}
           disabled={inputsDisableState.name}
           disableHandle={disableHandler}
@@ -79,7 +79,7 @@ const ProfileForm = () => {
           name={'email'}
           error={false}
           size={'default'}
-          value={inputedData.email}
+          value={inputedData.email || ''}
           errorText={'Ошибка'}
           disabled={inputsDisableState.email}
           disableHandle={disableHandler}

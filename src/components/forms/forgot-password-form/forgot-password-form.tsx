@@ -1,7 +1,7 @@
-import AuthForm from '../auth-form/auth-form'
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import useInput from '../../../services/custom-hooks/use-input'
 import React, { useCallback, FC } from 'react'
+import AuthForm from '../auth-form'
 
 import { restorePass } from '../../../services/actions/thunk/restore-pass'
 import { useAppSelector, useAppDispatch } from '../../../services/custom-hooks/redux-hooks'

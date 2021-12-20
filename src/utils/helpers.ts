@@ -53,12 +53,12 @@ const deleteCookie = (name: string) => {
   setCookie(name, '', { expires: -1 })
 }
 
-// const getFormatedDay = (date) => {
-//   const today = new Date()
-//   const differenceDay = new Date(date)
-//   const difference = moment(today).diff(differenceDay, 'days')
-//   return difference > 1 ? moment(date).from() : moment(date).calendar()
-// }
+const getFormatedDay = (date: Date) => {
+  const today = new Date()
+  const differenceDay = new Date(date)
+  const difference = moment(today).diff(differenceDay, 'days')
+  return difference > 1 ? moment(date).from(today) : moment(date).calendar()
+}
 moment.updateLocale('ru', {
   calendar: {
     sameDay: '[Сегодня] LT [i-GMT]Z',
@@ -67,7 +67,7 @@ moment.updateLocale('ru', {
   },
   relativeTime: {
     future: 'in %s',
-    past: '%s ago',
+    past: '%s назад',
     s: 'a few seconds',
     ss: '%d seconds',
     m: 'a minute',
@@ -85,4 +85,4 @@ moment.updateLocale('ru', {
   }
 })
 
-export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, checkReponse }
+export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, checkReponse, getFormatedDay }

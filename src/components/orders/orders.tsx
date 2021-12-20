@@ -1,21 +1,28 @@
 import styles from './orders.module.css'
-// import OrderCard from './order-card/order-card.tsx.new'
-import { FC } from 'react'
-import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
+import OrderCard from './order-card/order-card'
+import { FC, useRef } from 'react'
+import type { IOrder } from '../../services/actions/orders'
+import useContainerHeight from '../../services/custom-hooks/use-container-height'
+import { useAppSelector } from '../../services/custom-hooks/redux-hooks'
 
-const Orders: FC = () => {
-  const { request: isOrdersRequest, data: orders } = useAppSelector(state => state.orders)
-  const isOrdersExist = orders.length > 0
+interface IOrders {
+  readonly data: IOrder[];
+}
 
-  if (isOrdersRequest) return null
-  if (!isOrdersExist) return <div className={`${styles.info} text text_type_main-medium`}>У вас нет созданных заказов</div>
+const Orders: FC<IOrders> = ({data}) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerHeight] = useContainerHeight(containerRef)
+  const ingredients = useAppSelector(state => state.ingredients.items)
+  const isOrdersExist = !data || data.length > 0 
 
-  return null
-  // <div className={`${styles.container} mt-10`}>
-  //   {[...orders].reverse().map((el, i) => (
-  //     <OrderCard props={el} key={i} />
-  //   ))}
-  // </div>
+  return (
+    <div className={`${styles.container} mt-10`} ref={containerRef} style={{maxHeight: `${containerHeight}px`}}>
+      {isOrdersExist && [...data].reverse().map((el, i) => (
+        <OrderCard data={el} ingredients={ingredients} key={i} />
+      ))}
+      {!isOrdersExist && <div className={`${styles.info} text text_type_main-medium`}>У вас нет созданных заказов</div>}
+    </div>
+  )
 }
 
 export default Orders

@@ -18,10 +18,7 @@ interface IUserState {
 }
 
 const initialState: IUserState = {
-  data: {
-    name: '',
-    email: ''
-  },
+  data: {},
   request: false,
   failed: false,
   errorMessage: null

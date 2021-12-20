@@ -4,6 +4,7 @@ import IngredientCard from './ingredient-card/ingredient-card'
 import TabList from './tab-list/tab-list'
 import type { IMainCardType } from '../../utils/types'
 import { useAppSelector } from '../../services/custom-hooks/redux-hooks'
+import useContainerHeight from '../../services/custom-hooks/use-container-height'
 
 export type TIngredients = 'bun' | 'sauce' | 'main' | undefined
 type TGetClosestTabCallback = () => TIngredients | null
@@ -33,7 +34,7 @@ const BurgerIngridients: FC = () => {
   const ingredients = useAppSelector(store => createGrouppedIngredients(store.ingredients.items))
 
   const [activeTab, setActiveTab] = useState<TIngredients | null>()
-  const [scrollContainerHeight, setSrollContainerHeight] = useState<number>(0)
+  const [containerHeight] = useContainerHeight(scrollContainerRef)
 
   const getClosestTab = useCallback<TGetClosestTabCallback>(() => {
     const tabsOffsetTop = tabsRef.current?.offsetTop
@@ -47,24 +48,12 @@ const BurgerIngridients: FC = () => {
   useEffect(() => {
     setActiveTab(getClosestTab())
   }, [getClosestTab])
-  useEffect(() => {
-    setSrollContainerHeight(getScrollContainerHeight())
-  }, [])
-
-  const getScrollContainerHeight = () => {
-    const windowHeight = window.innerHeight
-    const scrollContainerOffsetTop = scrollContainerRef.current?.offsetTop
-    if (scrollContainerOffsetTop) {
-      return windowHeight - scrollContainerOffsetTop
-    }
-    return 0
-  }
 
   return (
     <section className={burgerIngridients.section}>
       <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
       <TabList items={ingredients} activeTab={activeTab} ref={tabsRef} />
-      <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: scrollContainerHeight }} ref={scrollContainerRef} onScroll={() => setActiveTab(getClosestTab())}>
+      <div className={`${burgerIngridients.content} mt-10`} style={{ maxHeight: containerHeight }} ref={scrollContainerRef} onScroll={() => setActiveTab(getClosestTab())}>
         {ingredients.map((group, index) => {
           return (
             <div key={index}>

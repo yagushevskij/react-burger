@@ -5,10 +5,10 @@ export const GET_ORDERS_FAILED: 'GET_ORDERS_FAILED' = 'GET_ORDERS_FAILED'
 export interface IOrder {
   _id: string;
   ingredients: string[];
-  status: string;
+  status: 'created' | 'pending' | 'done';
   name: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   number: number;
 }
 

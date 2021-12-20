@@ -103,7 +103,7 @@ export const logout = () => {
       deleteCookie('accessToken')
       dispatch({
         type: SET_USER,
-        payload: { data: {name: '', email: ''} }
+        payload: { data: {} }
       })
     }
   }

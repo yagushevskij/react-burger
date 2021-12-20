@@ -72,3 +72,11 @@
   display: flex;
   align-items: center;
 }
+
+.created .pending {
+  color: #F2F2F3
+}
+
+.done {
+  color: #00CCCC
+}

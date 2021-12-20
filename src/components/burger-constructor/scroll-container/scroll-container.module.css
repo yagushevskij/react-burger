@@ -1,10 +1,11 @@
 .list {
   composes: list from '../burger-constructor.module.css'
-  }
-  
+}
 
-  .scroll {
-    max-height: 370px;
-    overflow: auto;
-    padding-right: 8px;
-  }
+
+.scroll {
+  max-height: 370px;
+  overflow: auto;
+  padding-right: 8px;
+  composes: scroll from '../../app/app.module.css'
+}
