@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import ProtectedRoute from '../protected-route'
 import ErrorBoundary from '../error-boundary/error-boundary'
-import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound } from '../../pages'
+import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, OrdersFeed } from '../../pages'
 import AppHeader from '../app-header/app-header'
 import { useEffect, useCallback, FC } from 'react'
 import { getUser } from '../../services/actions/thunk/user'
@@ -30,6 +30,7 @@ const WrappedRoutes: FC = () => {
     <>
       <Routes location={background ?? location}>
         <Route path='/' element={<Home />} />
+        <Route path='/feed' element={<OrdersFeed />} />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='/profile' element={<ProtectedRoute />}>
           <Route path='/profile' element={<Profile />} />

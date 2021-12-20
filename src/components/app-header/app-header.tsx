@@ -10,7 +10,7 @@ const links = {
   },
   ordersFeed: {
     title: 'Лента заказов',
-    path: '/profile/orders'
+    path: '/feed'
   },
   profile: {
     title: 'Личный кабинет',
@@ -40,7 +40,7 @@ const AppHeader: FC = () => {
           </li>
           <li className={`${appHeader.item__link} p-5 ml-2`}>
             <ListIcon type={getActiveIcon(links.ordersFeed.path)} />
-            <NavLink end to={`/profile/orders`} className={getLinkStyle}>
+            <NavLink end to={`/feed`} className={getLinkStyle}>
               {links.ordersFeed.title}
             </NavLink>
           </li>

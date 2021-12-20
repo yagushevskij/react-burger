@@ -11,11 +11,11 @@ const Profile: FC = () => {
   const orders = useAppSelector(state => state.orders.data)
 
   return (
-    <section className={`${styles.main}`}>
+    <main className={`${styles.main}`}>
       <ProfileNavLinks />
       {location.pathname === '/profile' && <ProfileForm />}
       {location.pathname === '/profile/orders' && <Orders data={orders} />}
-    </section>
+    </main>
   )
 }
 

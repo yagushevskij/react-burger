@@ -51,11 +51,11 @@ const OrderCard: FC<IOrderCard> = ({ data, ingredients }) => {
   return (
     <article className={styles.container}>
       <div className={styles.between}>
-        <span className={`text text_type_digits-default`}>{number}</span>
+        <span className={`text text_type_digits-default`}>{`#${number}`}</span>
         <span className={`text text_type_main-default text_color_inactive`}>{getFormatedDay(createdAt)}</span>
       </div>
       <p className={`text text_type_main-medium mt-5`}>{name}</p>
-      <p className={`${styles[status]} text text_type_main-default mt-2`}>{orderStatus[status]}</p>
+      {status && <p className={`${styles[status]} text text_type_main-default mt-2`}>{orderStatus[status]}</p>}
       <div className={`${styles.between} mt-7`}>
         <ul className={`${styles.icons}`}>
           {iconsToRender}

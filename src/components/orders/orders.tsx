@@ -20,7 +20,7 @@ const Orders: FC<IOrders> = ({data}) => {
       {isOrdersExist && [...data].reverse().map((el, i) => (
         <OrderCard data={el} ingredients={ingredients} key={i} />
       ))}
-      {!isOrdersExist && <div className={`${styles.info} text text_type_main-medium`}>У вас нет созданных заказов</div>}
+      {!isOrdersExist && <div className={`${styles.info} text text_type_main-medium`}>Заказы отсутствуют</div>}
     </div>
   )
 }
