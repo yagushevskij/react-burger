@@ -16,7 +16,7 @@ const Orders: FC<IOrders> = ({data}) => {
   const isOrdersExist = !data || data.length > 0 
 
   return (
-    <div className={`${styles.container} mt-10`} ref={containerRef} style={{maxHeight: `${containerHeight}px`}}>
+    <div className={`${styles.container}`} ref={containerRef} style={{maxHeight: `${containerHeight}px`}}>
       {isOrdersExist && [...data].reverse().map((el, i) => (
         <OrderCard data={el} ingredients={ingredients} key={i} />
       ))}

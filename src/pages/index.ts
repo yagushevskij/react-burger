@@ -6,5 +6,6 @@ import ResetPassword from './reset-password/reset-password'
 import Profile from './profile/profile'
 import NotFound from './not-found/not-found'
 import OrdersFeed from './orders-feed/orders-feed'
+import OrderInfo from './order-info/order-info'
 
-export { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, OrdersFeed }
+export { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, OrdersFeed, OrderInfo }

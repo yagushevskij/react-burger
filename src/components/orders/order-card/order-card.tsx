@@ -4,16 +4,11 @@ import { getFormatedDay } from '../../../utils/helpers'
 import { FC } from 'react'
 import type { IOrder } from '../../../services/actions/orders'
 import type {IMainCardType} from '../../../utils/types'
+import { orderStatus } from '../../../utils/config'
 
 interface IOrderCard {
   readonly data: IOrder
   readonly ingredients: IMainCardType[]
-}
-
-enum orderStatus {
-  created = 'Создан',
-  pending = 'Готовится',
-  done = 'Выполнен'
 }
 
 const maxIngredientIcons = 5 // Число показываемых иконок ингредиентов

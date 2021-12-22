@@ -53,6 +53,21 @@ const deleteCookie = (name: string) => {
   setCookie(name, '', { expires: -1 })
 }
 
+const getUniqueAndCountedObjects = (arr: {}[]) => {
+  let result: any = []
+  const baseQty = { qty: 1 }
+  for (let obj of arr) {
+    Object.assign(obj, baseQty)
+    if (!result.includes(obj)) {
+      result.push(obj)
+    } else {
+      result.qty += 1
+    }
+  }
+
+  return result
+}
+
 const getFormatedDay = (date: Date) => {
   const today = new Date()
   const differenceDay = new Date(date)
@@ -64,25 +79,7 @@ moment.updateLocale('ru', {
     sameDay: '[Сегодня] LT [i-GMT]Z',
     lastDay: '[Вчера] LT [i-GMT]Z',
     sameElse: 'LL LT [i-GMT]Z'
-  },
-  relativeTime: {
-    future: 'in %s',
-    past: '%s назад',
-    s: 'a few seconds',
-    ss: '%d seconds',
-    m: 'a minute',
-    mm: '%d minutes',
-    h: 'an hour',
-    hh: '%d hours',
-    d: 'a day ff',
-    dd: '%d days',
-    w: 'a week',
-    ww: '%d weeks',
-    M: 'a month',
-    MM: '%d months',
-    y: 'a year',
-    yy: '%d years'
   }
 })
 
-export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, checkReponse, getFormatedDay }
+export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, checkReponse, getFormatedDay, getUniqueAndCountedObjects }

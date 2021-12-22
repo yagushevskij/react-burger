@@ -1,0 +1,62 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.number {
+  align-self: center;
+}
+
+.space_between {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.ingredient:first-of-type {
+  margin-top: 0;
+}
+
+.scroll_container {
+  display: flex;
+  width: 100%;
+  padding-left: 0;
+  margin-bottom: 0;
+  max-height: 312px;
+  overflow: auto;
+  composes: scroll from '../app/app.module.css';
+}
+
+
+.scroll_container::-webkit-scrollbar-thumb {
+  padding-left: 24px;
+}
+
+.icon_container {
+  height: 56px;
+  width: 56px;
+  border: #4C4CFF solid 1px;
+  border-radius: 100%;
+  list-style: none;
+  background: #1C1C21;
+}
+
+.ingredient_icon {
+  margin-left: -24px;
+  height: 94%;
+  height: 94%;
+}
+
+.centered_line {
+  display: flex;
+  align-items: center;
+}
+
+.created .pending {
+  color: #F2F2F3
+}
+
+.done {
+  color: #00CCCC
+}

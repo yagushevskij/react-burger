@@ -14,7 +14,11 @@ const Profile: FC = () => {
     <main className={`${styles.main}`}>
       <ProfileNavLinks />
       {location.pathname === '/profile' && <ProfileForm />}
-      {location.pathname === '/profile/orders' && <Orders data={orders} />}
+      {location.pathname === '/profile/orders' && (
+        <div className='mt-10'>
+          <Orders data={orders} />
+        </div>
+      )}
     </main>
   )
 }
