@@ -8,7 +8,7 @@ import { useAppSelector } from '../../services/custom-hooks/redux-hooks'
 
 const Profile: FC = () => {
   const location = useLocation()
-  const orders = useAppSelector(state => state.orders.data)
+  const orders = useAppSelector(state => state.ordersUser.data)
 
   return (
     <main className={`${styles.main}`}>

@@ -1,10 +1,9 @@
 import styles from './orders.module.css'
 import OrderCard from './order-card/order-card'
 import { FC, useRef } from 'react'
-import type { IOrder } from '../../services/actions/orders'
+import type { IOrder } from '../../utils/types'
 import useContainerHeight from '../../services/custom-hooks/use-container-height'
 import { useAppSelector } from '../../services/custom-hooks/redux-hooks'
-import { useNavigationType } from 'react-router'
 
 interface IOrders {
   readonly data: IOrder[];
@@ -15,7 +14,6 @@ const Orders: FC<IOrders> = ({data}) => {
   const [containerHeight] = useContainerHeight(containerRef)
   const ingredients = useAppSelector(state => state.ingredients.items)
   const isOrdersExist = !data || data.length > 0
-  console.log(useNavigationType())
 
   return (
     <div className={`${styles.container}`} ref={containerRef} style={{maxHeight: `${containerHeight}px`}}>

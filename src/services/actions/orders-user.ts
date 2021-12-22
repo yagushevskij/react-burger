@@ -1,16 +1,8 @@
+import { IOrder } from "../../utils/types"
+
 export const GET_ORDERS_REQUEST: 'GET_ORDERS_REQUEST' = 'GET_ORDERS_REQUEST'
 export const GET_ORDERS_SUCCESS: 'GET_ORDERS_SUCCESS' = 'GET_ORDERS_SUCCESS'
 export const GET_ORDERS_FAILED: 'GET_ORDERS_FAILED' = 'GET_ORDERS_FAILED'
-
-export interface IOrder {
-  _id: string;
-  ingredients: string[];
-  status: 'created' | 'pending' | 'done';
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
-  number: number;
-}
 
 interface IGetOrdersRequestAction {
     readonly type: typeof GET_ORDERS_REQUEST;

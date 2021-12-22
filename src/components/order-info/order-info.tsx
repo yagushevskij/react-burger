@@ -1,6 +1,6 @@
 import styles from './order-info.module.css'
 import { FC } from 'react'
-import type { IOrder } from '../../services/actions/orders'
+import type { IOrder } from '../../utils/types'
 import type { IMainCardType } from '../../utils/types'
 import { orderStatus } from '../../utils/config'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'

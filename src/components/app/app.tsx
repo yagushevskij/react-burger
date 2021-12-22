@@ -6,7 +6,7 @@ import AppHeader from '../app-header/app-header'
 import { useEffect, useCallback, FC } from 'react'
 import { getUser } from '../../services/actions/thunk/user'
 import { getItems } from '../../services/actions/thunk/ingredients'
-import { getOrders } from '../../services/actions/thunk/order'
+import { getUserOrders, getAllOrders } from '../../services/actions/thunk/order'
 import Logout from '../logout/logout'
 import ProtectedAuthRoute from '../protected-auth-route'
 import Modal from '../modal/modal'
@@ -78,12 +78,13 @@ const App: FC = () => {
   useEffect(() => {
     dispatch(getUser())
     dispatch(getItems())
-    dispatch(getOrders())
+    dispatch(getUserOrders())
+    dispatch(getAllOrders())
   }, [dispatch])
 
   useEffect(() => {
     if (orderNumber) {
-      dispatch(getOrders())
+      dispatch(getUserOrders())
       dispatch(getItems())
     }
   }, [dispatch, orderNumber])

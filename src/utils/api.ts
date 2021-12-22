@@ -12,7 +12,7 @@ interface TFetchOptopns {
   method: 'POST' | 'GET' | 'PATCH' | 'DELETE'
   headers: {
     'Content-Type': 'application/json',
-    authorization: string
+    authorization?: string
   },
   body?: BodyInit
 }

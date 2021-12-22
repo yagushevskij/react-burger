@@ -1,10 +1,11 @@
 import { API_URL } from '../../../utils/config'
 import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED } from '../order'
-import { GET_ORDERS_REQUEST, GET_ORDERS_SUCCESS, GET_ORDERS_FAILED } from '../orders'
+import { GET_ORDERS_REQUEST, GET_ORDERS_SUCCESS, GET_ORDERS_FAILED } from '../orders-user'
+import { GET_ALL_ORDERS_REQUEST, GET_ALL_ORDERS_SUCCESS, GET_ALL_ORDERS_FAILED } from '../orders-all'
 import { getCookie } from '../../../utils/helpers'
 import { retriableFetch } from '../../../utils/api'
 import type { TAppDispatch, IIngredientType } from '../../../utils/types'
-import type { IOrder } from '../orders'
+import type { IOrder } from '../../../utils/types'
 
 interface IGetOrdersResp {
   orders: IOrder[];
@@ -50,7 +51,7 @@ export const order = (items: IIngredientType[]) => {
   }
 }
 
-export const getOrders = () => {
+export const getUserOrders = () => {
   return async function (dispatch: TAppDispatch) {
     const token = getCookie('accessToken')
     dispatch({
@@ -71,6 +72,32 @@ export const getOrders = () => {
     } catch (e) {
       dispatch({
         type: GET_ORDERS_FAILED,
+        payload: { message: 'Ошибка при получении списка заказов. Пожалуйста, повторите позже.' }
+      })
+      console.log(e)
+    }
+  }
+}
+
+export const getAllOrders = () => {
+  return async function (dispatch: TAppDispatch) {
+    dispatch({
+      type: GET_ALL_ORDERS_REQUEST
+    })
+    try {
+      const res = await retriableFetch<IGetOrdersResp>(API_URL + 'orders/all', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      dispatch({
+        type: GET_ALL_ORDERS_SUCCESS,
+        payload: { data: res.orders }
+      })
+    } catch (e) {
+      dispatch({
+        type: GET_ALL_ORDERS_FAILED,
         payload: { message: 'Ошибка при получении списка заказов. Пожалуйста, повторите позже.' }
       })
       console.log(e)

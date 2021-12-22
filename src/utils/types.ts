@@ -7,7 +7,24 @@ export type TAppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, TRootState, TAppActions>
 >;
 
-export type TAppDispatch = Dispatch<TAppActions>; 
+export type TAppDispatch = Dispatch<TAppActions>;
+
+export interface IOrder {
+  _id: string;
+  ingredients: string[];
+  status: 'created' | 'pending' | 'done';
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+  number: number;
+}
+
+export interface IOrdersState {
+  data: IOrder[]
+  request: boolean,
+  failed: boolean,
+  errorMessage: null | string | undefined
+}
 
 interface IIngredientType {
   readonly _id: string;

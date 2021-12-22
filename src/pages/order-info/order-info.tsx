@@ -15,7 +15,7 @@ export const costErrorText = 'нужно уточнить'
 const OrderInfo: FC<IOrderInfoProps> = ({type}) => {
   const [error, setError] = useState<string | null>(null)
   const { id } = useParams()
-  const userOrders = useAppSelector(state => state.orders.data)
+  const userOrders = useAppSelector(state => state.ordersUser.data)
   const orders = (type === 'user') ? userOrders : userOrders
   const order = orders.find(el => el._id === id)
 

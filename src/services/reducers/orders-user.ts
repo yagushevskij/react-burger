@@ -1,13 +1,6 @@
-import { GET_ORDERS_REQUEST, GET_ORDERS_SUCCESS, GET_ORDERS_FAILED } from '../actions/orders'
-import type { IOrder } from '../actions/orders'
-import type { TOrdersActions } from '../actions/orders'
-
-interface IOrdersState {
-  data: IOrder[]
-  request: boolean,
-  failed: boolean,
-  errorMessage: null | string | undefined
-}
+import { GET_ORDERS_REQUEST, GET_ORDERS_SUCCESS, GET_ORDERS_FAILED } from '../actions/orders-user'
+import type { IOrdersState } from '../../utils/types'
+import type { TOrdersActions } from '../actions/orders-user'
 
 const initialState: IOrdersState = {
   data: [],
@@ -16,7 +9,7 @@ const initialState: IOrdersState = {
   errorMessage: null
 }
 
-const ordersReducer = (state = initialState, action: TOrdersActions): IOrdersState => {
+const ordersUserReducer = (state = initialState, action: TOrdersActions): IOrdersState => {
   switch (action.type) {
     case GET_ORDERS_REQUEST: {
       return { ...initialState, request: true }
@@ -33,4 +26,4 @@ const ordersReducer = (state = initialState, action: TOrdersActions): IOrdersSta
   }
 }
 
-export default ordersReducer
+export default ordersUserReducer
