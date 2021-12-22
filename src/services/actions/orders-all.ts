@@ -11,6 +11,8 @@ interface IGetAllOrdersRequestAction {
     readonly type: typeof GET_ALL_ORDERS_SUCCESS;
     payload: {
         data: IOrder[]
+        total: number | null
+        totalToday: number | null
     }
   }
   interface IGetAllOrdersFailedAction {

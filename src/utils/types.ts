@@ -9,10 +9,12 @@ export type TAppThunk<TReturn = void> = ActionCreator<
 
 export type TAppDispatch = Dispatch<TAppActions>;
 
+export type TOrderStatus = 'created' | 'pending' | 'done';
+
 export interface IOrder {
   _id: string;
   ingredients: string[];
-  status: 'created' | 'pending' | 'done';
+  status: TOrderStatus;
   name: string;
   createdAt: Date;
   updatedAt: Date;

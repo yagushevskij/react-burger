@@ -91,9 +91,10 @@ export const getAllOrders = () => {
           'Content-Type': 'application/json'
         }
       })
+      const { orders, total, totalToday } = res
       dispatch({
         type: GET_ALL_ORDERS_SUCCESS,
-        payload: { data: res.orders }
+        payload: { data: orders, total, totalToday }
       })
     } catch (e) {
       dispatch({

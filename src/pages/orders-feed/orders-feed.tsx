@@ -5,7 +5,7 @@ import { useAppSelector } from '../../services/custom-hooks/redux-hooks'
 import Feed from '../../components/feed/feed'
 
 const OrdersFeed: FC = () => {
-  const orders = useAppSelector(state => state.ordersAll.data)
+  const { data: orders, total, totalToday } = useAppSelector(state => state.ordersAll)
   return (
     <main className={styles.main}>
       <h1 className={`text text_type_main-large mt-10 mb-5`}>Лента заказов</h1>
@@ -14,7 +14,7 @@ const OrdersFeed: FC = () => {
           <Orders data={orders} />
         </div>
         <div className={styles.wrapper}>
-          <Feed />
+          <Feed orders={orders} total={total} totalToday={totalToday} />
         </div>
       </div>
     </main>

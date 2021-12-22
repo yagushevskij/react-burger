@@ -82,4 +82,19 @@ moment.updateLocale('ru', {
   }
 })
 
-export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, checkReponse, getFormatedDay, getUniqueAndCountedObjects }
+const numberWithSpaces = (num: any) => {
+  if (typeof num === 'number') {
+    return num.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
+  }
+  return null
+}
+
+const getGrouppedItems = (arr: any[], size: number) => {
+  let result = []
+  for (let i = 0; i < Math.ceil(arr.length / size); i++) {
+    result[i] = arr.slice(i * size, i * size + size)
+  }
+  return result
+}
+
+export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, checkReponse, getFormatedDay, getUniqueAndCountedObjects, numberWithSpaces, getGrouppedItems }
