@@ -14,8 +14,8 @@ const Profile: FC = () => {
     <main className={`${styles.main}`}>
       <ProfileNavLinks />
       {location.pathname === '/profile' && <ProfileForm />}
-      {location.pathname === '/profile/orders' && (
-        <div className='mt-10'>
+      {location.pathname.includes('/profile/orders') && (
+        <div className='mt-10 ml-15'>
           <Orders data={orders} />
         </div>
       )}

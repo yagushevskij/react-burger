@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, useNavigationType } from 'react-router-dom'
 import ProtectedRoute from '../protected-route'
 import ErrorBoundary from '../error-boundary/error-boundary'
 import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, OrdersFeed, OrderInfo } from '../../pages'
@@ -12,11 +12,14 @@ import ProtectedAuthRoute from '../protected-auth-route'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
+import OrderInfoModal from '../order-info-modal/order-info-modal'
 
 const WrappedRoutes: FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const background = location.state?.background
+  const navigationType = useNavigationType()
+  const shouldShowPage = navigationType === 'POP' || navigationType === 'REPLACE'
 
   const back = useCallback(
     event => {
@@ -31,12 +34,12 @@ const WrappedRoutes: FC = () => {
       <Routes location={background ?? location}>
         <Route path='/' element={<Home />} />
         <Route path='/feed' element={<OrdersFeed />} />
-        {/* <Route path='/feed/:id' element={<OrderInfo />} /> */}
+        {shouldShowPage && <Route path='/profile/orders/:id' element={<OrderInfo type={'all'} />} />}
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='/profile' element={<ProtectedRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/profile/orders' element={<Profile />} />
-          <Route path='/profile/orders/:id' element={<OrderInfo />} />
+          {shouldShowPage && <Route path='/profile/orders/:id' element={<OrderInfo type={'user'} />} />}
         </Route>
         <Route path='/logout' element={<ProtectedRoute />}>
           <Route path='/logout' element={<Logout />} />
@@ -60,6 +63,8 @@ const WrappedRoutes: FC = () => {
             }
           />
         )}
+        {background && <Route path='profile/orders/:id' element={<OrderInfoModal />} />}
+        {background && <Route path='feed/:id' element={<OrderInfoModal />} />}
         <Route path='*' element={null} />
       </Routes>
     </>

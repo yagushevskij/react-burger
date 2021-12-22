@@ -18,7 +18,7 @@ interface IOrderInfo {
 }
 
 export const OrderInfo: FC<IOrderInfo> = ({order, ingredients, totalCost}) => {
-  const iniqueCountedIngredients = getUniqueAndCountedObjects(ingredients)
+  const iniqueCountedIngredients = getUniqueAndCountedObjects(ingredients.slice())
   const { createdAt, name, number, status } = order as IOrderData
 
   if (!order) return null

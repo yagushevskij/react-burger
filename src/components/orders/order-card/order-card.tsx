@@ -1,10 +1,13 @@
 import styles from './order-card.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { getFormatedDay } from '../../../utils/helpers'
-import { FC } from 'react'
+import { FC, useCallback, useState } from 'react'
 import type { IOrder } from '../../../services/actions/orders'
 import type {IMainCardType} from '../../../utils/types'
 import { orderStatus } from '../../../utils/config'
+import { useLocation, useNavigate } from 'react-router'
+import Modal from '../../modal/modal'
+import { OrderInfo } from '../../order-info/order-info'
 
 interface IOrderCard {
   readonly data: IOrder
@@ -15,13 +18,19 @@ const maxIngredientIcons = 5 // Число показываемых иконок
 let zIndex = 5000 // Максимальное значение zIndex для иконок ингредиентов
 
 const OrderCard: FC<IOrderCard> = ({ data, ingredients }) => {
-  const { createdAt, name, number, status, ingredients: ids } = data
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { createdAt, name, number, status, ingredients: ids, _id } = data
 
   const orderIngredients = ids.map(id => {
         return ingredients.find(el => el._id === id)
       }) as IMainCardType[]
 
   const totalPrice = orderIngredients.reduce((acc, item) => acc + item?.price, 0)
+
+  const handleOpenModal = useCallback(() => {
+    navigate(`${_id}`, { state: { background: location, order: data, ingredients, totalCost: totalPrice } })
+  }, [navigate, _id, location, data, ingredients, totalPrice])
 
   const iconsToRender = orderIngredients.map((el, i) => {
     zIndex = zIndex - 1
@@ -44,7 +53,7 @@ const OrderCard: FC<IOrderCard> = ({ data, ingredients }) => {
   })
 
   return (
-    <article className={styles.container}>
+    <article className={styles.container} onClick={handleOpenModal}>
       <div className={styles.between}>
         <span className={`text text_type_digits-default`}>{`#${number}`}</span>
         <span className={`text text_type_main-default text_color_inactive`}>{getFormatedDay(createdAt)}</span>
