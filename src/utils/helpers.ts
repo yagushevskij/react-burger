@@ -53,21 +53,6 @@ const deleteCookie = (name: string) => {
   setCookie(name, '', { expires: -1 })
 }
 
-const getUniqueAndCountedObjects = (arr: {}[]) => {
-  let result: any = []
-  const baseQty = { qty: 1 }
-  for (let obj of arr) {
-    Object.assign(obj, baseQty)
-    if (!result.includes(obj)) {
-      result.push(obj)
-    } else {
-      result.qty += 1
-    }
-  }
-
-  return result
-}
-
 const getFormatedDay = (date: Date) => {
   const today = new Date()
   const differenceDay = new Date(date)
@@ -97,4 +82,4 @@ const getGrouppedItems = (arr: any[], size: number) => {
   return result
 }
 
-export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, checkReponse, getFormatedDay, getUniqueAndCountedObjects, numberWithSpaces, getGrouppedItems }
+export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, checkReponse, getFormatedDay, numberWithSpaces, getGrouppedItems }

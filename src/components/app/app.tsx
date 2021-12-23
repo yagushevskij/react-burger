@@ -20,6 +20,7 @@ const WrappedRoutes: FC = () => {
   const background = location.state?.background
   const navigationType = useNavigationType()
   const shouldShowPage = navigationType === 'POP' || navigationType === 'REPLACE'
+  console.log(!!shouldShowPage)
 
   const back = useCallback(
     event => {
@@ -33,8 +34,8 @@ const WrappedRoutes: FC = () => {
     <>
       <Routes location={background ?? location}>
         <Route path='/' element={<Home />} />
+        {shouldShowPage && <Route path='/feed/:id' element={<OrderInfo type={'all'} />} />}
         <Route path='/feed' element={<OrdersFeed />} />
-        {shouldShowPage && <Route path='/profile/orders/:id' element={<OrderInfo type={'all'} />} />}
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='/profile' element={<ProtectedRoute />}>
           <Route path='/profile' element={<Profile />} />
@@ -63,8 +64,8 @@ const WrappedRoutes: FC = () => {
             }
           />
         )}
-        {background && <Route path='profile/orders/:id' element={<OrderInfoModal />} />}
-        {background && <Route path='feed/:id' element={<OrderInfoModal />} />}
+        {background && <Route path='/profile/orders/:id' element={<OrderInfoModal />} />}
+        {background && <Route path='/feed/:id' element={<OrderInfoModal />} />}
         <Route path='*' element={null} />
       </Routes>
     </>

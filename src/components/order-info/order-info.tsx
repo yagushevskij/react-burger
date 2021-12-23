@@ -4,9 +4,9 @@ import type { IOrder } from '../../utils/types'
 import type { IMainCardType } from '../../utils/types'
 import { orderStatus } from '../../utils/config'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { getUniqueAndCountedObjects } from '../../utils/helpers'
 import { costErrorText } from '../../pages/order-info/order-info'
 import  {getFormatedDay} from '../../utils/helpers'
+import _ from 'lodash'
 
 type IOrderData = Omit<IOrder, 'number'> & {number?: number}
 
@@ -18,7 +18,22 @@ interface IOrderInfo {
 }
 
 export const OrderInfo: FC<IOrderInfo> = ({order, ingredients, totalCost}) => {
-  const iniqueCountedIngredients = getUniqueAndCountedObjects(ingredients.slice())
+
+  const getUniqueAndCountedIngredients = (arr: IMainCardType[]) => {
+    let result: IMainCardType[] = []
+    arr.forEach(el => {
+      const doublicate = result.find((x: IMainCardType) => x._id === el._id)
+      if (doublicate) {
+        doublicate.qty += 1
+      } else {
+        el.qty = 1
+        result.push(el)
+      }
+    })
+    return result
+  }
+  const ingrDeepCopy = _.cloneDeep(ingredients)
+  const iniqueCountedIngredients = getUniqueAndCountedIngredients(ingrDeepCopy)
   const { createdAt, name, number, status } = order as IOrderData
 
   if (!order) return null

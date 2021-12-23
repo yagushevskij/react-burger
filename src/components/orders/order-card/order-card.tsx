@@ -15,7 +15,6 @@ interface IOrderCard {
 }
 
 const maxIngredientIcons = 5 // Число показываемых иконок ингредиентов
-let zIndex = 5000 // Максимальное значение zIndex для иконок ингредиентов
 
 const OrderCard: FC<IOrderCard> = ({ data, ingredients }) => {
   const navigate = useNavigate()
@@ -29,10 +28,11 @@ const OrderCard: FC<IOrderCard> = ({ data, ingredients }) => {
   const totalPrice = orderIngredients.reduce((acc, item) => acc + item?.price, 0)
 
   const handleOpenModal = useCallback(() => {
-    navigate(`${_id}`, { state: { background: location, order: data, ingredients, totalCost: totalPrice } })
-  }, [navigate, _id, location, data, ingredients, totalPrice])
+    navigate(`${_id}`, { state: { background: location, order: data, ingredients: orderIngredients, totalCost: totalPrice } })
+  }, [navigate, _id, location, data, orderIngredients, totalPrice])
 
   const iconsToRender = orderIngredients.map((el, i) => {
+    let zIndex = 1000 // Максимальное значение zIndex для иконок ингредиентов
     zIndex = zIndex - 1
     if (i <= maxIngredientIcons - 1) {
       return (
