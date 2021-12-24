@@ -26,6 +26,7 @@ export interface IOrdersState {
   request: boolean,
   failed: boolean,
   errorMessage: null | string | undefined
+  wsConnected?: boolean
 }
 
 interface IIngredientType {

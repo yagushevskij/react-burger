@@ -7,7 +7,7 @@ import { retriableFetch } from '../../../utils/api'
 import type { TAppDispatch, IIngredientType } from '../../../utils/types'
 import type { IOrder } from '../../../utils/types'
 
-interface IGetOrdersResp {
+export interface IGetOrdersResp {
   orders: IOrder[];
   success: boolean;
   total: number;
