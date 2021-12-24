@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, useNavigationType } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, useNavigationType, Outlet } from 'react-router-dom'
 import ProtectedRoute from '../protected-route'
 import ErrorBoundary from '../error-boundary/error-boundary'
 import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, OrdersFeed, OrderInfo } from '../../pages'
@@ -20,7 +20,7 @@ const WrappedRoutes: FC = () => {
   const background = location.state?.background
   const navigationType = useNavigationType()
   const shouldShowPage = navigationType === 'POP' || navigationType === 'REPLACE'
-  console.log(!!shouldShowPage)
+  const shouldShowModal = navigationType === 'PUSH'
 
   const back = useCallback(
     event => {
@@ -34,8 +34,7 @@ const WrappedRoutes: FC = () => {
     <>
       <Routes location={background ?? location}>
         <Route path='/' element={<Home />} />
-        {shouldShowPage && <Route path='/feed/:id' element={<OrderInfo type={'all'} />} />}
-        <Route path='/feed' element={<OrdersFeed />} />
+        <Route path='/feed' element={<Feed />} />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='/profile' element={<ProtectedRoute />}>
           <Route path='/profile' element={<Profile />} />
@@ -64,31 +63,42 @@ const WrappedRoutes: FC = () => {
             }
           />
         )}
-        {background && <Route path='/profile/orders/:id' element={<OrderInfoModal />} />}
-        {background && <Route path='/feed/:id' element={<OrderInfoModal />} />}
+        {shouldShowModal && background && <Route path='/profile/orders/:id' element={<OrderInfoModal />} />}
+        {shouldShowModal && background && <Route path='/feed/:id' element={<OrderInfoModal />} />}
         <Route path='*' element={null} />
       </Routes>
     </>
   )
 }
 
+const Feed: FC = () => {
+  return (
+    <Routes>
+      <Route path=':id' element={<OrderInfo type={'all'} />} />
+      <Route path='' element={<OrdersFeed />} />
+    </Routes>
+  )
+}
+
 const App: FC = () => {
   const dispatch = useAppDispatch()
   const orderNumber = useAppSelector(state => state.order.number)
+  const user = useAppSelector(state => state.user.data)
+  const isAuth = Object.keys(user).length !== 0
 
   useEffect(() => {
     dispatch(getUser())
     dispatch(getItems())
-    dispatch(getUserOrders())
     dispatch(getAllOrders())
   }, [dispatch])
 
   useEffect(() => {
-    if (orderNumber) {
-      dispatch(getUserOrders())
-      dispatch(getItems())
-    }
+    orderNumber && dispatch(getItems())
   }, [dispatch, orderNumber])
+
+  useEffect(() => {
+    isAuth && dispatch(getUserOrders())
+  }, [dispatch, isAuth])
 
   return (
     <ErrorBoundary>

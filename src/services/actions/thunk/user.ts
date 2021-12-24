@@ -40,7 +40,6 @@ export const getUser = () => {
 
 export const updateUser = (data: IUserData) => {
   return async function (dispatch: TAppDispatch) {
-    console.log(data)
     const accessToken = getCookie('accessToken')
     dispatch({
       type: UPDATE_USER_REQUEST

@@ -15,6 +15,7 @@ export const costErrorText = 'нужно уточнить'
 const OrderInfo: FC<IOrderInfoProps> = ({type}) => {
   const [error, setError] = useState<string | null>(null)
   const { id } = useParams()
+
   const userOrders = useAppSelector(state => state.ordersUser.data)
   const allOrders = useAppSelector(state => state.ordersAll.data)
   const orders = (type === 'user') ? userOrders : allOrders
@@ -23,9 +24,9 @@ const OrderInfo: FC<IOrderInfoProps> = ({type}) => {
   const ingredients = useAppSelector(state => state.ingredients.items)
   const orderIngredients = order?.ingredients.map(id => {
     return ingredients.find(el => el._id === id)
-  }) as any
+  }) as IMainCardType[]
 
-  const totalCost = (orderIngredients) ? orderIngredients.reduce((acc: any, item: any) => acc + item!.price, 0) : costErrorText
+  const totalCost = (orderIngredients) ? orderIngredients.reduce((acc, item) => acc + item!.price, 0) : costErrorText
 
   const handleCloseErrorModal = () => setError(null)
 
