@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
 export type TUseInput<T> = {
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   data: T
-  resetInputedData: () => void;
+  resetInputedData: () => void
 }
 
-const useInput = <T>(initialData: T): TUseInput<T>=> {
+const useInput = <T>(initialData: T): TUseInput<T> => {
   const [data, setData] = useState<T>(initialData)
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target
@@ -19,7 +19,7 @@ const useInput = <T>(initialData: T): TUseInput<T>=> {
     setData(initialData)
   }
 
-  return { handleInputChange, data, resetInputedData };
+  return { handleInputChange, data, resetInputedData }
 }
 
 export default useInput

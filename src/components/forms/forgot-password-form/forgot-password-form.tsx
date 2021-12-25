@@ -18,10 +18,10 @@ const ForgotPasswordForm: FC = () => {
       event.preventDefault()
       dispatch(restorePass(data))
     },
-    [data, dispatch]
+    [data, dispatch],
   )
   return (
-    <AuthForm title='Восстановление пароля' buttonText='Восстановить' onSubmit={onSubmit} isButtonDisabled={isRequest}>
+    <AuthForm title="Восстановление пароля" buttonText="Восстановить" onSubmit={onSubmit} isButtonDisabled={isRequest}>
       <Input
         type={'email'}
         placeholder={'Укажите e-mail'}

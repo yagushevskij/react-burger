@@ -1,17 +1,24 @@
-import { GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, GET_ITEMS_FAILED, UPDATE_ITEMS, INCREASE_ITEM_COUNT, DECREASE_ITEM_COUNT } from '../actions/ingredients'
+import {
+  GET_ITEMS_REQUEST,
+  GET_ITEMS_SUCCESS,
+  GET_ITEMS_FAILED,
+  UPDATE_ITEMS,
+  INCREASE_ITEM_COUNT,
+  DECREASE_ITEM_COUNT,
+} from '../actions/ingredients'
 import type { TIngredientActions } from '../actions/ingredients'
 import type { IMainCardType } from '../../utils/types'
 
 interface IIngredientsState {
-  items: IMainCardType[];
-  itemsRequest: boolean;
-  itemsRequestFailed: boolean;
+  items: IMainCardType[]
+  itemsRequest: boolean
+  itemsRequestFailed: boolean
 }
 
 const initialState: IIngredientsState = {
   items: [],
   itemsRequest: false,
-  itemsRequestFailed: false
+  itemsRequestFailed: false,
 }
 
 const ingredientsReducer = (state = initialState, action: TIngredientActions): IIngredientsState => {
@@ -23,7 +30,7 @@ const ingredientsReducer = (state = initialState, action: TIngredientActions): I
       return {
         ...state,
         itemsRequest: false,
-        items: action.payload.items
+        items: action.payload.items,
       }
     }
     case GET_ITEMS_FAILED: {

@@ -3,11 +3,11 @@ import { IConCardType } from '../../utils/types'
 import { TConstructorActions } from '../actions/constructor'
 
 interface IConstructorReducerState {
-  items: IConCardType[];
+  items: IConCardType[]
 }
 
 const initialState: IConstructorReducerState = {
-  items: []
+  items: [],
 }
 
 const constructorReducer = (state = initialState, action: TConstructorActions): IConstructorReducerState => {
@@ -15,13 +15,13 @@ const constructorReducer = (state = initialState, action: TConstructorActions): 
     case ADD_CONSTR_ITEM: {
       return {
         ...state,
-        items: [...state.items, action.payload.item]
+        items: [...state.items, action.payload.item],
       }
     }
     case REMOVE_CONSTR_ITEM: {
       return {
         ...state,
-        items: state.items.filter(el => el.key !== action.payload.item.key)
+        items: state.items.filter(el => el.key !== action.payload.item.key),
       }
     }
     case UPDATE_CONSTR_ITEMS: {

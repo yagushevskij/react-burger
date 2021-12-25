@@ -1,10 +1,10 @@
 .container {
-  background: #1C1C21;
+  background: #1c1c21;
   padding: 24px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
   border-radius: 40px;
   height: fit-content;
-  composes: link from '../../app/app.module.css'
+  composes: link from '../../app/app.module.css';
 }
 
 .between {
@@ -23,14 +23,14 @@
 .icon {
   height: 64px;
   width: 64px;
-  border: #4C4CFF solid 1px;
+  border: #4c4cff solid 1px;
   border-radius: 100%;
   margin-left: -20px;
   list-style: none;
-  background: #1C1C21;
+  background: #1c1c21;
 }
 
-.icon:first-of-type{
+.icon:first-of-type {
   margin-left: 0;
 }
 
@@ -45,7 +45,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   left: 0;
   top: 0;
 }
@@ -75,9 +75,9 @@
 }
 
 .created .pending {
-  color: #F2F2F3
+  color: #f2f2f3;
 }
 
 .done {
-  color: #00CCCC
+  color: #00cccc;
 }

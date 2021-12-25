@@ -1,24 +1,18 @@
-import { useParams } from "react-router"
+import { useParams } from 'react-router'
 import styles from './order-info.module.css'
-import { OrderInfo as OrderInfoComponent } from "../../components/order-info/order-info"
-import { useAppSelector } from "../../services/custom-hooks/redux-hooks"
-import type { IMainCardType } from "../../utils/types"
-import Modal from "../../components/modal/modal"
-import { useEffect, useState, FC } from "react"
-
-interface IOrderInfoProps {
-  readonly type: 'user' | 'all'
-}
+import { OrderInfo as OrderInfoComponent } from '../../components/order-info/order-info'
+import { useAppSelector } from '../../services/custom-hooks/redux-hooks'
+import type { IMainCardType } from '../../utils/types'
+import Modal from '../../components/modal/modal'
+import { useEffect, useState, FC } from 'react'
 
 export const costErrorText = 'нужно уточнить'
 
-const OrderInfo: FC<IOrderInfoProps> = ({type}) => {
+const OrderInfo: FC = () => {
   const [error, setError] = useState<string | null>(null)
   const { id } = useParams()
 
-  const userOrders = useAppSelector(state => state.ordersUser.data)
-  const allOrders = useAppSelector(state => state.ordersAll.data)
-  const orders = (type === 'user') ? userOrders : allOrders
+  const orders = useAppSelector(state => state.orders.data)
   const order = orders.find(el => el._id === id)
 
   const ingredients = useAppSelector(state => state.ingredients.items)
@@ -26,7 +20,7 @@ const OrderInfo: FC<IOrderInfoProps> = ({type}) => {
     return ingredients.find(el => el._id === id)
   }) as IMainCardType[]
 
-  const totalCost = (orderIngredients) ? orderIngredients.reduce((acc, item) => acc + item!.price, 0) : costErrorText
+  const totalCost = orderIngredients ? orderIngredients.reduce((acc, item) => acc + item!.price, 0) : costErrorText
 
   const handleCloseErrorModal = () => setError(null)
 
@@ -37,11 +31,10 @@ const OrderInfo: FC<IOrderInfoProps> = ({type}) => {
 
   return (
     <>
-      {error && 
-      <Modal title={error} handleClose={handleCloseErrorModal}></Modal>}
-         <section className={`${styles.container} mt-30`}>
-          {order && <OrderInfoComponent order={order} ingredients={orderIngredients} totalCost={totalCost} />}
-        </section>
+      {error && <Modal title={error} handleClose={handleCloseErrorModal}></Modal>}
+      <section className={`${styles.container} mt-30`}>
+        {order && <OrderInfoComponent order={order} ingredients={orderIngredients} totalCost={totalCost} />}
+      </section>
     </>
   )
 }

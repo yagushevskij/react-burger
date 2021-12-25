@@ -2,17 +2,17 @@ import { RESTORE_PASS_REQUEST, RESTORE_PASS_REQUEST_SUCCESS, RESTORE_PASS_REQUES
 import type { TRestorePassActions } from '../actions/restore-pass'
 
 interface IRestorePassState {
-  request: boolean;
-  failed: boolean;
-  success: boolean;
-  errorMessage: null | string | undefined;
+  request: boolean
+  failed: boolean
+  success: boolean
+  errorMessage: null | string | undefined
 }
 
 const initialState: IRestorePassState = {
   request: false,
   failed: false,
   success: false,
-  errorMessage: null
+  errorMessage: null,
 }
 
 const restorePassReducer = (state = initialState, action: TRestorePassActions): IRestorePassState => {
@@ -20,23 +20,23 @@ const restorePassReducer = (state = initialState, action: TRestorePassActions): 
     case RESTORE_PASS_REQUEST:
       return {
         ...initialState,
-        request: true
+        request: true,
       }
     case RESTORE_PASS_REQUEST_SUCCESS:
       return {
         ...state,
         request: false,
-        success: true
+        success: true,
       }
     case RESTORE_PASS_REQUEST_FAILED:
       return {
         ...initialState,
         failed: true,
-        errorMessage: action.payload?.message
+        errorMessage: action.payload?.message,
       }
     case SET_INIT_STATE_RESTORE_PASS:
       return {
-        ...initialState
+        ...initialState,
       }
     default:
       return state

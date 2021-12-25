@@ -16,13 +16,13 @@ const Login: FC = () => {
       <LoginForm />
       <div className={`${styles.line} mt-20`}>
         <p className={`text text_type_main-default text_color_inactive mr-2`}>Вы — новый пользователь?</p>
-        <Link className={styles.line} to='/register'>
+        <Link className={styles.line} to="/register">
           Зарегистрироваться
         </Link>
       </div>
       <div className={`${styles.line} mt-4`}>
         <p className={`text text_type_main-default text_color_inactive mr-2`}>Забыли пароль?</p>
-        <Link className={styles.line} to='/forgot-password'>
+        <Link className={styles.line} to="/forgot-password">
           Восстановить пароль
         </Link>
       </div>

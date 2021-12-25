@@ -19,13 +19,22 @@ const RegisterForm = () => {
       event.preventDefault()
       dispatch(register(data))
     },
-    [data, dispatch]
+    [data, dispatch],
   )
 
   return (
-    <AuthForm onSubmit={onSubmit} title='Регистрация' buttonText={'Зарегистрироваться'} isButtonDisabled={isRequest}>
+    <AuthForm onSubmit={onSubmit} title="Регистрация" buttonText={'Зарегистрироваться'} isButtonDisabled={isRequest}>
       <>
-        <Input type={'text'} placeholder={'Имя'} onChange={event => handleInputChange(event)} name={'name'} error={false} size={'default'} value={name} errorText={'Ошибка'} />
+        <Input
+          type={'text'}
+          placeholder={'Имя'}
+          onChange={event => handleInputChange(event)}
+          name={'name'}
+          error={false}
+          size={'default'}
+          value={name}
+          errorText={'Ошибка'}
+        />
         <Input
           type={'email'}
           placeholder={'E-mail'}
@@ -37,7 +46,7 @@ const RegisterForm = () => {
           errorText={'Ошибка'}
         />
         <Input
-          type='password'
+          type="password"
           placeholder={'Пароль'}
           onChange={event => handleInputChange(event)}
           name={'password'}

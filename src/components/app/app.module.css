@@ -7,11 +7,11 @@
 }
 
 .scroll::-webkit-scrollbar-track {
-  background: #2F2F37;
+  background: #2f2f37;
 }
 
 .scroll::-webkit-scrollbar-thumb {
-  background: #8585AD;
+  background: #8585ad;
 }
 
 .scroll::-webkit-scrollbar {
@@ -20,7 +20,7 @@
 
 .link {
   cursor: pointer;
-  transition: all .1s ease-in;
+  transition: all 0.1s ease-in;
 }
 
 .link:hover {

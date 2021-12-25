@@ -5,7 +5,7 @@ import type { TIngredients } from '../burger-ingredients'
 import type { TGrouppedIngredients } from '../burger-ingredients'
 
 type TTabList = {
-  items: TGrouppedIngredients,
+  items: TGrouppedIngredients
   activeTab: TIngredients | null
 }
 

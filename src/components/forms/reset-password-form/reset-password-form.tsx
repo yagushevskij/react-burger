@@ -18,10 +18,10 @@ const ResetPasswordForm: FC = () => {
       event.preventDefault()
       dispatch(resetPass(data))
     },
-    [data, dispatch]
+    [data, dispatch],
   )
   return (
-    <AuthForm title='Восстановление пароля' buttonText='Восстановить' onSubmit={onSubmit} isButtonDisabled={isRequest}>
+    <AuthForm title="Восстановление пароля" buttonText="Восстановить" onSubmit={onSubmit} isButtonDisabled={isRequest}>
       <>
         <Input
           type={'password'}

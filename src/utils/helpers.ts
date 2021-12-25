@@ -2,8 +2,8 @@ import moment from 'moment'
 import 'moment/locale/ru'
 
 type TCookieOptions = {
-  expires?: number,
-  path?: string,
+  expires?: number
+  path?: string
   [key: string]: any
 } | null
 
@@ -27,7 +27,7 @@ const getExpiredDate = (sec: number) => {
 const setCookie = (name: string, value: string, options: TCookieOptions) => {
   options = {
     path: '/',
-    ...options
+    ...options,
   }
   let exp = options.expires
   if (typeof exp == 'number' && exp) {
@@ -63,8 +63,8 @@ moment.updateLocale('ru', {
   calendar: {
     sameDay: '[Сегодня] LT [i-GMT]Z',
     lastDay: '[Вчера] LT [i-GMT]Z',
-    sameElse: 'LL LT [i-GMT]Z'
-  }
+    sameElse: 'LL LT [i-GMT]Z',
+  },
 })
 
 const numberWithSpaces = (num: any) => {
@@ -74,12 +74,4 @@ const numberWithSpaces = (num: any) => {
   return null
 }
 
-const getGrouppedItems = (arr: any[], size: number) => {
-  let result = []
-  for (let i = 0; i < Math.ceil(arr.length / size); i++) {
-    result[i] = arr.slice(i * size, i * size + size)
-  }
-  return result
-}
-
-export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, checkReponse, getFormatedDay, numberWithSpaces, getGrouppedItems }
+export { getKeyByGenerate, setCookie, getCookie, deleteCookie, getExpiredDate, checkReponse, getFormatedDay, numberWithSpaces }

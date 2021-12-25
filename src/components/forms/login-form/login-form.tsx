@@ -20,10 +20,10 @@ const LoginForm: FC = () => {
       event.preventDefault()
       dispatch(login(data))
     },
-    [data, dispatch]
+    [data, dispatch],
   )
   return (
-    <AuthForm title='Вход' buttonText='Войти' onSubmit={onSubmit} isButtonDisabled={isRequest}>
+    <AuthForm title="Вход" buttonText="Войти" onSubmit={onSubmit} isButtonDisabled={isRequest}>
       <>
         <Input
           type={'email'}
@@ -35,7 +35,15 @@ const LoginForm: FC = () => {
           value={email}
           errorText={'Ошибка'}
         />
-        <PassInput placeholder={'Пароль'} onChange={event => handleInputChange(event)} name={'password'} error={false} size={'default'} value={password} errorText={'Ошибка'} />
+        <PassInput
+          placeholder={'Пароль'}
+          onChange={event => handleInputChange(event)}
+          name={'password'}
+          error={false}
+          size={'default'}
+          value={password}
+          errorText={'Ошибка'}
+        />
       </>
     </AuthForm>
   )

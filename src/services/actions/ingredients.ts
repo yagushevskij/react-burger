@@ -12,27 +12,27 @@ export const itemActions = {
   updateItems: (items: IIngredientType[]) => ({
     type: UPDATE_ITEMS,
     payload: {
-      items
-    }
+      items,
+    },
   }),
   increaseItem: (item: IIngredientType, qty: number) => ({
     type: INCREASE_ITEM_COUNT,
     payload: {
       item,
-      qty
-    }
+      qty,
+    },
   }),
   decreaseItem: (item: IIngredientType, qty: number) => ({
     type: DECREASE_ITEM_COUNT,
     payload: {
       item,
-      qty
-    }
-  })
+      qty,
+    },
+  }),
 }
 
 interface IUpdateItemsAction {
-  readonly type: typeof UPDATE_ITEMS;
+  readonly type: typeof UPDATE_ITEMS
   payload: {
     items: IMainCardType[]
   }
@@ -52,16 +52,22 @@ interface IDecreaseItemAction {
   }
 }
 interface IGetItemsSuccessAction {
-  readonly type: typeof GET_ITEMS_SUCCESS;
+  readonly type: typeof GET_ITEMS_SUCCESS
   payload: {
     items: IMainCardType[]
   }
 }
 interface IGetItemsRequestAction {
-  readonly type: typeof GET_ITEMS_REQUEST;
+  readonly type: typeof GET_ITEMS_REQUEST
 }
 interface IGetItemsFailedAction {
-  readonly type: typeof GET_ITEMS_FAILED;
+  readonly type: typeof GET_ITEMS_FAILED
 }
 
-export type TIngredientActions = IUpdateItemsAction | IIncreaseItemAction | IDecreaseItemAction | IGetItemsRequestAction | IGetItemsSuccessAction | IGetItemsFailedAction
+export type TIngredientActions =
+  | IUpdateItemsAction
+  | IIncreaseItemAction
+  | IDecreaseItemAction
+  | IGetItemsRequestAction
+  | IGetItemsSuccessAction
+  | IGetItemsFailedAction

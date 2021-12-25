@@ -9,13 +9,13 @@ import type { TOnSubmitCallback } from '../../../utils/types'
 import { useAppSelector, useAppDispatch } from '../../../services/custom-hooks/redux-hooks'
 
 export interface IDisableHandleData {
-  [key: string]: boolean;
+  [key: string]: boolean
 }
 
 const initialDisableState = {
   name: true,
   email: true,
-  password: true
+  password: true,
 }
 
 const ProfileForm = () => {
@@ -40,7 +40,7 @@ const ProfileForm = () => {
       dispatch(updateUser(inputedData))
       setInitialFormState()
     },
-    [dispatch, inputedData, setInitialFormState]
+    [dispatch, inputedData, setInitialFormState],
   )
 
   const disableHandler = (data: IDisableHandleData) => {
@@ -105,7 +105,7 @@ const ProfileForm = () => {
           <p className={`${styles.link} text text_type_main-default mr-7`} onClick={setInitialFormState}>
             Отмена
           </p>
-          <Button type='primary' size='medium' disabled={isUserRequest}>
+          <Button type="primary" size="medium" disabled={isUserRequest}>
             Сохранить
           </Button>
         </div>

@@ -4,14 +4,14 @@ import { checkReponse } from '../../../utils/helpers'
 import type { IIngredientType, TAppDispatch } from '../../../utils/types'
 
 interface IGetItemsResp {
-  success: boolean;
-  data: IIngredientType[];
+  success: boolean
+  data: IIngredientType[]
 }
 
 export const getItems = () => {
   return async function (dispatch: TAppDispatch) {
     dispatch({
-      type: GET_ITEMS_REQUEST
+      type: GET_ITEMS_REQUEST,
     })
     try {
       const res = await fetch(API_URL + 'ingredients')
@@ -21,12 +21,12 @@ export const getItems = () => {
         payload: {
           items: resData.data.map((el: IIngredientType) => {
             return { ...el, qty: 0 }
-          })
-        }
+          }),
+        },
       })
     } catch (e) {
       dispatch({
-        type: GET_ITEMS_FAILED
+        type: GET_ITEMS_FAILED,
       })
       console.log(e)
     }

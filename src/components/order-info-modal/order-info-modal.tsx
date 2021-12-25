@@ -1,4 +1,3 @@
-import styles from './order-info-modal.module.css'
 import Modal from '../modal/modal'
 import { OrderInfo } from '../order-info/order-info'
 import { useLocation, useNavigate } from 'react-router'
@@ -15,7 +14,7 @@ const OrderInfoModal = () => {
       event.stopPropagation()
       navigate(-1)
     },
-    [navigate]
+    [navigate],
   )
 
   return (

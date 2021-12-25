@@ -11,39 +11,39 @@ export const constrItemActions = {
     payload: {
       item: {
         ...item,
-        key: getKeyByGenerate()
-      }
-    }
+        key: getKeyByGenerate(),
+      },
+    },
   }),
   removeItem: (item: IConCardType) => ({
     type: REMOVE_CONSTR_ITEM,
     payload: {
-      item
-    }
+      item,
+    },
   }),
   updateItems: (items: IConCardType[]) => ({
     type: UPDATE_CONSTR_ITEMS,
-    payload: { items }
-  })
+    payload: { items },
+  }),
 }
 
 interface IAddItemAction {
-  readonly type: typeof ADD_CONSTR_ITEM;
+  readonly type: typeof ADD_CONSTR_ITEM
   payload: {
     item: IConCardType
   }
 }
 interface IRemoveItemAction {
-  readonly type: typeof REMOVE_CONSTR_ITEM;
+  readonly type: typeof REMOVE_CONSTR_ITEM
   payload: {
     item: IConCardType
   }
 }
 interface IUpdateItemsAction {
-  readonly type: typeof UPDATE_CONSTR_ITEMS;
+  readonly type: typeof UPDATE_CONSTR_ITEMS
   payload: {
     items: IConCardType[]
   }
 }
 
-export type TConstructorActions = IAddItemAction | IRemoveItemAction |IUpdateItemsAction
+export type TConstructorActions = IAddItemAction | IRemoveItemAction | IUpdateItemsAction

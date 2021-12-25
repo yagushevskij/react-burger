@@ -2,17 +2,17 @@ import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED, SET_INITIAL_ORD
 import type { TOrderActions } from '../actions/order'
 
 interface IOrderState {
-  number: number | null;
-  request: boolean;
-  failed: boolean;
-  errorMessage: string | null | undefined;
+  number: number | null
+  request: boolean
+  failed: boolean
+  errorMessage: string | null | undefined
 }
 
 const initialState: IOrderState = {
   number: null,
   request: false,
   failed: false,
-  errorMessage: null
+  errorMessage: null,
 }
 
 const orderReducer = (state = initialState, action: TOrderActions): IOrderState => {

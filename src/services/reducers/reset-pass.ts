@@ -2,17 +2,17 @@ import { RESET_PASS_REQUEST, RESET_PASS_REQUEST_SUCCESS, RESET_PASS_REQUEST_FAIL
 import type { TResetPassActions } from '../actions/reset-pass'
 
 interface IResetPassState {
-  request: boolean;
-  failed: boolean;
-  success: boolean;
-  errorMessage: null | string | undefined;
+  request: boolean
+  failed: boolean
+  success: boolean
+  errorMessage: null | string | undefined
 }
 
 const initialState: IResetPassState = {
   request: false,
   failed: false,
   success: false,
-  errorMessage: null
+  errorMessage: null,
 }
 
 const resetPassReducer = (state = initialState, action: TResetPassActions): IResetPassState => {
@@ -20,23 +20,23 @@ const resetPassReducer = (state = initialState, action: TResetPassActions): IRes
     case RESET_PASS_REQUEST:
       return {
         ...initialState,
-        request: true
+        request: true,
       }
     case RESET_PASS_REQUEST_SUCCESS:
       return {
         ...state,
         request: false,
-        success: true
+        success: true,
       }
     case RESET_PASS_REQUEST_FAILED:
       return {
         ...initialState,
         failed: true,
-        errorMessage: action.payload?.message
+        errorMessage: action.payload?.message,
       }
     case SET_INIT_STATE_RESET_PASS: {
       return {
-        ...initialState
+        ...initialState,
       }
     }
     default:

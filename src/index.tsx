@@ -7,9 +7,8 @@ import { rootReducer } from './services/reducers'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { socketMiddleware } from './services/middlewares/socket-middleware'
-import { wsActions } from './services/actions/orders-user'
+import { wsActions } from './services/actions/orders'
 
-const wsUrl = 'wss://norma.nomoreparties.space/orders'
 const composeEnhancers = composeWithDevTools({
   // Specify here name, actionsBlacklist, actionsCreators and other options
 })
@@ -17,7 +16,7 @@ const composeEnhancers = composeWithDevTools({
 export type TRootState = ReturnType<typeof rootReducer>
 export type TAppDispatch = typeof store.dispatch
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(socketMiddleware(wsUrl, wsActions), thunk)))
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(socketMiddleware(wsActions), thunk)))
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,5 +24,5 @@ ReactDOM.render(
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('app-root')
+  document.getElementById('app-root'),
 )

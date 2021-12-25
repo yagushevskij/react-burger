@@ -9,7 +9,7 @@ const Register: FC = () => {
       <RegisterForm />
       <div className={`${styles.line} mt-20`}>
         <p className={`text text_type_main-default text_color_inactive mr-2`}>Уже зарегистрированы?</p>
-        <Link className={styles.line} to='/login'>
+        <Link className={styles.line} to="/login">
           Войти
         </Link>
       </div>

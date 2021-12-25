@@ -1,5 +1,5 @@
 .main {
   display: flex;
   justify-content: space-between;
-  composes: container from '../../components/app/app.module.css'
+  composes: container from '../../components/app/app.module.css';
 }

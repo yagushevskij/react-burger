@@ -1,12 +1,11 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, useNavigationType, Outlet } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, useNavigationType } from 'react-router-dom'
 import ProtectedRoute from '../protected-route'
 import ErrorBoundary from '../error-boundary/error-boundary'
-import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, OrdersFeed, OrderInfo } from '../../pages'
+import { Home, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, OrdersFeed, OrderUserInfo, OrderAllUsersInfo } from '../../pages'
 import AppHeader from '../app-header/app-header'
 import { useEffect, useCallback, FC } from 'react'
 import { getUser } from '../../services/actions/thunk/user'
 import { getItems } from '../../services/actions/thunk/ingredients'
-import { getUserOrders, getAllOrders } from '../../services/actions/thunk/order'
 import Logout from '../logout/logout'
 import ProtectedAuthRoute from '../protected-auth-route'
 import Modal from '../modal/modal'
@@ -27,45 +26,45 @@ const WrappedRoutes: FC = () => {
       event.stopPropagation()
       navigate(-1)
     },
-    [navigate]
+    [navigate],
   )
 
   return (
     <>
       <Routes location={background ?? location}>
-        <Route path='/' element={<Home />} />
-        <Route path='/feed' element={<Feed />} />
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
-        <Route path='/profile' element={<ProtectedRoute />}>
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/profile/orders' element={<Profile />} />
-          {shouldShowPage && <Route path='/profile/orders/:id' element={<OrderInfo type={'user'} />} />}
+        <Route path="/" element={<Home />} />
+        <Route path="/feed/*" element={<Feed />} />
+        <Route path="/ingredients/:id" element={<IngredientDetails />} />
+        <Route path="/profile" element={<ProtectedRoute />}>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/orders" element={<Profile />} />
+          {shouldShowPage && <Route path="/profile/orders/:id" element={<OrderUserInfo />} />}
         </Route>
-        <Route path='/logout' element={<ProtectedRoute />}>
-          <Route path='/logout' element={<Logout />} />
+        <Route path="/logout" element={<ProtectedRoute />}>
+          <Route path="/logout" element={<Logout />} />
         </Route>
-        <Route path='/' element={<ProtectedAuthRoute />}>
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route path='/reset-password' element={<ResetPassword />} />
+        <Route path="/" element={<ProtectedAuthRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Route>
-        <Route path='*' element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Routes>
         {background && (
           <Route
-            path='/ingredients/:id'
+            path="/ingredients/:id"
             element={
-              <Modal title='Детали ингридиента' handleClose={back}>
+              <Modal title="Детали ингридиента" handleClose={back}>
                 <IngredientDetails />
               </Modal>
             }
           />
         )}
-        {shouldShowModal && background && <Route path='/profile/orders/:id' element={<OrderInfoModal />} />}
-        {shouldShowModal && background && <Route path='/feed/:id' element={<OrderInfoModal />} />}
-        <Route path='*' element={null} />
+        {shouldShowModal && background && <Route path="/profile/orders/:id" element={<OrderInfoModal />} />}
+        {shouldShowModal && background && <Route path="/feed/:id" element={<OrderInfoModal />} />}
+        <Route path="*" element={null} />
       </Routes>
     </>
   )
@@ -74,8 +73,8 @@ const WrappedRoutes: FC = () => {
 const Feed: FC = () => {
   return (
     <Routes>
-      <Route path=':id' element={<OrderInfo type={'all'} />} />
-      <Route path='' element={<OrdersFeed />} />
+      <Route path=":id" element={<OrderAllUsersInfo />} />
+      <Route path="" element={<OrdersFeed />} />
     </Routes>
   )
 }
@@ -83,22 +82,15 @@ const Feed: FC = () => {
 const App: FC = () => {
   const dispatch = useAppDispatch()
   const orderNumber = useAppSelector(state => state.order.number)
-  const user = useAppSelector(state => state.user.data)
-  const isAuth = Object.keys(user).length !== 0
 
   useEffect(() => {
     dispatch(getUser())
     dispatch(getItems())
-    dispatch(getAllOrders())
   }, [dispatch])
 
   useEffect(() => {
     orderNumber && dispatch(getItems())
   }, [dispatch, orderNumber])
-
-  useEffect(() => {
-    isAuth && dispatch(getUserOrders())
-  }, [dispatch, isAuth])
 
   return (
     <ErrorBoundary>

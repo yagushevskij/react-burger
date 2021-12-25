@@ -7,7 +7,7 @@ import { TItemCallback } from '../burger-constructor'
 import { useAppDispatch } from '../../../services/custom-hooks/redux-hooks'
 
 type TScrollContainerProps = {
-  items: IConCardType[],
+  items: IConCardType[]
   removeItem: TItemCallback
 }
 export type TMoveCardCallback = (dragIndex: number, hoverIndex: number) => void
@@ -23,7 +23,7 @@ const ScrollContainer: FC<TScrollContainerProps> = ({ items, removeItem }) => {
       copyItems.splice(hoverIndex, 0, dragCard)
       dispatch(constrItemActions.updateItems(copyItems))
     },
-    [items, dispatch]
+    [items, dispatch],
   )
   return (
     <ul className={`${scrollContainer.list} ${scrollContainer.scroll}`}>
