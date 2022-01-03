@@ -20,7 +20,7 @@ export const OrderInfo: FC<IOrderInfo> = ({ order, ingredients, totalCost }) => 
   const getUniqueAndCountedIngredients = (arr: IMainCardType[]) => {
     let result: IMainCardType[] = []
     arr.forEach(el => {
-      const doublicate = result.find((x: IMainCardType) => x._id === el._id)
+      const doublicate = result.find(x => x._id === el._id)
       if (doublicate) {
         doublicate.qty += 1
       } else {
@@ -43,7 +43,7 @@ export const OrderInfo: FC<IOrderInfo> = ({ order, ingredients, totalCost }) => 
       <p className="text text_type_main-medium mt-15">Состав:</p>
       <ul className={`${styles.scroll_container} mt-6`}>
         {iniqueCountedIngredients &&
-          iniqueCountedIngredients.map((el: IMainCardType, i: number) => {
+          iniqueCountedIngredients.map((el, i) => {
             return (
               <li className={`${styles.space_between} mt-4`} key={i}>
                 <div className={styles.centered_line}>

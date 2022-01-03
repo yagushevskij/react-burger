@@ -20,7 +20,7 @@ export const getItems = () => {
       dispatch({
         type: GET_ITEMS_SUCCESS,
         payload: {
-          items: resData.data.map((el: IIngredientType) => {
+          items: resData.data.map(el => {
             return { ...el, qty: 0 }
           }),
         },

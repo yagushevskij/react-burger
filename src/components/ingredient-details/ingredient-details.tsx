@@ -7,7 +7,7 @@ import type { IMainCardType } from '../../utils/types'
 const IngredientDetails: FC = () => {
   const ingredients = useAppSelector(state => state.ingredients.items)
   const { id } = useParams()
-  const data = ingredients.find((el: IMainCardType) => el._id === id)
+  const data = ingredients.find(el => el._id === id)
   const { image, name, calories, proteins, fat, carbohydrates } = data || {}
 
   return (

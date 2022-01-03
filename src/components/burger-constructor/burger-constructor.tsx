@@ -39,7 +39,7 @@ const BurgerConstructor: FC = () => {
     )
   }, [constrItems])
 
-  const bun = useMemo(() => constrItems.find((el: IConCardType) => el.type === 'bun'), [constrItems])
+  const bun = useMemo(() => constrItems.find(el => el.type === 'bun'), [constrItems])
 
   const handleDrop = (item: IConCardType) => {
     if (item.type === 'bun' && bun) {
