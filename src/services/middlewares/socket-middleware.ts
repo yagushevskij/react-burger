@@ -1,12 +1,13 @@
 import type { TWsOrdersListActions } from '../actions/orders'
 import type { TOrdersActions } from '../actions/orders'
 import type { IWsConnectionStart } from '../actions/orders'
+import { MiddlewareAPI, Dispatch } from 'redux'
 
 export const socketMiddleware = (wsActions: { [key: string]: TWsOrdersListActions }) => {
-  return (store: any) => {
+  return (store: MiddlewareAPI) => {
     let socket: WebSocket | null = null
 
-    return (next: any) => (action: TOrdersActions) => {
+    return (next: Dispatch) => (action: TOrdersActions) => {
       const { dispatch } = store
       const { type } = action
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions

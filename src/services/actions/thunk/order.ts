@@ -2,7 +2,8 @@ import { API_URL } from '../../../utils/config'
 import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED } from '../order'
 import { getCookie } from '../../../utils/helpers'
 import { retriableFetch } from '../../../utils/api'
-import type { TAppDispatch, IIngredientType } from '../../../utils/types'
+import type { IIngredientType } from '../../../utils/types'
+import type { TAppDispatch } from '../../custom-hooks/redux-hooks'
 import type { IOrder } from '../../reducers/orders'
 
 export interface IGetOrdersResp {

@@ -1,7 +1,8 @@
 import { API_URL } from '../../../utils/config'
 import { GET_ITEMS_FAILED, GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS } from '../ingredients'
 import { checkReponse } from '../../../utils/helpers'
-import type { IIngredientType, TAppDispatch } from '../../../utils/types'
+import type { IIngredientType } from '../../../utils/types'
+import type { TAppDispatch } from '../../custom-hooks/redux-hooks'
 
 interface IGetItemsResp {
   success: boolean

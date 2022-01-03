@@ -2,7 +2,7 @@ import { API_URL } from '../../../utils/config'
 import { AUTH_REQUEST, AUTH_REQUEST_SUCCESS, AUTH_REQUEST_FAILED, LOGOUT_REQUEST, LOGOUT_REQUEST_SUCCESS, LOGOUT_REQUEST_FAILED } from '../auth'
 import { setCookie, getCookie, deleteCookie, checkReponse } from '../../../utils/helpers'
 import { SET_USER } from '../user'
-import type { TAppDispatch } from '../../../utils/types'
+import type { TAppDispatch } from '../../custom-hooks/redux-hooks'
 
 export interface ILoginData {
   email: string

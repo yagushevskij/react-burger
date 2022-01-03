@@ -1,7 +1,7 @@
 import { API_URL } from '../../../utils/config'
 import { RESTORE_PASS_REQUEST, RESTORE_PASS_REQUEST_SUCCESS, RESTORE_PASS_REQUEST_FAILED } from '../restore-pass'
 import { checkReponse } from '../../../utils/helpers'
-import type { TAppDispatch } from '../../../utils/types'
+import type { TAppDispatch } from '../../custom-hooks/redux-hooks'
 
 interface IRestorePassData {
   email: string

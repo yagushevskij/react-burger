@@ -1,7 +1,7 @@
 import { API_URL } from '../../../utils/config'
 import { RESET_PASS_REQUEST, RESET_PASS_REQUEST_SUCCESS, RESET_PASS_REQUEST_FAILED } from '../reset-pass'
 import { checkReponse } from '../../../utils/helpers'
-import type { TAppDispatch } from '../../../utils/types'
+import type { TAppDispatch } from '../../custom-hooks/redux-hooks'
 
 interface IResetPassData {
   token: string

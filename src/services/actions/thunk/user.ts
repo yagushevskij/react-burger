@@ -10,7 +10,7 @@ import { API_URL } from '../../../utils/config'
 import { getCookie } from '../../../utils/helpers'
 import { retriableFetch } from '../../../utils/api'
 import { IUserData } from '../user'
-import type { TAppDispatch } from '../../../utils/types'
+import type { TAppDispatch } from '../../custom-hooks/redux-hooks'
 
 interface IUserResp {
   success: boolean
