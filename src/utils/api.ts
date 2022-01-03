@@ -8,16 +8,7 @@ interface IUpdTokenResp {
   refreshToken: string
 }
 
-interface TFetchOptopns {
-  method: 'POST' | 'GET' | 'PATCH' | 'DELETE'
-  headers: {
-    'Content-Type': 'application/json'
-    authorization?: string
-  }
-  body?: BodyInit
-}
-
-export const retriableFetch = async <T>(url: string, options: TFetchOptopns): Promise<T> => {
+export const retriableFetch = async <T>(url: string, options: RequestInit): Promise<T> => {
   const accessToken = getCookie('accessToken')
   try {
     const res = await fetch(url, options)
@@ -28,8 +19,8 @@ export const retriableFetch = async <T>(url: string, options: TFetchOptopns): Pr
       const updatedAccessToken = refreshData.accessToken.split('Bearer ')[1]
       setCookie('refreshToken', refreshData.refreshToken, null)
       setCookie('accessToken', updatedAccessToken, null)
-      options.headers.authorization = 'Bearer ' + updatedAccessToken
-      const res = await fetch(url, options)
+      const newOptions = { authorization: 'Bearer ' + updatedAccessToken, ...options }
+      const res = await fetch(url, newOptions)
       return await checkReponse(res)
     } else {
       throw err
