@@ -1,13 +1,13 @@
-import type { TWsOrdersListActions } from '../actions/orders'
-import type { TOrdersActions } from '../actions/orders'
-import type { IWsConnectionStart } from '../actions/orders'
-import { MiddlewareAPI, Dispatch } from 'redux'
+import type { TWsOrdersActions, IWsConnectionStart } from '../actions/orders'
+import { MiddlewareAPI, Middleware } from 'redux'
+import { TRootState } from '../store'
+import { TAppDispatch } from '../custom-hooks/redux-hooks'
 
-export const socketMiddleware = (wsActions: { [key: string]: TWsOrdersListActions }) => {
-  return (store: MiddlewareAPI) => {
+export const socketMiddleware = (wsActions: TWsOrdersActions): Middleware => {
+  return (store: MiddlewareAPI<TAppDispatch, TRootState>) => {
     let socket: WebSocket | null = null
 
-    return (next: Dispatch) => (action: TOrdersActions) => {
+    return next => action => {
       const { dispatch } = store
       const { type } = action
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions
@@ -36,7 +36,7 @@ export const socketMiddleware = (wsActions: { [key: string]: TWsOrdersListAction
         }
 
         socket.onclose = event => {
-          dispatch({ type: onClose })
+          dispatch({ type: onClose, payload: null })
           if (event.wasClean) {
             console.log(`WS cоединение закрыто корректно. Код ${event.code}`)
           } else {

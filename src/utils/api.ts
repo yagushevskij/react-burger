@@ -18,9 +18,9 @@ export const retriableFetch = async <T>(url: string, options: RequestInit): Prom
       const refreshData = await refreshToken()
       const updatedAccessToken = refreshData.accessToken.split('Bearer ')[1]
       setCookie('refreshToken', refreshData.refreshToken, null)
-      setCookie('accessToken', updatedAccessToken, null)
-      const newOptions = { authorization: 'Bearer ' + updatedAccessToken, ...options }
-      const res = await fetch(url, newOptions)
+      setCookie('accessToken', updatedAccessToken, null);
+      (options.headers as Record<string, string>).authorization = 'Bearer ' + updatedAccessToken
+      const res = await fetch(url, options)
       return await checkReponse(res)
     } else {
       throw err
