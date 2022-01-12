@@ -7,16 +7,10 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
+  composes: scroll from '../app/app.module.css';
 }
 
-.content::-webkit-scrollbar {
-  width: 8px;
-}
-.content::-webkit-scrollbar-track {
-  background: #2F2F37;
-}
 .content::-webkit-scrollbar-thumb {
-  background: #8585AD;
   height: 500px;
 }
 

@@ -5,16 +5,21 @@ import type { TIngredients } from '../burger-ingredients'
 import type { TGrouppedIngredients } from '../burger-ingredients'
 
 type TTabList = {
-  items: TGrouppedIngredients,
+  items: TGrouppedIngredients
   activeTab: TIngredients | null
 }
 
 const TabList = React.forwardRef<HTMLDivElement, TTabList>((props, ref) => {
   const { items, activeTab } = props
+
+  const scrollIntoView = (ref: React.RefObject<HTMLDivElement>) => {
+    ref.current?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+  }
+  
   return (
     <div className={`${tabList.tab} mt-5`} ref={ref}>
       {items.map((el, index) => (
-        <Tab active={el.type === activeTab} key={index} value={''} onClick={() => {}}>
+        <Tab active={el.type === activeTab} key={index} value={''} onClick={() => scrollIntoView(el.ref)}>
           {el.title}
         </Tab>
       ))}

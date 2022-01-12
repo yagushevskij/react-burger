@@ -2,8 +2,14 @@
   display: grid;
   gap: 24px;
   width: 100%;
+  overflow: auto;
+  composes: scroll from '../app/app.module.css';
+}
+
+.container::-webkit-scrollbar-thumb {
+  height: 640px;
 }
 
 .info {
-  margin: auto
+  margin: auto;
 }

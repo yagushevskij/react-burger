@@ -10,6 +10,7 @@
     "@types/jest": "^26.0.24",
     "@types/node": "^12.20.28",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.13.1",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dnd": "^14.0.4",
@@ -51,7 +52,9 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.178",
     "@types/react": "^17.0.37",
-    "@types/react-dom": "^17.0.11"
+    "@types/react-dom": "^17.0.11",
+    "prettier": "2.5.1"
   }
 }

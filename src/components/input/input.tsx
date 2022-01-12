@@ -2,20 +2,20 @@ import { Input as InputLibraryElem } from '@ya.praktikum/react-developer-burger-
 import { FC, useRef } from 'react'
 
 export type TInputProps = {
-  type?: 'text' | 'email' | 'password';
+  type?: 'text' | 'email' | 'password'
   placeholder?: string
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  name: string;
-  error?: boolean;
-  size: 'small' | 'default' | undefined;
-  value: string;
-  errorText?: string;
-  icon?: any;
-  onIconClick?: () => void;
-  disabled?: boolean;
+  name: string
+  error?: boolean
+  size: 'small' | 'default' | undefined
+  value: string
+  errorText?: string
+  icon?: any
+  onIconClick?: () => void
+  disabled?: boolean
 }
 
-const Input: FC<TInputProps> = ({onIconClick, ...props }) => {
+const Input: FC<TInputProps> = ({ onIconClick, ...props }) => {
   const ref = useRef<HTMLInputElement>(null)
 
   const onIconClickHandle = () => {
@@ -23,13 +23,9 @@ const Input: FC<TInputProps> = ({onIconClick, ...props }) => {
     onIconClick && onIconClick()
   }
 
-  const params = {ref, onIconClick: onIconClickHandle, ...props}
+  const params = { ref, onIconClick: onIconClickHandle, ...props }
 
-  return (
-    <InputLibraryElem
-    {... params}
-    />
-  )
+  return <InputLibraryElem {...params} />
 }
 
 export default Input

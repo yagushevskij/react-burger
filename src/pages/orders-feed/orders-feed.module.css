@@ -1,0 +1,19 @@
+.main {
+  composes: container from '../../components/app/app.module.css';
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.wrapper + .wrapper {
+  margin-left: 8.7%;
+}

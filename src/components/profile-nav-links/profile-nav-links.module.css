@@ -9,9 +9,9 @@
 }
 
 .link_active {
-  color: #F2F2F3;
+  color: #f2f2f3;
 }
 
 .container {
-  width: 320px;
+  min-width: 320px;
 }

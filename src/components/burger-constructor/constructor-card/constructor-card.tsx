@@ -10,10 +10,10 @@ import { IConCardType } from '../../../utils/types'
 
 type TConstructorCardProps = {
   data: IConCardType
-  handleRemove: TItemCallback;
-  index: number;
-  moveCard: TMoveCardCallback;
-  id: string;
+  handleRemove: TItemCallback
+  index: number
+  moveCard: TMoveCardCallback
+  id: string
 }
 
 interface IDragItem {
@@ -49,7 +49,7 @@ const ConstructorCard: FC<TConstructorCardProps> = ({ data, handleRemove, index,
       }
       moveCard(dragIndex, hoverIndex)
       item.index = hoverIndex
-    }
+    },
   })
 
   const [{ isDragging }, drag] = useDrag({
@@ -57,9 +57,9 @@ const ConstructorCard: FC<TConstructorCardProps> = ({ data, handleRemove, index,
     item: () => {
       return { id, index }
     },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging()
-    })
+    collect: monitor => ({
+      isDragging: monitor.isDragging(),
+    }),
   })
 
   const opacity = isDragging ? 0 : 1
@@ -67,7 +67,7 @@ const ConstructorCard: FC<TConstructorCardProps> = ({ data, handleRemove, index,
 
   return (
     <li className={`${constructorCard.item}`} ref={ref} style={{ opacity }}>
-      <DragIcon type='primary' />
+      <DragIcon type="primary" />
       <ConstructorElement text={data.name} price={data.price} thumbnail={data.image} handleClose={() => handleRemove(data)} />
     </li>
   )

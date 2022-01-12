@@ -1,36 +1,28 @@
 import { API_URL } from '../../../utils/config'
 import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED } from '../order'
-import { GET_ORDERS_REQUEST, GET_ORDERS_SUCCESS, GET_ORDERS_FAILED } from '../orders'
 import { getCookie } from '../../../utils/helpers'
 import { retriableFetch } from '../../../utils/api'
 import type { IIngredientType } from '../../../utils/types'
+import type { TAppDispatch } from '../../custom-hooks/redux-hooks'
+import type { IOrder } from '../../reducers/orders'
 
-interface IGetOrdersResp {
-  orders: IOrder[];
-  success: boolean;
-  total: number;
-  totalToday: number;
-}
-interface IOrder {
-  _id: string;
-  ingredients: string[];
-  status: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  number: number;
+export interface IGetOrdersResp {
+  orders: IOrder[]
+  success: boolean
+  total: number
+  totalToday: number
 }
 interface IOrderResp {
-  success: boolean;
-  message?: string;
-  order: IOrder;
+  success: boolean
+  message?: string
+  order: IOrder
 }
 
 export const order = (items: IIngredientType[]) => {
-  return async function (dispatch: any) {
+  return async function (dispatch: TAppDispatch) {
     const token = getCookie('accessToken')
     dispatch({
-      type: GET_ORDER_REQUEST
+      type: GET_ORDER_REQUEST,
     })
     try {
       const ids = items.map(el => el._id)
@@ -38,46 +30,20 @@ export const order = (items: IIngredientType[]) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          authorization: 'Bearer ' + token
+          authorization: 'Bearer ' + token,
         },
-        body: JSON.stringify({ ingredients: ids })
+        body: JSON.stringify({ ingredients: ids }),
       })
       dispatch({
         type: GET_ORDER_SUCCESS,
-        orderNumber: res.order.number
+        payload: {
+          orderNumber: res.order.number,
+        },
       })
     } catch (e) {
       dispatch({
         type: GET_ORDER_FAILED,
-        payload: { message: 'Ошибка при создании заказа. Пожалуйста, повторите позже.' }
-      })
-      console.log(e)
-    }
-  }
-}
-
-export const getOrders = () => {
-  return async function (dispatch: any) {
-    const token = getCookie('accessToken')
-    dispatch({
-      type: GET_ORDERS_REQUEST
-    })
-    try {
-      const res = await retriableFetch<IGetOrdersResp>(API_URL + 'orders', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: 'Bearer ' + token
-        }
-      })
-      dispatch({
-        type: GET_ORDERS_SUCCESS,
-        data: res.orders
-      })
-    } catch (e) {
-      dispatch({
-        type: GET_ORDERS_FAILED,
-        payload: { message: 'Ошибка при получении списка заказов. Пожалуйста, повторите позже.' }
+        payload: { message: 'Ошибка при создании заказа. Пожалуйста, повторите позже.' },
       })
       console.log(e)
     }

@@ -1,24 +1,14 @@
-import { checkReponse } from "./helpers"
-import { setCookie, getCookie } from "./helpers"
-import { API_URL } from "./config"
+import { checkReponse } from './helpers'
+import { setCookie, getCookie } from './helpers'
+import { API_URL } from './config'
 
 interface IUpdTokenResp {
-  success: boolean;
-  accessToken: string;
-  refreshToken: string;
+  success: boolean
+  accessToken: string
+  refreshToken: string
 }
 
-interface TFetchOptopns {
-  method: 'POST' | 'GET' | 'PATCH' | 'DELETE'
-  headers: {
-    'Content-Type': 'application/json',
-    authorization: string
-  },
-  body?: BodyInit
-}
-
-
-export const retriableFetch = async <T>(url: string, options: TFetchOptopns): Promise<T> => {
+export const retriableFetch = async <T>(url: string, options: RequestInit): Promise<T> => {
   const accessToken = getCookie('accessToken')
   try {
     const res = await fetch(url, options)
@@ -28,8 +18,8 @@ export const retriableFetch = async <T>(url: string, options: TFetchOptopns): Pr
       const refreshData = await refreshToken()
       const updatedAccessToken = refreshData.accessToken.split('Bearer ')[1]
       setCookie('refreshToken', refreshData.refreshToken, null)
-      setCookie('accessToken', updatedAccessToken, null)
-      options.headers.authorization = 'Bearer ' + updatedAccessToken
+      setCookie('accessToken', updatedAccessToken, null);
+      (options.headers as Record<string, string>).authorization = 'Bearer ' + updatedAccessToken
       const res = await fetch(url, options)
       return await checkReponse(res)
     } else {
@@ -44,9 +34,9 @@ const refreshToken = async () => {
   const res = await fetch(API_URL + 'auth/token', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   })
   return await checkReponse<IUpdTokenResp>(res)
 }

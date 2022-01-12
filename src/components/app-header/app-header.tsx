@@ -6,28 +6,29 @@ import { NavLink, Link, useLocation } from 'react-router-dom'
 const links = {
   constructor: {
     title: 'Конструктор',
-    path: '/'
+    path: '/',
   },
   ordersFeed: {
     title: 'Лента заказов',
-    path: '/profile/orders'
+    path: '/feed',
   },
   profile: {
     title: 'Личный кабинет',
-    path: '/profile'
-  }
+    path: '/profile',
+  },
 }
 
 enum IconsType {
   primary = 'primary',
-  secondary = 'secondary'
+  secondary = 'secondary',
 }
-
 
 const AppHeader: FC = () => {
   const location = useLocation()
-  const getLinkStyle = ({isActive}: {isActive: {}}): string => `${appHeader.link} text text_type_main-default text_color_inactive ml-2 ${isActive && appHeader.link_active}`
-  const getActiveIcon = (path: string): IconsType.primary | IconsType.secondary  => (location.pathname === path ? IconsType.primary : IconsType.secondary)
+  const getLinkStyle = ({ isActive }: { isActive: {} }): string =>
+    `${appHeader.link} text text_type_main-default text_color_inactive ml-2 ${isActive && appHeader.link_active}`
+  const getActiveIcon = (path: string): IconsType.primary | IconsType.secondary =>
+    location.pathname === path ? IconsType.primary : IconsType.secondary
   return (
     <header className={appHeader.header}>
       <div className={appHeader.header__wrapper}>
@@ -40,7 +41,7 @@ const AppHeader: FC = () => {
           </li>
           <li className={`${appHeader.item__link} p-5 ml-2`}>
             <ListIcon type={getActiveIcon(links.ordersFeed.path)} />
-            <NavLink end to={`/profile/orders`} className={getLinkStyle}>
+            <NavLink end to={`/feed`} className={getLinkStyle}>
               {links.ordersFeed.title}
             </NavLink>
           </li>

@@ -4,17 +4,16 @@ import React, { useCallback, FC } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { GET_ORDER_FAILED } from '../../../services/actions/order'
 import { IConCardType } from '../../../utils/types'
-import useAppSelector from '../../../services/custom-hooks/use-app-selector'
-import { useDispatch } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../../services/custom-hooks/redux-hooks'
 
 type TOrderProps = {
-  items: IConCardType[],
+  items: IConCardType[]
   bun?: IConCardType
 }
 
 const Order: FC<TOrderProps> = ({ items, bun }) => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const location = useLocation()
   const orderRequest = useAppSelector(state => state.order.request)
   const user = useAppSelector(state => state.user.data)
@@ -31,7 +30,7 @@ const Order: FC<TOrderProps> = ({ items, bun }) => {
   }, [dispatch, bun, items, location, navigate, user])
 
   return (
-    <Button type='primary' size='large' onClick={makeOrder} disabled={orderRequest}>
+    <Button type="primary" size="large" onClick={makeOrder} disabled={orderRequest}>
       Оформить заказ
     </Button>
   )
