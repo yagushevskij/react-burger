@@ -6,7 +6,7 @@ import {
   INCREASE_ITEM_COUNT,
   DECREASE_ITEM_COUNT,
 } from '../actions/ingredients'
-import type { TIngredientActions } from '../actions/ingredients'
+import type { TAppActions } from '../actions/index'
 import type { IMainCardType } from '../../utils/types'
 
 interface IIngredientsState {
@@ -15,13 +15,13 @@ interface IIngredientsState {
   itemsRequestFailed: boolean
 }
 
-const initialState: IIngredientsState = {
+export const initialState: IIngredientsState = {
   items: [],
   itemsRequest: false,
   itemsRequestFailed: false,
 }
 
-const ingredientsReducer = (state = initialState, action: TIngredientActions): IIngredientsState => {
+const ingredientsReducer = (state = initialState, action: TAppActions): IIngredientsState => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return { ...state, itemsRequest: true, itemsRequestFailed: false }
@@ -34,16 +34,16 @@ const ingredientsReducer = (state = initialState, action: TIngredientActions): I
       }
     }
     case GET_ITEMS_FAILED: {
-      return { ...initialState, itemsRequestFailed: true }
+      return { ...initialState, itemsRequest: false, itemsRequestFailed: true }
     }
     case UPDATE_ITEMS: {
       return { ...state, items: action.payload.items }
     }
     case INCREASE_ITEM_COUNT: {
-      return { ...state, items: state.items.map(el => (el._id === action.payload.item._id ? { ...el, qty: el.qty + action.payload.qty } : el)) }
+      return { ...state, items: state.items.map(el => (el._id === action.payload.id ? { ...el, qty: el.qty + action.payload.qty } : el)) }
     }
     case DECREASE_ITEM_COUNT: {
-      return { ...state, items: state.items.map(el => (el._id === action.payload.item._id ? { ...el, qty: el.qty - action.payload.qty } : el)) }
+      return { ...state, items: state.items.map(el => (el._id === action.payload.id ? { ...el, qty: el.qty - action.payload.qty } : el)) }
     }
     default: {
       return state

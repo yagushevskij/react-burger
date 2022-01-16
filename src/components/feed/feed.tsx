@@ -1,6 +1,6 @@
 import styles from './feed.module.css'
 import { FC } from 'react'
-import type { IOrder, TOrderStatus } from '../../services/reducers/orders'
+import type { IOrder } from '../../services/reducers/orders'
 import { numberWithSpaces } from '../../utils/helpers'
 
 interface IFeed {
@@ -12,7 +12,7 @@ interface IFeed {
 const Feed: FC<IFeed> = ({ orders, total, totalToday }) => {
   const totalCostFormated = numberWithSpaces(total)
 
-  const getOrdersToRender = (orders: IOrder[], status: TOrderStatus, size: number) => {
+  const getOrdersToRender = (orders: IOrder[], status: string, size: number) => {
     const filtered = orders.filter(el => el.status === status)
     const sorted = filtered.sort((a, b) => b.number - a.number)
     const sliced = sorted.slice(0, size)

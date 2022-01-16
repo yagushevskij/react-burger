@@ -13,6 +13,7 @@ import OrderDetails from '../order-details/order-details'
 import Loader from '../loader/loader'
 import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
 import type { IConCardType } from '../../utils/types'
+import { getKeyByGenerate } from '../../utils/helpers'
 
 export type TItemCallback = (item: IConCardType) => void
 
@@ -51,8 +52,12 @@ const BurgerConstructor: FC = () => {
   const addItem = useCallback<TItemCallback>(
     item => {
       const qty = item.type === 'bun' ? 2 : 1
-      dispatch(constrItemActions.addItem(item))
-      dispatch(itemActions.increaseItem(item, qty))
+      const itemWithKey = {
+        ...item,
+        key: getKeyByGenerate(),
+      }
+      dispatch(constrItemActions.addItem(itemWithKey))
+      dispatch(itemActions.increaseItem(item._id, qty))
     },
     [dispatch],
   )
@@ -60,8 +65,8 @@ const BurgerConstructor: FC = () => {
   const removeItem = useCallback<TItemCallback>(
     item => {
       const qty = item.type === 'bun' ? 2 : 1
-      dispatch(constrItemActions.removeItem(item))
-      dispatch(itemActions.decreaseItem(item, qty))
+      dispatch(constrItemActions.removeItem(item.key))
+      dispatch(itemActions.decreaseItem(item._id, qty))
     },
     [dispatch],
   )

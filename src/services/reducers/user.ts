@@ -7,8 +7,8 @@ import {
   UPDATE_USER_REQUEST_FAILED,
   SET_USER,
 } from '../actions/user'
-import type { TUserActions } from '../actions/user'
 import type { IUserData } from '../actions/user'
+import { TAppActions } from '../actions'
 
 interface IUserState {
   data: IUserData
@@ -17,14 +17,14 @@ interface IUserState {
   errorMessage: null | string | undefined
 }
 
-const initialState: IUserState = {
+export const initialState: IUserState = {
   data: {},
   request: false,
   failed: false,
   errorMessage: null,
 }
 
-const userReducer = (state = initialState, action: TUserActions): IUserState => {
+const userReducer = (state = initialState, action: TAppActions): IUserState => {
   switch (action.type) {
     case GET_USER_REQUEST:
     case UPDATE_USER_REQUEST:
@@ -42,20 +42,16 @@ const userReducer = (state = initialState, action: TUserActions): IUserState => 
         data: action.payload.user,
       }
     case GET_USER_REQUEST_FAILED:
-      return {
-        ...initialState,
-        failed: true,
-        errorMessage: action.payload?.message,
-      }
     case UPDATE_USER_REQUEST_FAILED:
       return {
         ...state,
         failed: true,
+        request: false,
         errorMessage: action.payload?.message,
       }
     case SET_USER:
       return {
-        ...initialState,
+        ...state,
         data: action.payload.data,
       }
     default:

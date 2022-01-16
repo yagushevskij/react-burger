@@ -1,5 +1,5 @@
 import { RESTORE_PASS_REQUEST, RESTORE_PASS_REQUEST_SUCCESS, RESTORE_PASS_REQUEST_FAILED, SET_INIT_STATE_RESTORE_PASS } from '../actions/restore-pass'
-import type { TRestorePassActions } from '../actions/restore-pass'
+import { TAppActions } from '../actions'
 
 interface IRestorePassState {
   request: boolean
@@ -8,14 +8,14 @@ interface IRestorePassState {
   errorMessage: null | string | undefined
 }
 
-const initialState: IRestorePassState = {
+export const initialState: IRestorePassState = {
   request: false,
   failed: false,
   success: false,
   errorMessage: null,
 }
 
-const restorePassReducer = (state = initialState, action: TRestorePassActions): IRestorePassState => {
+const restorePassReducer = (state = initialState, action: TAppActions): IRestorePassState => {
   switch (action.type) {
     case RESTORE_PASS_REQUEST:
       return {
