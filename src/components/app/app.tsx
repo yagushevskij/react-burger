@@ -33,7 +33,8 @@ const WrappedRoutes: FC = () => {
     <>
       <Routes location={background ?? location}>
         <Route path="/" element={<Home />} />
-        <Route path="/feed/*" element={<Feed />} />
+        <Route path="/feed" element={<OrdersFeed />} />
+        {shouldShowPage && <Route path="/feed/:id" element={<OrderAllUsersInfo />} />}
         <Route path="/ingredients/:id" element={<IngredientDetails />} />
         <Route path="/profile" element={<ProtectedRoute />}>
           <Route path="/profile" element={<Profile />} />
@@ -67,15 +68,6 @@ const WrappedRoutes: FC = () => {
         <Route path="*" element={null} />
       </Routes>
     </>
-  )
-}
-
-const Feed: FC = () => {
-  return (
-    <Routes>
-      <Route path=":id" element={<OrderAllUsersInfo />} />
-      <Route path="" element={<OrdersFeed />} />
-    </Routes>
   )
 }
 
