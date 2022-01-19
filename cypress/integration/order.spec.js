@@ -6,14 +6,15 @@ describe('order works correctly for auth users', function () {
 
   beforeEach(() => {
     cy.get('[class^=burger-constructor_section__]').as('constructorSection')
-  })
 
-  it('should handle order creation with sauce only', function () {
     cy.get('[data-cy="ingredient-card"]').contains('Соус').as('sauce')
 
     cy.get('@sauce').trigger('dragstart')
-    // cy.get('@sauce').trigger('ondrag').should('have.css', 'border', '1px solid rgb(76, 76, 255)')
+
     cy.get('@constructorSection').trigger('drop')
+  })
+
+  it('should handle order creation with sauce only', function () {
     cy.get('[class^=button_button__]').as('orderButton').click()
 
     cy.get('[data-cy="error-modal"]').as('errorModal')
@@ -22,6 +23,12 @@ describe('order works correctly for auth users', function () {
 
     cy.get('[class^=burger-constructor_list]').as('constructorList')
     cy.get('@constructorList').find('li').should('have.length', 1)
+  })
+
+  it('should remove ingredient', function () {
+    cy.get('[class^=constructor-element__action]').as('deleteButton').click({ multiple: true })
+    cy.get('[class^=burger-constructor_list]').should('not.exist')
+    cy.get('@sauce').find('[class^=counter_counter__num__]').should('not.exist')
   })
 
   it('should handle order creation with bun', function () {
