@@ -6,7 +6,7 @@ type TOverlayProps = {
 }
 
 const Overlay: FC<TOverlayProps> = ({ onClose }) => {
-  return <div className={styles.overlay} onClick={onClose}></div>
+  return <div className={styles.overlay} onClick={onClose} data-cy='overlay'></div>
 }
 
 export default Overlay

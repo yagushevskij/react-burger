@@ -83,11 +83,11 @@ const BurgerConstructor: FC = () => {
     <>
       {isOrderRequest && <Loader title={`Идёт оформление заказа, ожидайте`} />}
       {orderNumber && (
-        <Modal handleClose={handleCloseOrderModal}>
+        <Modal handleClose={handleCloseOrderModal} dataCy='order-modal'>
           <OrderDetails />
         </Modal>
       )}
-      {errorMessage && <Modal title={errorMessage} handleClose={handleCloseErrorModal}></Modal>}
+      {errorMessage && <Modal title={errorMessage} handleClose={handleCloseErrorModal} dataCy='error-modal'></Modal>}
       <section className={`${burgerConstructor.section} ml-10 pl-4 mt-25`} ref={sectionTarget} style={{ border }}>
         {constrItems.length === 0 ? (
           <div className={`${burgerConstructor.info} text text_type_main-default`}>Перетащите в это окно ингредиенты чтобы собрать бургер</div>

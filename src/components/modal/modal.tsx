@@ -10,10 +10,11 @@ interface IModalProps {
   text?: string
   children?: React.ReactNode
   handleClose: (event: React.MouseEvent<HTMLDivElement> | KeyboardEvent) => void
+  dataCy?: string
 }
 export type TCloseCallback<T> = (event: T) => void
 
-const Modal: FC<IModalProps> = ({ text, title, children, handleClose }) => {
+const Modal: FC<IModalProps> = ({ text, title, children, handleClose, dataCy }) => {
   const closeByEsc = useCallback<TCloseCallback<KeyboardEvent>>(
     event => {
       if (event.code === 'Escape') {
@@ -33,11 +34,11 @@ const Modal: FC<IModalProps> = ({ text, title, children, handleClose }) => {
   const child = (
     <>
       <Overlay onClose={(event: React.MouseEvent<HTMLDivElement>) => handleClose(event)} />
-      <div className={`${modal.modal}  pt-10 pb-15 pl-10 pr-10`}>
+      <div className={`${modal.modal}  pt-10 pb-15 pl-10 pr-10`} data-cy={dataCy}>
         <div className={`${modal.header}`}>
           {title && <h3 className={`${modal.header__title} text text_type_main-large`}>{title}</h3>}
           {text && <p className={`${modal.header__title} text text_type_main-medium`}>{text}</p>}
-          <div className={modal.header__icon} onClick={event => handleClose(event)}>
+          <div className={modal.header__icon} onClick={event => handleClose(event)} data-cy='close-button'>
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 fillRule="evenodd"

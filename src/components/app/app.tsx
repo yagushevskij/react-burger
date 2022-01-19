@@ -56,7 +56,7 @@ const WrappedRoutes: FC = () => {
           <Route
             path="/ingredients/:id"
             element={
-              <Modal title="Детали ингридиента" handleClose={back}>
+              <Modal title="Детали ингридиента" handleClose={back} dataCy='ingredient-modal'>
                 <IngredientDetails />
               </Modal>
             }
