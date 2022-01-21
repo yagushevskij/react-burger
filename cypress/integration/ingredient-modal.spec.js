@@ -1,8 +1,6 @@
 describe('ingredient modal works correctly', function () {
   before(function () {
     cy.visit('http://localhost:3006')
-    // cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients').as('getCards')
-    // cy.wait('@getCards')
   })
 
   beforeEach(() => {
