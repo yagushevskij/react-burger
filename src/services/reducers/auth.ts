@@ -11,11 +11,13 @@ import type { TAppActions } from '../actions/index'
 interface IAuthReducerState {
   request: boolean
   failed: boolean
+  errorMessage: string | null | undefined
 }
 
 export const initialState: IAuthReducerState = {
   request: false,
   failed: false,
+  errorMessage: null,
 }
 
 const authReducer = (state = initialState, action: TAppActions): IAuthReducerState => {
@@ -38,6 +40,7 @@ const authReducer = (state = initialState, action: TAppActions): IAuthReducerSta
       return {
         ...initialState,
         failed: true,
+        errorMessage: action.payload?.errorMessage
       }
     default:
       return state

@@ -28,6 +28,9 @@ export const itemActions = {
       qty,
     },
   }),
+  request: { type: GET_ITEMS_REQUEST },
+  requestSuccess: (items: IMainCardType[]) => ({ type: GET_ITEMS_SUCCESS, payload: { items } }),
+  requestFailed: { type: GET_ITEMS_FAILED },
 }
 
 interface IUpdateItemsAction {

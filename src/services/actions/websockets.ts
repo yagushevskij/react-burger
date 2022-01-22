@@ -7,11 +7,11 @@ export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSE
 export const WS_GET_MESSAGE: 'WS_GET_MESSAGE' = 'WS_GET_MESSAGE'
 
 export const wsActions = {
-  wsInit: WS_CONNECTION_START,
-  onOpen: WS_CONNECTION_SUCCESS,
-  onClose: WS_CONNECTION_CLOSED,
-  onError: WS_CONNECTION_ERROR,
-  onMessage: WS_GET_MESSAGE,
+  wsInit: (url: string) => ({ type: WS_CONNECTION_START, payload: { url } }),
+  onOpen: { type: WS_CONNECTION_SUCCESS },
+  onClose: { type: WS_CONNECTION_CLOSED },
+  onError: { type: WS_CONNECTION_ERROR },
+  onMessage: (msg: IGetOrdersResp) => ({ type: WS_GET_MESSAGE, payload: msg }),
 }
 
 export interface IWsConnectionStart {
@@ -34,11 +34,11 @@ interface IWsGetMessage {
   readonly payload: IGetOrdersResp
 }
 
-export type TWsOrdersActions = {
-  wsInit: typeof WS_CONNECTION_START
-  onOpen: typeof WS_CONNECTION_SUCCESS
-  onClose: typeof WS_CONNECTION_CLOSED
-  onError: typeof WS_CONNECTION_ERROR
-  onMessage: typeof WS_GET_MESSAGE
+export type TWsObjActions = {
+  wsInit: (url: string) => IWsConnectionStart
+  onOpen: IWsConnectionSuccess
+  onClose: IWsConnectionClosed
+  onError: IWsConnectionError
+  onMessage: (msg: IGetOrdersResp) => IWsGetMessage
 }
-export type TOrdersActions = IWsConnectionClosed | IWsConnectionError | IWsConnectionSuccess | IWsGetMessage | IWsConnectionStart
+export type TWsActions = IWsConnectionClosed | IWsConnectionError | IWsConnectionSuccess | IWsGetMessage | IWsConnectionStart

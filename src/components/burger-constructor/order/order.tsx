@@ -2,7 +2,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { order } from '../../../services/actions/thunk/order'
 import React, { useCallback, FC } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { GET_ORDER_FAILED } from '../../../services/actions/order'
+import { orderActions } from '../../../services/actions/order'
 import { IConCardType } from '../../../utils/types'
 import { useAppSelector, useAppDispatch } from '../../../services/custom-hooks/redux-hooks'
 
@@ -23,7 +23,7 @@ const Order: FC<TOrderProps> = ({ items, bun }) => {
     if (!isAuth) {
       navigate(`/login`, { state: { from: location } })
     } else if (!bun) {
-      dispatch({ type: GET_ORDER_FAILED, payload: { message: 'Нужно добавить хотя бы 1 булку' } })
+      dispatch(orderActions.requestFailed('Нужно добавить хотя бы 1 булку'))
     } else {
       dispatch(order(items))
     }

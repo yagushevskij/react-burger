@@ -4,7 +4,7 @@ import Orders from '../../components/orders/orders'
 import { useAppDispatch, useAppSelector } from '../../services/custom-hooks/redux-hooks'
 import Feed from '../../components/feed/feed'
 import { useEffect } from 'react'
-import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/orders'
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/websockets'
 import { wsUrl } from '../../utils/config'
 
 const OrdersFeed: FC = () => {

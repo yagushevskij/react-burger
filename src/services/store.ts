@@ -3,7 +3,7 @@ import { rootReducer } from './reducers'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { socketMiddleware } from './middlewares/socket-middleware'
-import { wsActions } from './actions/orders'
+import { wsActions } from './actions/websockets'
 
 
 const composeEnhancers = composeWithDevTools({

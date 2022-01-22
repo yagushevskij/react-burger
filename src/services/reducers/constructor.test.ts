@@ -1,7 +1,7 @@
 import reducer from './constructor'
 import { constrItemActions } from '../actions/constructor'
 import { initialState } from './constructor'
-import { GET_ITEMS_REQUEST } from '../actions/ingredients' //Экшн от другого редьюсера
+import { itemActions} from '../actions/ingredients' //Экшн от другого редьюсера
 
 const ingredient = {
   calories: 643,
@@ -56,7 +56,7 @@ const state = { ...initialState, items: ingredients} //На вырост в сл
 
 describe('contructor reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(initialState, { type: GET_ITEMS_REQUEST })).toEqual(initialState)
+    expect(reducer(initialState, itemActions.request)).toEqual(initialState)
   })
 
   it('should handle ADD_CONSTR_ITEM', () => {

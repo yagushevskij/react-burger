@@ -1,4 +1,4 @@
-import { WS_CONNECTION_SUCCESS, WS_CONNECTION_ERROR, WS_CONNECTION_CLOSED, WS_GET_MESSAGE } from '../actions/orders'
+import { WS_CONNECTION_SUCCESS, WS_CONNECTION_ERROR, WS_CONNECTION_CLOSED, WS_GET_MESSAGE } from '../actions/websockets'
 import { TAppActions } from '../actions'
 
 export type TOrderStatus = 'created' | 'pending' | 'done'

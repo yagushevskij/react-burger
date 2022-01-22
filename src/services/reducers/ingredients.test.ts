@@ -1,7 +1,7 @@
 import reducer from './ingredients'
-import * as types from '../actions/ingredients'
+import { itemActions } from '../actions/ingredients'
 import { initialState } from './ingredients'
-import { AUTH_REQUEST } from '../actions/auth' //Экшн от другого редьюсера
+import { authActions } from '../actions/auth' //Экшн от другого редьюсера
 
 const ingredients = [
   {
@@ -40,15 +40,15 @@ const requestState = { ...initialState, itemsRequest: true, itemsRequestFailed: 
 
 describe('ingredients reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(initialState, { type: AUTH_REQUEST })).toEqual(initialState)
+    expect(reducer(initialState, authActions.request)).toEqual(initialState)
   })
 
   it('should handle GET_ITEMS_REQUEST', () => {
-    expect(reducer(initialState, { type: types.GET_ITEMS_REQUEST })).toEqual(requestState)
+    expect(reducer(initialState, itemActions.request)).toEqual(requestState)
   })
 
   it('should handle GET_ITEMS_SUCCESS', () => {
-    expect(reducer(requestState, { type: types.GET_ITEMS_SUCCESS, payload: { items: ingredients } })).toEqual({
+    expect(reducer(requestState, itemActions.requestSuccess(ingredients))).toEqual({
       ...requestState,
       itemsRequest: false,
       items: ingredients,
@@ -56,7 +56,7 @@ describe('ingredients reducer', () => {
   })
 
   it('should handle GET_ITEMS_FAILED', () => {
-    expect(reducer({ ...requestState, itemsRequest: true }, { type: types.GET_ITEMS_FAILED })).toEqual({
+    expect(reducer({ ...requestState, itemsRequest: true }, itemActions.requestFailed)).toEqual({
       ...requestState,
       itemsRequest: false,
       itemsRequestFailed: true,
@@ -64,11 +64,11 @@ describe('ingredients reducer', () => {
   })
 
   it('should handle UPDATE_ITEMS', () => {
-    expect(reducer(initialState, types.itemActions.updateItems(ingredients))).toEqual({ ...initialState, items: ingredients })
+    expect(reducer(initialState, itemActions.updateItems(ingredients))).toEqual({ ...initialState, items: ingredients })
   })
 
   it('should handle INCREASE_ITEM_COUNT', () => {
-    expect(reducer(state, types.itemActions.increaseItem('60d3b41abdacab0026a733cd', 1))).toEqual({
+    expect(reducer(state, itemActions.increaseItem('60d3b41abdacab0026a733cd', 1))).toEqual({
       ...state,
       items: [
         {
@@ -106,7 +106,7 @@ describe('ingredients reducer', () => {
   })
 
   it('should handle DECREASE_ITEM_COUNT', () => {
-    expect(reducer(state, types.itemActions.decreaseItem('60d3b41abdacab0026a733cd', 1))).toEqual({
+    expect(reducer(state, itemActions.decreaseItem('60d3b41abdacab0026a733cd', 1))).toEqual({
       ...state,
       items: [
         {

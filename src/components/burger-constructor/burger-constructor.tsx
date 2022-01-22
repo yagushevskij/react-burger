@@ -6,8 +6,7 @@ import { itemActions } from '../../services/actions/ingredients'
 import { useDrop } from 'react-dnd'
 import ScrollContainer from './scroll-container/scroll-container'
 import Order from './order/order'
-import { UPDATE_CONSTR_ITEMS } from '../../services/actions/constructor'
-import { SET_INITIAL_ORDER_STATE } from '../../services/actions/order'
+import { orderActions } from '../../services/actions/order'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import Loader from '../loader/loader'
@@ -72,11 +71,11 @@ const BurgerConstructor: FC = () => {
   )
 
   const handleCloseOrderModal = () => {
-    dispatch({ type: UPDATE_CONSTR_ITEMS, payload: { items: [] } })
-    dispatch({ type: SET_INITIAL_ORDER_STATE })
+    dispatch(constrItemActions.updateItems([]))
+    dispatch(orderActions.setInitialState)
   }
   const handleCloseErrorModal = () => {
-    dispatch({ type: SET_INITIAL_ORDER_STATE })
+    dispatch(orderActions.setInitialState)
   }
 
   return (

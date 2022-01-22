@@ -3,7 +3,7 @@ import { Link, useLocation, Navigate } from 'react-router-dom'
 
 import { useEffect, FC } from 'react'
 import ForgotPasswordForm from '../../components/forms/forgot-password-form/forgot-password-form'
-import { SET_INIT_STATE_RESTORE_PASS } from '../../services/actions/restore-pass'
+import { restorePassActions } from '../../services/actions/restore-pass'
 import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
 
 const ForgotPassword: FC = () => {
@@ -13,7 +13,7 @@ const ForgotPassword: FC = () => {
 
   useEffect(() => {
     return () => {
-      dispatch({ type: SET_INIT_STATE_RESTORE_PASS })
+      dispatch(restorePassActions.setInitState)
     }
   }, [dispatch])
 

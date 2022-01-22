@@ -1,6 +1,6 @@
 import reducer from './orders'
-import * as types from '../actions/orders'
-import { GET_ITEMS_REQUEST } from '../actions/ingredients' //Экшн от другого редьюсера
+import * as types from '../actions/websockets'
+import { itemActions } from '../actions/ingredients' //Экшн от другого редьюсера
 import { initialState } from './orders'
 import type { TOrderStatus } from './orders'
 
@@ -31,7 +31,7 @@ const connectedState = { ...initialState, wsConnected: true }
 
 describe('orders reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(initialState, { type: GET_ITEMS_REQUEST })).toEqual(initialState)
+    expect(reducer(initialState, itemActions.request)).toEqual(initialState)
   })
 
   it('should handle WS_CONNECTION_SUCCESS', () => {

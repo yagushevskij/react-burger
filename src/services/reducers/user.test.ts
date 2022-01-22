@@ -1,6 +1,6 @@
 import reducer from './user'
-import * as types from '../actions/user'
-import { GET_ITEMS_REQUEST } from '../actions/ingredients' //Экшн от другого редьюсера
+import { userActions } from '../actions/user'
+import { itemActions } from '../actions/ingredients' //Экшн от другого редьюсера
 import { initialState } from './user'
 
 const user = {
@@ -11,21 +11,21 @@ const requestState = { ...initialState, request: true, failed: false }
 
 describe('user reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(initialState, { type: GET_ITEMS_REQUEST })).toEqual(initialState)
+    expect(reducer(initialState, itemActions.request)).toEqual(initialState)
   })
 
   it('should handle GET_USER_REQUEST || UPDATE_USER_REQUEST', () => {
-    expect(reducer(initialState, { type: types.GET_USER_REQUEST })).toEqual(requestState)
-    expect(reducer(initialState, { type: types.UPDATE_USER_REQUEST })).toEqual(requestState)
+    expect(reducer(initialState, userActions.getUserReq)).toEqual(requestState)
+    expect(reducer(initialState, userActions.updateUserReq)).toEqual(requestState)
   })
 
   it('should handle GET_USER_REQUEST_SUCCESS || UPDATE_USER_REQUEST_SUCCESS', () => {
-    expect(reducer(requestState, { type: types.GET_USER_REQUEST_SUCCESS, payload: { user } })).toEqual({
+    expect(reducer(requestState, userActions.getUserReqSuccess(user))).toEqual({
       ...requestState,
       request: false,
       data: user,
     })
-    expect(reducer(requestState, { type: types.UPDATE_USER_REQUEST_SUCCESS, payload: { user } })).toEqual({
+    expect(reducer(requestState, userActions.updateUserReqSuccess(user))).toEqual({
       ...requestState,
       request: false,
       data: user,
@@ -33,12 +33,12 @@ describe('user reducer', () => {
   })
 
   it('should handle GET_USER_REQUEST_FAILED || UPDATE_USER_REQUEST_FAILED', () => {
-    expect(reducer(requestState, { type: types.GET_USER_REQUEST_FAILED, payload: { message: 'error' } })).toEqual({
+    expect(reducer(requestState, userActions.getUserReqFailed('error'))).toEqual({
       ...initialState,
       failed: true,
       errorMessage: 'error',
     })
-    expect(reducer(requestState, { type: types.UPDATE_USER_REQUEST_FAILED, payload: { message: 'error' } })).toEqual({
+    expect(reducer(requestState, userActions.updateUserReqFailed('error'))).toEqual({
       ...initialState,
       failed: true,
       errorMessage: 'error',
@@ -46,6 +46,6 @@ describe('user reducer', () => {
   })
 
   it('should handle SET_USER', () => {
-    expect(reducer(initialState, { type: types.SET_USER, payload: { data: user } })).toEqual({ ...initialState, data: user })
+    expect(reducer(initialState, userActions.setUser(user))).toEqual({ ...initialState, data: user })
   })
 })

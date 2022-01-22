@@ -1,9 +1,9 @@
-import type { TWsOrdersActions, IWsConnectionStart } from '../actions/orders'
+import type { TWsObjActions, IWsConnectionStart } from '../actions/websockets'
 import { MiddlewareAPI, Middleware } from 'redux'
 import { TRootState } from '../store'
 import { TAppDispatch } from '../custom-hooks/redux-hooks'
 
-export const socketMiddleware = (wsActions: TWsOrdersActions): Middleware => {
+export const socketMiddleware = (wsActions: TWsObjActions): Middleware => {
   return (store: MiddlewareAPI<TAppDispatch, TRootState>) => {
     let socket: WebSocket | null = null
 
@@ -11,32 +11,31 @@ export const socketMiddleware = (wsActions: TWsOrdersActions): Middleware => {
       const { dispatch } = store
       const { type } = action
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions
-      if (type === wsInit) {
+      if (type === wsInit('someUrl').type) {
         const { payload } = action as IWsConnectionStart
         socket = new WebSocket(payload.url)
       }
-      if (socket?.readyState === 1 && type === onClose) {
+      if (socket?.readyState === 1 && type === onClose.type) {
         socket?.close()
       }
       if (socket) {
         socket.onopen = () => {
-          dispatch({ type: onOpen })
+          dispatch(onOpen)
         }
 
         socket.onerror = () => {
-          dispatch({ type: onError })
+          dispatch(onError)
         }
 
         socket.onmessage = event => {
           const { data } = event
           const parsedData = JSON.parse(data)
           const { success, ...restParsedData } = parsedData
-
-          dispatch({ type: onMessage, payload: restParsedData })
+          dispatch(onMessage(restParsedData))
         }
 
         socket.onclose = event => {
-          dispatch({ type: onClose, payload: null })
+          dispatch(onClose)
           if (event.wasClean) {
             console.log(`WS cоединение закрыто корректно. Код ${event.code}`)
           } else {

@@ -1,5 +1,5 @@
 import { API_URL } from '../../../utils/config'
-import { RESTORE_PASS_REQUEST, RESTORE_PASS_REQUEST_SUCCESS, RESTORE_PASS_REQUEST_FAILED } from '../restore-pass'
+import { restorePassActions } from '../restore-pass'
 import { checkReponse } from '../../../utils/helpers'
 import type { TAppDispatch } from '../../custom-hooks/redux-hooks'
 
@@ -9,9 +9,7 @@ interface IRestorePassData {
 
 export const restorePass = (data: IRestorePassData) => {
   return async function (dispatch: TAppDispatch) {
-    dispatch({
-      type: RESTORE_PASS_REQUEST,
-    })
+    dispatch(restorePassActions.request)
     try {
       const res = await fetch(API_URL + 'password-reset', {
         method: 'POST',
@@ -21,15 +19,9 @@ export const restorePass = (data: IRestorePassData) => {
         body: JSON.stringify(data),
       })
       const resData = await checkReponse(res)
-      resData &&
-        dispatch({
-          type: RESTORE_PASS_REQUEST_SUCCESS,
-        })
+      resData && dispatch(restorePassActions.requestSuccess)
     } catch (e) {
-      dispatch({
-        type: RESTORE_PASS_REQUEST_FAILED,
-        payload: { message: 'Возникла ошибка при восстановлении пароля. Пожалуйста, попробуйте позже' },
-      })
+      dispatch(restorePassActions.requestFailed('Возникла ошибка при восстановлении пароля. Пожалуйста, попробуйте позже'))
       console.log(e)
     }
   }
