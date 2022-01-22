@@ -1,4 +1,3 @@
-import constructorCard from './constructor-card.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useRef, FC } from 'react'
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
@@ -66,7 +65,7 @@ const ConstructorCard: FC<TConstructorCardProps> = ({ data, handleRemove, index,
   drag(drop(ref))
 
   return (
-    <li className={`${constructorCard.item}`} ref={ref} style={{ opacity }}>
+    <li ref={ref} style={{ opacity }}>
       <DragIcon type="primary" />
       <ConstructorElement text={data.name} price={data.price} thumbnail={data.image} handleClose={() => handleRemove(data)} />
     </li>

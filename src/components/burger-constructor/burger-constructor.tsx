@@ -94,13 +94,13 @@ const BurgerConstructor: FC = () => {
           <>
             <ul className={`${burgerConstructor.list}`}>
               {bun && (
-                <li className={`${burgerConstructor.item} pl-8 pr-5`} key={'bun-top' + bun._id}>
+                <li className='pl-8' key={'bun-top' + bun._id}>
                   <ConstructorElement type="top" isLocked={true} text={`${bun.name} (верх)`} price={bun.price} thumbnail={bun.image} />
                 </li>
               )}
               <ScrollContainer items={constrItems} removeItem={removeItem} />
               {bun && (
-                <li className={`${burgerConstructor.item} pl-8 pr-5`} key={'bun-bottom' + bun._id}>
+                <li className={`${burgerConstructor.item} pl-8`} key={'bun-bottom' + bun._id}>
                   <ConstructorElement type="bottom" isLocked={true} text={`${bun.name} (низ)`} price={bun.price} thumbnail={bun.image} />
                 </li>
               )}
