@@ -5,6 +5,5 @@
 .scroll {
   max-height: 370px;
   overflow: auto;
-  padding-right: 8px;
   composes: scroll from '../../app/app.module.css';
 }
