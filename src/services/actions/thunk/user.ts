@@ -1,11 +1,4 @@
-import {
-  GET_USER_REQUEST,
-  GET_USER_REQUEST_SUCCESS,
-  GET_USER_REQUEST_FAILED,
-  UPDATE_USER_REQUEST,
-  UPDATE_USER_REQUEST_SUCCESS,
-  UPDATE_USER_REQUEST_FAILED,
-} from '../user'
+import { userActions } from '../user'
 import { API_URL } from '../../../utils/config'
 import { getCookie } from '../../../utils/helpers'
 import { retriableFetch } from '../../../utils/api'
@@ -20,9 +13,7 @@ interface IUserResp {
 export const getUser = () => {
   const accessToken = getCookie('accessToken')
   return async function (dispatch: TAppDispatch) {
-    dispatch({
-      type: GET_USER_REQUEST,
-    })
+    dispatch(userActions.getUserReq)
     try {
       const res = await retriableFetch<IUserResp>(API_URL + 'auth/user', {
         method: 'GET',
@@ -31,15 +22,9 @@ export const getUser = () => {
           authorization: 'Bearer ' + accessToken,
         },
       })
-      dispatch({
-        type: GET_USER_REQUEST_SUCCESS,
-        payload: { user: res.user },
-      })
+      dispatch(userActions.getUserReqSuccess(res.user))
     } catch (e) {
-      dispatch({
-        type: GET_USER_REQUEST_FAILED,
-        payload: { message: 'На сайте возникла ошибка. Пожалуйста, попробуйте позже' },
-      })
+      dispatch(userActions.getUserReqFailed('На сайте возникла ошибка. Пожалуйста, попробуйте позже'))
       console.log(e)
     }
   }
@@ -48,9 +33,7 @@ export const getUser = () => {
 export const updateUser = (data: IUserData) => {
   return async function (dispatch: TAppDispatch) {
     const accessToken = getCookie('accessToken')
-    dispatch({
-      type: UPDATE_USER_REQUEST,
-    })
+    dispatch(userActions.updateUserReq)
     try {
       const res = await retriableFetch<IUserResp>(API_URL + 'auth/user', {
         method: 'PATCH',
@@ -60,15 +43,9 @@ export const updateUser = (data: IUserData) => {
         },
         body: JSON.stringify(data),
       })
-      dispatch({
-        type: UPDATE_USER_REQUEST_SUCCESS,
-        payload: { user: res.user },
-      })
+      dispatch(userActions.updateUserReqSuccess(res.user))
     } catch (e) {
-      dispatch({
-        type: UPDATE_USER_REQUEST_FAILED,
-        payload: { message: 'На сайте возникла ошибка. Пожалуйста, попробуйте позже' },
-      })
+      dispatch(userActions.updateUserReqFailed('На сайте возникла ошибка. Пожалуйста, попробуйте позже'))
       console.log(e)
     }
   }

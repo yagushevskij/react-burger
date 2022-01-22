@@ -2,7 +2,7 @@ import styles from './reset-password.module.css'
 import { Link, Navigate, useLocation } from 'react-router-dom'
 import { useEffect, FC } from 'react'
 import ResetPasswordForm from '../../components/forms/reset-password-form/reset-password-form'
-import { SET_INIT_STATE_RESET_PASS } from '../../services/actions/reset-pass'
+import { resetPassActions } from '../../services/actions/reset-pass'
 import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
 
 const ResetPassword: FC = () => {
@@ -13,7 +13,7 @@ const ResetPassword: FC = () => {
 
   useEffect(() => {
     return () => {
-      dispatch({ type: SET_INIT_STATE_RESET_PASS })
+      dispatch(resetPassActions.setInitState)
     }
   }, [dispatch])
 

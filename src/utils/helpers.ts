@@ -53,7 +53,7 @@ const deleteCookie = (name: string) => {
   setCookie(name, '', { expires: -1 })
 }
 
-const getFormatedDay = (date: Date) => {
+const getFormatedDay = (date: string) => {
   const today = new Date()
   const differenceDay = new Date(date)
   const difference = moment(today).diff(differenceDay, 'days')

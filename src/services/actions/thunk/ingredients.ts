@@ -1,5 +1,5 @@
 import { API_URL } from '../../../utils/config'
-import { GET_ITEMS_FAILED, GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS } from '../ingredients'
+import { itemActions } from '../ingredients'
 import { checkReponse } from '../../../utils/helpers'
 import type { IIngredientType } from '../../../utils/types'
 import type { TAppDispatch } from '../../custom-hooks/redux-hooks'
@@ -11,24 +11,16 @@ interface IGetItemsResp {
 
 export const getItems = () => {
   return async function (dispatch: TAppDispatch) {
-    dispatch({
-      type: GET_ITEMS_REQUEST,
-    })
+    dispatch(itemActions.request)
     try {
       const res = await fetch(API_URL + 'ingredients')
       const resData = await checkReponse<IGetItemsResp>(res)
-      dispatch({
-        type: GET_ITEMS_SUCCESS,
-        payload: {
-          items: resData.data.map(el => {
-            return { ...el, qty: 0 }
-          }),
-        },
+      const items = resData.data.map(el => {
+        return { ...el, qty: 0 }
       })
+      dispatch(itemActions.requestSuccess(items))
     } catch (e) {
-      dispatch({
-        type: GET_ITEMS_FAILED,
-      })
+      dispatch(itemActions.requestFailed)
       console.log(e)
     }
   }

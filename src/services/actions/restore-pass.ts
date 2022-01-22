@@ -3,6 +3,13 @@ export const RESTORE_PASS_REQUEST_SUCCESS: 'RESTORE_PASS_REQUEST_SUCCESS' = 'RES
 export const RESTORE_PASS_REQUEST_FAILED: 'RESTORE_PASS_REQUEST_FAILED' = 'RESTORE_PASS_REQUEST_FAILED'
 export const SET_INIT_STATE_RESTORE_PASS: 'SET_INIT_STATE_RESTORE_PASS' = 'SET_INIT_STATE_RESTORE_PASS'
 
+export const restorePassActions = {
+  request: { type: RESTORE_PASS_REQUEST },
+  requestSuccess: { type: RESTORE_PASS_REQUEST_SUCCESS },
+  requestFailed: (message: string) => ({ type: RESTORE_PASS_REQUEST_FAILED, payload: { message } }),
+  setInitState: { type: SET_INIT_STATE_RESTORE_PASS }
+}
+
 interface IRestorePassRequestAction {
   readonly type: typeof RESTORE_PASS_REQUEST
 }

@@ -6,19 +6,21 @@ import {
   LOGOUT_REQUEST_SUCCESS,
   LOGOUT_REQUEST_FAILED,
 } from '../actions/auth'
-import type { TAuthActions } from '../actions/auth'
+import type { TAppActions } from '../actions/index'
 
 interface IAuthReducerState {
   request: boolean
   failed: boolean
+  errorMessage: string | null | undefined
 }
 
-const initialState: IAuthReducerState = {
+export const initialState: IAuthReducerState = {
   request: false,
   failed: false,
+  errorMessage: null,
 }
 
-const authReducer = (state = initialState, action: TAuthActions): IAuthReducerState => {
+const authReducer = (state = initialState, action: TAppActions): IAuthReducerState => {
   switch (action.type) {
     case AUTH_REQUEST:
     case LOGOUT_REQUEST:
@@ -38,6 +40,7 @@ const authReducer = (state = initialState, action: TAuthActions): IAuthReducerSt
       return {
         ...initialState,
         failed: true,
+        errorMessage: action.payload?.errorMessage
       }
     default:
       return state

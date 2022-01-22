@@ -1,5 +1,5 @@
 import { API_URL } from '../../../utils/config'
-import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED } from '../order'
+import { orderActions } from '../order'
 import { getCookie } from '../../../utils/helpers'
 import { retriableFetch } from '../../../utils/api'
 import type { IIngredientType } from '../../../utils/types'
@@ -21,9 +21,7 @@ interface IOrderResp {
 export const order = (items: IIngredientType[]) => {
   return async function (dispatch: TAppDispatch) {
     const token = getCookie('accessToken')
-    dispatch({
-      type: GET_ORDER_REQUEST,
-    })
+    dispatch(orderActions.request)
     try {
       const ids = items.map(el => el._id)
       const res = await retriableFetch<IOrderResp>(API_URL + 'orders', {
@@ -34,17 +32,9 @@ export const order = (items: IIngredientType[]) => {
         },
         body: JSON.stringify({ ingredients: ids }),
       })
-      dispatch({
-        type: GET_ORDER_SUCCESS,
-        payload: {
-          orderNumber: res.order.number,
-        },
-      })
+      dispatch(orderActions.requestSuccess(res.order.number))
     } catch (e) {
-      dispatch({
-        type: GET_ORDER_FAILED,
-        payload: { message: 'Ошибка при создании заказа. Пожалуйста, повторите позже.' },
-      })
+      dispatch(orderActions.requestFailed('Ошибка при создании заказа. Пожалуйста, повторите позже.'))
       console.log(e)
     }
   }

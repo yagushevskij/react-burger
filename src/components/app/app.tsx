@@ -33,12 +33,12 @@ const WrappedRoutes: FC = () => {
     <>
       <Routes location={background ?? location}>
         <Route path="/" element={<Home />} />
-        <Route path="/feed/*" element={<Feed />} />
+        <Route path="/feed/*" element={<Feed shouldShowPage={shouldShowPage} />} />
         <Route path="/ingredients/:id" element={<IngredientDetails />} />
         <Route path="/profile" element={<ProtectedRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/orders" element={<Profile />} />
-          {shouldShowPage && <Route path="/profile/orders/:id" element={<OrderUserInfo />} />}
+          <Route path="/profile/orders/:id" element={<OrderUserInfo />} />
         </Route>
         <Route path="/logout" element={<ProtectedRoute />}>
           <Route path="/logout" element={<Logout />} />
@@ -56,7 +56,7 @@ const WrappedRoutes: FC = () => {
           <Route
             path="/ingredients/:id"
             element={
-              <Modal title="Детали ингридиента" handleClose={back}>
+              <Modal title="Детали ингридиента" handleClose={back} dataCy='ingredient-modal'>
                 <IngredientDetails />
               </Modal>
             }
@@ -70,11 +70,11 @@ const WrappedRoutes: FC = () => {
   )
 }
 
-const Feed: FC = () => {
+const Feed = ({ shouldShowPage }: any) => {
   return (
     <Routes>
-      <Route path=":id" element={<OrderAllUsersInfo />} />
-      <Route path="" element={<OrdersFeed />} />
+      {shouldShowPage && <Route path=":id" element={<OrderAllUsersInfo />} />}
+      <Route path="*" element={<OrdersFeed />} />
     </Routes>
   )
 }

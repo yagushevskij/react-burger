@@ -1,16 +1,16 @@
 import { ADD_CONSTR_ITEM, REMOVE_CONSTR_ITEM, UPDATE_CONSTR_ITEMS } from '../actions/constructor'
 import { IConCardType } from '../../utils/types'
-import { TConstructorActions } from '../actions/constructor'
+import type { TAppActions } from '../actions/index'
 
 interface IConstructorReducerState {
   items: IConCardType[]
 }
 
-const initialState: IConstructorReducerState = {
+export const initialState: IConstructorReducerState = {
   items: [],
 }
 
-const constructorReducer = (state = initialState, action: TConstructorActions): IConstructorReducerState => {
+const constructorReducer = (state = initialState, action: TAppActions): IConstructorReducerState => {
   switch (action.type) {
     case ADD_CONSTR_ITEM: {
       return {
@@ -21,7 +21,7 @@ const constructorReducer = (state = initialState, action: TConstructorActions): 
     case REMOVE_CONSTR_ITEM: {
       return {
         ...state,
-        items: state.items.filter(el => el.key !== action.payload.item.key),
+        items: state.items.filter(el => el.key !== action.payload.key),
       }
     }
     case UPDATE_CONSTR_ITEMS: {

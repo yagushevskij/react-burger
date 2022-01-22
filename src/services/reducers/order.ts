@@ -1,5 +1,5 @@
 import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED, SET_INITIAL_ORDER_STATE } from '../actions/order'
-import type { TOrderActions } from '../actions/order'
+import { TAppActions } from '../actions'
 
 interface IOrderState {
   number: number | null
@@ -8,17 +8,17 @@ interface IOrderState {
   errorMessage: string | null | undefined
 }
 
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
   number: null,
   request: false,
   failed: false,
   errorMessage: null,
 }
 
-const orderReducer = (state = initialState, action: TOrderActions): IOrderState => {
+const orderReducer = (state = initialState, action: TAppActions): IOrderState => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
-      return { ...initialState, request: true }
+      return { ...initialState, request: true, failed: false }
     }
     case GET_ORDER_SUCCESS: {
       return { ...state, number: action.payload.orderNumber, request: false }
@@ -27,7 +27,7 @@ const orderReducer = (state = initialState, action: TOrderActions): IOrderState 
       return { ...initialState, failed: true, errorMessage: action.payload?.message }
     }
     case SET_INITIAL_ORDER_STATE: {
-      return { ...initialState }
+      return initialState
     }
     default: {
       return state

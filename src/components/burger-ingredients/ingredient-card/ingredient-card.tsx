@@ -27,7 +27,7 @@ const IngredientCard: FC<TIngredientCard> = ({ data }) => {
   }, [data, location, navigate])
 
   return (
-    <article className={ingredientCard.card} onClick={handleClick} ref={dragRef} style={{ border }}>
+    <article data-cy='ingredient-card' className={ingredientCard.card} onClick={handleClick} ref={dragRef} style={{ border }}>
       <div className={`${ingredientCard.card__count}`}>{data.qty > 0 && <Counter count={data.qty} size="default" />}</div>
       <img className={`${ingredientCard.card__image} ml-4 mr-4`} src={data.image} alt=""></img>
       <div className={`${ingredientCard.card__price} mt-1`}>

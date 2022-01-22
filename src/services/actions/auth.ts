@@ -6,6 +6,18 @@ export const LOGOUT_REQUEST: 'LOGOUT_REQUEST' = 'LOGOUT_REQUEST'
 export const LOGOUT_REQUEST_SUCCESS: 'LOGOUT_REQUEST_SUCCESS' = 'LOGOUT_REQUEST_SUCCESS'
 export const LOGOUT_REQUEST_FAILED: 'LOGOUT_REQUEST_FAILED' = 'LOGOUT_REQUEST_FAILED'
 
+export const authActions = {
+  request: { type: AUTH_REQUEST },
+  requestSuccess: { type: AUTH_REQUEST_SUCCESS },
+  requestFailed: (errorMessage: string) => ({ type: AUTH_REQUEST_FAILED, payload: { errorMessage } }),
+}
+
+export const logoutActions = {
+  request: { type: LOGOUT_REQUEST },
+  requestSuccess: { type: LOGOUT_REQUEST_SUCCESS },
+  requestFailed: (errorMessage: string) => ({ type: LOGOUT_REQUEST_FAILED, payload: { errorMessage } }),
+}
+
 interface IAuthRequestAction {
   readonly type: typeof AUTH_REQUEST
 }
@@ -14,6 +26,7 @@ interface ILogoutRequestSuccessAction {
 }
 interface ILogoutRequestFailedAction {
   readonly type: typeof LOGOUT_REQUEST_FAILED
+  readonly payload?: { errorMessage: string }
 }
 interface ILogoutRequestAction {
   readonly type: typeof LOGOUT_REQUEST
@@ -23,6 +36,7 @@ interface IAuthRequestSuccessAction {
 }
 interface IAuthRequestFailedAction {
   readonly type: typeof AUTH_REQUEST_FAILED
+  readonly payload?: { errorMessage: string }
 }
 
 export type TAuthActions =

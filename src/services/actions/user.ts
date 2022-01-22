@@ -8,6 +8,16 @@ export const UPDATE_USER_REQUEST_FAILED: 'UPDATE_USER_REQUEST_FAILED' = 'UPDATE_
 
 export const SET_USER: 'SET_USER' = 'SET_USER'
 
+export const userActions = {
+  getUserReq: { type: GET_USER_REQUEST },
+  getUserReqSuccess: (user: IUserData) => ({ type: GET_USER_REQUEST_SUCCESS, payload: { user } }),
+  getUserReqFailed: (message: string) => ({ type: GET_USER_REQUEST_FAILED, payload: { message } }),
+  updateUserReq: { type: UPDATE_USER_REQUEST },
+  updateUserReqSuccess: (user: IUserData) => ({ type: UPDATE_USER_REQUEST_SUCCESS, payload: { user } }),
+  updateUserReqFailed: (message: string) => ({ type: UPDATE_USER_REQUEST_FAILED, payload: { message } }),
+  setUser: (data: IUserData) => ({ type: SET_USER, payload: { data } }),
+}
+
 export interface IUserData {
   email?: string
   name?: string
@@ -25,7 +35,7 @@ interface IGetUserRequestSuccessAction {
 }
 interface IGetUserRequestFailedAction {
   readonly type: typeof GET_USER_REQUEST_FAILED
-  readonly payload: {
+  readonly payload?: {
     message: string
   }
 }
@@ -40,7 +50,7 @@ interface IUpdateUserRequestSuccessAction {
 }
 interface IUpdateUserRequestFailedAction {
   readonly type: typeof UPDATE_USER_REQUEST_FAILED
-  readonly payload: {
+  readonly payload?: {
     message: string
   }
 }

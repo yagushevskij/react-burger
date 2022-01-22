@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 import Orders from '../../components/orders/orders'
 import { FC, useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '../../services/custom-hooks/redux-hooks'
-import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/orders'
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/websockets'
 import { getCookie } from '../../utils/helpers'
 import { wsUrl } from '../../utils/config'
 

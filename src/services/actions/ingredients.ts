@@ -1,4 +1,3 @@
-import { IIngredientType } from '../../utils/types'
 import { IMainCardType } from '../../utils/types'
 
 export const GET_ITEMS_REQUEST: 'GET_ITEMS_REQUEST' = 'GET_ITEMS_REQUEST'
@@ -9,26 +8,29 @@ export const INCREASE_ITEM_COUNT: 'INCREASE_ITEM_COUNT' = 'INCREASE_ITEM_COUNT'
 export const DECREASE_ITEM_COUNT: 'DECREASE_ITEM_COUNT' = 'DECREASE_ITEM_COUNT'
 
 export const itemActions = {
-  updateItems: (items: IIngredientType[]) => ({
+  updateItems: (items: IMainCardType[]) => ({
     type: UPDATE_ITEMS,
     payload: {
       items,
     },
   }),
-  increaseItem: (item: IIngredientType, qty: number) => ({
+  increaseItem: (id: string, qty: number) => ({
     type: INCREASE_ITEM_COUNT,
     payload: {
-      item,
+      id,
       qty,
     },
   }),
-  decreaseItem: (item: IIngredientType, qty: number) => ({
+  decreaseItem: (id: string, qty: number) => ({
     type: DECREASE_ITEM_COUNT,
     payload: {
-      item,
+      id,
       qty,
     },
   }),
+  request: { type: GET_ITEMS_REQUEST },
+  requestSuccess: (items: IMainCardType[]) => ({ type: GET_ITEMS_SUCCESS, payload: { items } }),
+  requestFailed: { type: GET_ITEMS_FAILED },
 }
 
 interface IUpdateItemsAction {
@@ -40,14 +42,14 @@ interface IUpdateItemsAction {
 interface IIncreaseItemAction {
   readonly type: typeof INCREASE_ITEM_COUNT
   payload: {
-    item: IIngredientType
+    id: string
     qty: number
   }
 }
 interface IDecreaseItemAction {
   readonly type: typeof DECREASE_ITEM_COUNT
   payload: {
-    item: IIngredientType
+    id: string
     qty: number
   }
 }
